@@ -212,7 +212,7 @@ module stage_id(
         if (reset) begin
             op2 <= 0;
         end else if (read2 == 0) begin
-            op2 <= imm1;
+            op2 <= imm2;
         end else if (ex_write && ex_regw_addr == reg2_addr) begin
             op2 <= ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg2_addr) begin

@@ -16,7 +16,7 @@ module test1;
     initial begin
         reset = 1;
         #30 reset = 0;
-        #1000 $finish();
+        #20000 $finish();
     end
 
     cpu cpu_(

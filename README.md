@@ -41,25 +41,25 @@
 |0|SB|
 |0|SH|
 |0|SW|
-|1|ADDI|
-|1|SLTI|
-|1|SLTIU|
-|1|XORI|
+|2|ADDI|
+|2|SLTI|
+|2|SLTIU|
+|2|XORI|
 |2|ORI|
-|1|ANDI|
-|1|SLLI|
-|1|SRLI|
-|1|SRAI|
-|1|ADD|
-|1|SUB|
-|1|SLL|
-|1|SLT|
-|1|SLTU|
-|1|XOR|
-|1|SRL|
-|1|SRA|
-|1|OR|
-|1|AND|
+|2|ANDI|
+|2|SLLI|
+|2|SRLI|
+|2|SRAI|
+|2|ADD|
+|2|SUB|
+|2|SLL|
+|2|SLT|
+|2|SLTU|
+|2|XOR|
+|2|SRL|
+|2|SRA|
+|2|OR|
+|2|AND|
 |0|FENCE|
 |0|FENCE.I|
 
@@ -71,4 +71,6 @@
 + 2019.11.22 Reconstruct lots of code (untested)
 + 2019.11.22 ori (pass test)
 + 2019.11.22 Add OP_OP and OP_IMM (untested)
-+ 2019.11.22 Add Data Forward (untested)
++ 2019.11.22 Add Data Forward (naive) (untested)
++ 2019.11.23 Data Forward (naive) (pass test)
++ 2019.11.23 OP_OP and OP_IMM (pass test)

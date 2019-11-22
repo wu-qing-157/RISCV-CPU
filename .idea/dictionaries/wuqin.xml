@@ -3,7 +3,18 @@
     <words>
       <w>aluop</w>
       <w>alusel</w>
+      <w>auipc</w>
+      <w>bgeu</w>
+      <w>bltu</w>
+      <w>jalr</w>
       <w>riscv</w>
+      <w>slli</w>
+      <w>slti</w>
+      <w>sltiu</w>
+      <w>sltu</w>
+      <w>srai</w>
+      <w>srli</w>
+      <w>xori</w>
     </words>
   </dictionary>
 </component>

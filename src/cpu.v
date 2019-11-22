@@ -77,15 +77,6 @@ module cpu(
         .pc_o(id_pc), .inst_o(id_inst)
     );
 
-    stage_id stage_id_(
-        .reset(rst_in),
-        .pc(id_pc), .inst(id_inst),
-        .read1(id_read1), .reg1_addr(id_reg1_addr), .reg1_data(id_reg1_data),
-        .read2(id_read2), .reg2_addr(id_reg2_addr), .reg2_data(id_reg2_data),
-        .alusel(id_alusel), .aluop(id_aluop), .op1(id_op1), .op2(id_op2),
-        .write(id_write), .regw_addr(id_regw_addr)
-    );
-
     wire [`AluSelBus] ex_alusel;
     wire [`AluOpBus] ex_aluop;
     wire [`RegBus] ex_op1;
@@ -128,6 +119,17 @@ module cpu(
         .reset(rst_in),
         .write_i(mem_write_i), .regw_addr_i(mem_regw_addr_i), .regw_data_i(mem_regw_data_i),
         .write_o(mem_write_o), .regw_addr_o(mem_regw_addr_o), .regw_data_o(mem_regw_data_o)
+    );
+
+    stage_id stage_id_(
+        .reset(rst_in),
+        .pc(id_pc), .inst(id_inst),
+        .read1(id_read1), .reg1_addr(id_reg1_addr), .reg1_data(id_reg1_data),
+        .read2(id_read2), .reg2_addr(id_reg2_addr), .reg2_data(id_reg2_data),
+        .alusel(id_alusel), .aluop(id_aluop), .op1(id_op1), .op2(id_op2),
+        .write(id_write), .regw_addr(id_regw_addr),
+        .ex_write(ex_write_o), .ex_regw_addr(ex_regw_addr_o), .ex_regw_data(ex_regw_data),
+        .mem_write(mem_write_o), .mem_regw_addr(mem_regw_addr_o), .mem_regw_data(mem_regw_data_o)
     );
 
     wire wb_write;

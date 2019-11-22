@@ -19,11 +19,45 @@ module reg_file(
 
     reg [`RegBus] regs [`RegNum-1:0];
 
+    initial begin
+        regs[0] <= 0;
+        regs[1] <= 0;
+        regs[2] <= 0;
+        regs[3] <= 0;
+        regs[4] <= 0;
+        regs[5] <= 0;
+        regs[6] <= 0;
+        regs[7] <= 0;
+        regs[8] <= 0;
+        regs[9] <= 0;
+        regs[10] <= 0;
+        regs[11] <= 0;
+        regs[12] <= 0;
+        regs[13] <= 0;
+        regs[14] <= 0;
+        regs[15] <= 0;
+        regs[16] <= 0;
+        regs[17] <= 0;
+        regs[18] <= 0;
+        regs[19] <= 0;
+        regs[20] <= 0;
+        regs[21] <= 0;
+        regs[22] <= 0;
+        regs[23] <= 0;
+        regs[24] <= 0;
+        regs[25] <= 0;
+        regs[26] <= 0;
+        regs[27] <= 0;
+        regs[28] <= 0;
+        regs[29] <= 0;
+        regs[30] <= 0;
+        regs[31] <= 0;
+    end
+
     always @(posedge clock) begin
         if (reset == 0 && write == 1 && regw_addr != 0)
             regs[regw_addr] <= regw_data;
     end
-
 
     always @(*) begin
         if (reset == 1 || read1 == 0 || reg1_addr == 0)
