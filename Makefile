@@ -1,4 +1,4 @@
-REMOTE?=1
+REMOTE?=0
 
 out/test1: src/*.v
 ifeq ($(REMOTE), 0)

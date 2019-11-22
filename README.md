@@ -12,8 +12,7 @@
 |1|Basic Flow|
 |0|Stall Control|
 |0|Memory Control|
-|0|Data Forward (EX)|
-|0|Data Forward (MEM)|
+|1|Data Forward|
 |0|Cache|
 
 ## Instruction Progress
@@ -42,25 +41,25 @@
 |0|SB|
 |0|SH|
 |0|SW|
-|0|ADDI|
-|0|SLTI|
-|0|SLTIU|
-|0|XORI|
+|1|ADDI|
+|1|SLTI|
+|1|SLTIU|
+|1|XORI|
 |2|ORI|
-|0|ANDI|
-|0|SLLI|
-|0|SRLI|
-|0|SRAI|
-|0|ADD|
-|0|SUB|
-|0|SLL|
-|0|SLT|
-|0|SLTU|
-|0|XOR|
-|0|SRL|
-|0|SRA|
-|0|OR|
-|0|AND|
+|1|ANDI|
+|1|SLLI|
+|1|SRLI|
+|1|SRAI|
+|1|ADD|
+|1|SUB|
+|1|SLL|
+|1|SLT|
+|1|SLTU|
+|1|XOR|
+|1|SRL|
+|1|SRA|
+|1|OR|
+|1|AND|
 |0|FENCE|
 |0|FENCE.I|
 
@@ -71,3 +70,5 @@
 + 2019.11.20 Change into RV32I (untested)
 + 2019.11.22 Reconstruct lots of code (untested)
 + 2019.11.22 ori (pass test)
++ 2019.11.22 Add OP_OP and OP_IMM (untested)
++ 2019.11.22 Add Data Forward (untested)

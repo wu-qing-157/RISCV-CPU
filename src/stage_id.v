@@ -18,7 +18,15 @@ module stage_id(
     output reg [`RegBus] op1,
     output reg [`RegBus] op2,
     output reg write,
-    output reg [`RegAddrBus] regw_addr
+    output reg [`RegAddrBus] regw_addr,
+
+    input wire ex_write,
+    input wire [`RegAddrBus] ex_regw_addr,
+    input wire [`RegBus] ex_regw_data,
+
+    input wire mem_write,
+    input wire [`RegAddrBus] mem_regw_addr,
+    input wire [`RegBus] mem_regw_data
 );
 
     wire [6:0] opcode = inst[6:0];
@@ -50,10 +58,134 @@ module stage_id(
                 end
                 7'b0010011: begin
                     case (funct3)
+                        3'b000: begin
+                            alusel <= 3'b100; aluop <= 0;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 0; reg2_addr <= 0; imm2 <= {{20{I_imm[11]}}, I_imm};
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b010: begin
+                            alusel <= 3'b100; aluop <= 2;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 0; reg2_addr <= 0; imm2 <= {{20{I_imm[11]}}, I_imm};
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b011: begin
+                            alusel <= 3'b100; aluop <= 3;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 0; reg2_addr <= 0; imm2 <= {{20{I_imm[11]}}, I_imm};
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b100: begin
+                            alusel <= 3'b001; aluop <= 2;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 0; reg2_addr <= 0; imm2 <= {{20{I_imm[11]}}, I_imm};
+                            write <= 1; regw_addr <= rd;
+                        end
                         3'b110: begin
                             alusel <= 3'b001; aluop <= 0;
                             read1 <= 1; reg1_addr <= rs; imm1 <= 0;
                             read2 <= 0; reg2_addr <= 0; imm2 <= {{20{I_imm[11]}}, I_imm};
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b111: begin
+                            alusel <= 3'b001; aluop <= 1;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 0; reg2_addr <= 0; imm2 <= {{20{I_imm[11]}}, I_imm};
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b001: begin
+                            alusel <= 3'b010; aluop <= 0;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 0; reg2_addr <= 0; imm2 <= {20'b0, rt};
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b101: begin
+                            case (funct7)
+                                7'b0000000: begin
+                                    alusel <= 3'b010; aluop <= 1;
+                                    read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                                    read2 <= 0; reg2_addr <= 0; imm2 <= {20'b0, rt};
+                                    write <= 1; regw_addr <= rd;
+                                end
+                                7'b0100000: begin
+                                    alusel <= 3'b010; aluop <= 2;
+                                    read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                                    read2 <= 0; reg2_addr <= 0; imm2 <= {20'b0, rt};
+                                    write <= 1; regw_addr <= rd;
+                                end
+                            endcase
+                        end
+                    endcase
+                end
+                7'b0110011: begin
+                    case (funct3)
+                        3'b000: begin
+                            case (funct7)
+                                7'b0000000: begin
+                                    alusel <= 3'b100; aluop <= 0;
+                                    read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                                    read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                                    write <= 1; regw_addr <= rd;
+                                end
+                                7'b0100000: begin
+                                    alusel <= 3'b100; aluop <= 1;
+                                    read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                                    read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                                    write <= 1; regw_addr <= rd;
+                                end
+                            endcase
+                        end
+                        3'b001: begin
+                            alusel <= 3'b010; aluop <= 0;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b010: begin
+                            alusel <= 3'b100; aluop <= 2;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b011: begin
+                            alusel <= 3'b100; aluop <= 3;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b100: begin
+                            alusel <= 3'b001; aluop <= 2;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b101: begin
+                            case (funct7)
+                                7'b0000000: begin
+                                    alusel <= 3'b010; aluop <= 1;
+                                    read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                                    read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                                    write <= 1; regw_addr <= rd;
+                                end
+                                7'b0100000: begin
+                                    alusel <= 3'b010; aluop <= 1;
+                                    read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                                    read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                                    write <= 1; regw_addr <= rd;
+                                end
+                            endcase
+                        end
+                        3'b110: begin
+                            alusel <= 3'b001; aluop <= 0;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 1; reg2_addr <= rt; imm2 <= 0;
+                            write <= 1; regw_addr <= rd;
+                        end
+                        3'b111: begin
+                            alusel <= 3'b001; aluop <= 1;
+                            read1 <= 1; reg1_addr <= rs; imm1 <= 0;
+                            read2 <= 1; reg2_addr <= rt; imm2 <= 0;
                             write <= 1; regw_addr <= rd;
                         end
                     endcase
@@ -63,21 +195,31 @@ module stage_id(
     end
 
     always @(*) begin
-        if (reset)
+        if (reset) begin
             op1 <= 0;
-        else if (read1)
-            op1 <= reg1_data;
-        else
+        end else if (read1 == 0) begin
             op1 <= imm1;
+        end else if (ex_write && ex_regw_addr == reg1_addr) begin
+            op1 <= ex_regw_data;
+        end else if (mem_write && mem_regw_addr == reg1_addr) begin
+            op1 <= mem_regw_data;
+        end else begin
+            op1 <= reg1_data;
+        end
     end
 
     always @(*) begin
-        if (reset)
+        if (reset) begin
             op2 <= 0;
-        else if (read2)
+        end else if (read2 == 0) begin
+            op2 <= imm1;
+        end else if (ex_write && ex_regw_addr == reg2_addr) begin
+            op2 <= ex_regw_data;
+        end else if (mem_write && mem_regw_addr == reg2_addr) begin
+            op2 <= mem_regw_data;
+        end else begin
             op2 <= reg2_data;
-        else
-            op2 <= imm2;
+        end
     end
 
 endmodule
