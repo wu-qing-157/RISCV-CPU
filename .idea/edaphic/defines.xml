@@ -2668,6 +2668,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/oldreg_file.v" />
               <option value="/pipe_ex_mem.v" />
               <option value="/pipe_id_ex.v" />
               <option value="/pipe_mem_wb.v" />
@@ -2726,6 +2727,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/oldreg_file.v" />
               <option value="/pipe_ex_mem.v" />
               <option value="/pipe_id_ex.v" />
               <option value="/pipe_mem_wb.v" />
@@ -2767,6 +2769,7 @@
         <entry key="RegNum">
           <value>
             <set>
+              <option value="/oldreg_file.v" />
               <option value="/reg_file.v" />
               <option value="$PROJECT_DIR$/src/reg_file.v" />
             </set>

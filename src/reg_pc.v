@@ -22,7 +22,8 @@ module reg_pc(
             pc <= 0;
             pc_o <= 0;
         end else if (stall[0] && br) begin
-            pc <= br_addr;
+            pc <= br_addr+4;
+            pc_o <= br_addr;
         end else if (br) begin
             pc <= br_addr+4;
             pc_o <= br_addr;

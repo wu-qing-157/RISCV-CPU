@@ -9,10 +9,10 @@
 
 |Status|Function|
 |----|----|
-|1|Basic Flow|
-|0|Stall Control|
-|0|Memory Control|
-|1|Data Forward|
+|2|Basic Flow|
+|2|Stall Control|
+|2|Memory Control|
+|3|Data Forward|
 |0|Cache|
 
 ## Instruction Progress
@@ -23,24 +23,24 @@
 
 |Status|Instruction|
 |----|----|
-|0|LUI|
-|0|AUIPC|
-|0|JAL|
-|0|JALR|
-|0|BEQ|
-|0|BNE|
-|0|BLT|
-|0|BGE|
-|0|BLTU|
-|0|BGEU|
-|0|LB|
-|0|LH|
-|0|LW|
-|0|LBU|
-|0|LHU|
-|0|SB|
-|0|SH|
-|0|SW|
+|2|LUI|
+|1|AUIPC|
+|1|JAL|
+|1|JALR|
+|1|BEQ|
+|1|BNE|
+|1|BLT|
+|1|BGE|
+|1|BLTU|
+|1|BGEU|
+|1|LB|
+|1|LH|
+|1|LW|
+|1|LBU|
+|1|LHU|
+|1|SB|
+|1|SH|
+|1|SW|
 |2|ADDI|
 |2|SLTI|
 |2|SLTIU|
@@ -77,3 +77,5 @@
 + 2019.11.23 Add JUMP and BRANCH (not pass compilation)
 + 2019.11.23 Add ctrl_stall (not pass compilation)
 + 2019.11.25 Add MEM (not pass compilation)
++ 2019.11.25 IF pass simple test
++ 2019.11.25 JAL seems passed
