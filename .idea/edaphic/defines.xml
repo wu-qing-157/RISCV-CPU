@@ -1326,6 +1326,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/stage_id.v" />
             </set>
           </value>
@@ -1334,6 +1335,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/stage_id.v" />
             </set>
           </value>
@@ -1342,6 +1344,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_id.v" />
             </set>
           </value>
         </entry>
@@ -1349,6 +1352,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_id.v" />
             </set>
           </value>
         </entry>
@@ -1356,6 +1360,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_id.v" />
             </set>
           </value>
         </entry>
@@ -1370,6 +1375,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_id.v" />
             </set>
           </value>
         </entry>
@@ -1377,6 +1383,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_id.v" />
             </set>
           </value>
         </entry>
@@ -1384,6 +1391,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_id.v" />
             </set>
           </value>
         </entry>
@@ -1401,6 +1409,13 @@
             </set>
           </value>
         </entry>
+        <entry key="AluOpIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="AluSelBus">
           <value>
             <set>
@@ -1412,6 +1427,105 @@
               <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
               <option value="$PROJECT_DIR$/src/stage_ex.v" />
               <option value="$PROJECT_DIR$/src/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Alul">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AlulIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="B">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Bus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="By">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ByBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Byt">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BytBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BytIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Byte">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ByteBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ByteIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -1429,11 +1543,32 @@
             </set>
           </value>
         </entry>
+        <entry key="D">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="DEFINE_V">
           <value>
             <set>
               <option value="/define.v" />
               <option value="$PROJECT_DIR$/src/define.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="DIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Da">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -1616,11 +1751,26 @@
             </set>
           </value>
         </entry>
+        <entry key="G">
+          <value>
+            <set>
+              <option value="/stage_ex.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="GIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_ex.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="I">
           <value>
             <set>
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
@@ -1635,8 +1785,9 @@
         <entry key="IIntellijIdeaRulezzz">
           <value>
             <set>
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
@@ -1651,24 +1802,27 @@
         <entry key="In">
           <value>
             <set>
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
         <entry key="Ins">
           <value>
             <set>
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
         <entry key="InsIntellijIdeaRulezzz">
           <value>
             <set>
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
@@ -1720,9 +1874,13 @@
         <entry key="IntellijIdeaRulezzz">
           <value>
             <set>
-              <option value="/stage_ex.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_id_ex.v" />
+              <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
@@ -1730,8 +1888,29 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/reg_pc.v" />
+              <option value="/stage_ex.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MA">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MAIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
             </set>
           </value>
         </entry>
@@ -1742,12 +1921,49 @@
             </set>
           </value>
         </entry>
+        <entry key="MBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MD">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/pipe_ex_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MDB">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/pipe_ex_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MDBIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/pipe_ex_mem.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="MIntellijIdeaRulezzz">
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/reg_pc.v" />
+              <option value="/stage_ex.v" />
+              <option value="/stage_if.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
@@ -1755,8 +1971,14 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/reg_pc.v" />
+              <option value="/stage_ex.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
@@ -1767,10 +1989,18 @@
             </set>
           </value>
         </entry>
+        <entry key="MeBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="MeIntellijIdeaRulezzz">
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/pipe_id_ex.v" />
             </set>
           </value>
         </entry>
@@ -1778,8 +2008,133 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/reg_pc.v" />
+              <option value="/stage_ex.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemA">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemABus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAD">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemADIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemADd">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemADdIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAd">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAdBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAdIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAdd">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAddBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAddr">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAddrB">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAddrBu">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -1787,73 +2142,226 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
               <option value="/pipe_if_id.v" />
               <option value="/reg_pc.v" />
+              <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
               <option value="/stage_if.v" />
+              <option value="/stage_mem.v" />
               <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
               <option value="$PROJECT_DIR$/src/fake_mem_if.v" />
               <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
               <option value="$PROJECT_DIR$/src/reg_pc.v" />
+              <option value="$PROJECT_DIR$/src/stage_ex.v" />
               <option value="$PROJECT_DIR$/src/stage_id.v" />
               <option value="$PROJECT_DIR$/src/stage_if.v" />
+              <option value="$PROJECT_DIR$/src/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemAddrIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemD">
           <value>
             <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemDa">
           <value>
             <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDaBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemDaIntellijIdeaRulezzz">
           <value>
             <set>
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDar">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDara">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDaraIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemDat">
           <value>
             <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDatBus">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDatIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemData">
           <value>
             <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemDataB">
           <value>
             <set>
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDataBIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemDataBu">
           <value>
             <set>
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemDataBus">
           <value>
             <set>
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/stage_mem.v" />
+              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
+              <option value="$PROJECT_DIR$/src/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDataIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDataW">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDataWi">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDataWid">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDataWidt">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemDataWidth">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -1861,8 +2369,76 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/fake_mem_if.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/reg_pc.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Mema">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemaIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Memad">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Memadd">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MemaddIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Mw">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MwIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Mwm">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MwmIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -1885,10 +2461,13 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/reg_file.v" />
               <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
@@ -1910,6 +2489,20 @@
           <value>
             <set>
               <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RB">
+          <value>
+            <set>
+              <option value="/pipe_id_ex.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RBIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/pipe_id_ex.v" />
             </set>
           </value>
         </entry>
@@ -1960,38 +2553,53 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/reg_file.v" />
               <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="Re">
           <value>
             <set>
-              <option value="/stage_ex.v" />
-              <option value="/pipe_ex_mem.v" />
               <option value="/cpu.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_id_ex.v" />
+              <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ReIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/stage_ex.v" />
             </set>
           </value>
         </entry>
         <entry key="Reg">
           <value>
             <set>
-              <option value="/stage_ex.v" />
-              <option value="/pipe_ex_mem.v" />
               <option value="/cpu.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_id_ex.v" />
+              <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="RegA">
           <value>
             <set>
-              <option value="/pipe_ex_mem.v" />
               <option value="/cpu.v" />
+              <option value="/pipe_ex_mem.v" />
               <option value="/stage_id.v" />
             </set>
           </value>
@@ -2051,8 +2659,10 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
@@ -2060,12 +2670,21 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="RegBuIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RegBua">
           <value>
             <set>
               <option value="/cpu.v" />
@@ -2094,12 +2713,23 @@
             </set>
           </value>
         </entry>
+        <entry key="RegBusIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+              <option value="/pipe_id_ex.v" />
+              <option value="/stage_ex.v" />
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="RegIntellijIdeaRulezzz">
           <value>
             <set>
-              <option value="/stage_ex.v" />
-              <option value="/pipe_ex_mem.v" />
               <option value="/cpu.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/stage_ex.v" />
+              <option value="/stage_id.v" />
             </set>
           </value>
         </entry>
@@ -2188,6 +2818,34 @@
             </set>
           </value>
         </entry>
+        <entry key="Reh">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RehB">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RehBu">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RehIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="d">
           <value>
             <set>
@@ -2240,11 +2898,12 @@
         <entry key="i">
           <value>
             <set>
-              <option value="/pipe_ex_mem.v" />
-              <option value="/stage_mem.v" />
-              <option value="/pipe_mem_wb.v" />
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_mem_wb.v" />
+              <option value="/stage_mem.v" />
               <option value="/test1.v" />
             </set>
           </value>
@@ -2252,11 +2911,12 @@
         <entry key="iIntellijIdeaRulezzz">
           <value>
             <set>
-              <option value="/pipe_ex_mem.v" />
-              <option value="/stage_mem.v" />
-              <option value="/pipe_mem_wb.v" />
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_mem_wb.v" />
+              <option value="/stage_mem.v" />
               <option value="/test1.v" />
             </set>
           </value>
@@ -2264,11 +2924,12 @@
         <entry key="in">
           <value>
             <set>
-              <option value="/pipe_ex_mem.v" />
-              <option value="/stage_mem.v" />
-              <option value="/pipe_mem_wb.v" />
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_mem_wb.v" />
+              <option value="/stage_mem.v" />
               <option value="/test1.v" />
             </set>
           </value>
@@ -2276,18 +2937,19 @@
         <entry key="inIntellijIdeaRulezzz">
           <value>
             <set>
-              <option value="/pipe_ex_mem.v" />
               <option value="/cpu.v" />
+              <option value="/pipe_ex_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="inc">
           <value>
             <set>
-              <option value="/stage_mem.v" />
-              <option value="/pipe_mem_wb.v" />
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_mem_wb.v" />
+              <option value="/stage_mem.v" />
               <option value="/test1.v" />
             </set>
           </value>
@@ -2302,10 +2964,11 @@
         <entry key="incl">
           <value>
             <set>
-              <option value="/stage_mem.v" />
-              <option value="/pipe_mem_wb.v" />
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_mem_wb.v" />
+              <option value="/stage_mem.v" />
               <option value="/test1.v" />
             </set>
           </value>
@@ -2320,10 +2983,11 @@
         <entry key="inclu">
           <value>
             <set>
-              <option value="/stage_mem.v" />
-              <option value="/pipe_mem_wb.v" />
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_mem_wb.v" />
+              <option value="/stage_mem.v" />
               <option value="/test1.v" />
             </set>
           </value>
@@ -2338,10 +3002,11 @@
         <entry key="includ">
           <value>
             <set>
-              <option value="/stage_mem.v" />
-              <option value="/pipe_mem_wb.v" />
-              <option value="/fake_mem_if.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_mem_wb.v" />
+              <option value="/stage_mem.v" />
               <option value="/test1.v" />
             </set>
           </value>
@@ -2423,10 +3088,94 @@
             </set>
           </value>
         </entry>
+        <entry key="m">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="mIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="o">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="oIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ou">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="output">
           <value>
             <set>
               <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="r">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="re">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="res">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="rese">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="reset">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="reseta">
+          <value>
+            <set>
+              <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="resetal">
+          <value>
+            <set>
+              <option value="/cpu.v" />
             </set>
           </value>
         </entry>

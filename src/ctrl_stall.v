@@ -1,6 +1,6 @@
 `include "define.v"
 
-module stall_ctrl(
+module ctrl_stall(
     input wire reset,
     input wire stall_if,
     input wire stall_id,

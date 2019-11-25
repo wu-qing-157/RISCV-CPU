@@ -4,6 +4,8 @@ module pipe_mem_wb(
     input wire clock,
     input wire reset,
 
+    input wire [5:0] stall,
+
     input wire write_i,
     input wire [`RegAddrBus] regw_addr_i,
     input wire [`RegBus] regw_data_i,
@@ -14,11 +16,11 @@ module pipe_mem_wb(
 );
 
     always @(posedge clock) begin
-        if (reset) begin
+        if (reset && (stall[4] && !stall[5])) begin
             write_o <= 0;
             regw_addr_o <= 0;
             regw_data_o <= 0;
-        end else begin
+        end else if (!stall[4]) begin
             write_o <= write_i;
             regw_addr_o <= regw_addr_i;
             regw_data_o <= regw_data_i;

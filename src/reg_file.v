@@ -20,6 +20,7 @@ module reg_file(
     reg [`RegBus] regs [`RegNum-1:0];
 
     initial begin
+        // TODO for difficulties when making test data
         regs[0] <= 0;
         regs[1] <= 0;
         regs[2] <= 0;
