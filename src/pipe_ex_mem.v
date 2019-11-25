@@ -35,7 +35,7 @@ module pipe_ex_mem(
             mem_write_data_o <= 0;
             mem_length_o <= 0;
             mem_signed_o <= 0;
-        end else if (!stall[3]) begin
+        end else if (!stall[3] && !stall[4]) begin
             write_o <= write_i;
             regw_addr_o <= regw_addr_i;
             regw_data_o <= regw_data_i;

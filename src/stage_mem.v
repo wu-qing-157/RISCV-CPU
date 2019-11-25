@@ -47,6 +47,7 @@ module stage_mem(
             regw_data_o = 0;
         end else if (load) begin
             if (ram_ready) begin
+                stall_mem = 0;
                 regw_data_o = ram_data_i;
             end else begin
                 stall_mem = 1;
@@ -61,6 +62,7 @@ module stage_mem(
             if (ram_busy) begin
                 stall_mem = 1;
             end else begin
+                stall_mem = 0;
                 ram_write = 1;
                 ram_addr = addr;
                 ram_data_o = data;

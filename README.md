@@ -79,3 +79,4 @@
 + 2019.11.25 Add MEM (not pass compilation)
 + 2019.11.25 IF pass simple test
 + 2019.11.25 JAL seems passed
++ 2019.11.25 Single LOAD seems passed

@@ -2884,6 +2884,9 @@
           <value>
             <set>
               <option value="/ctrl_stall.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/pipe_id_ex.v" />
+              <option value="/pipe_if_id.v" />
               <option value="/reg_pc.v" />
               <option value="$PROJECT_DIR$/src/ctrl_stall.v" />
               <option value="$PROJECT_DIR$/src/pipe_ex_mem.v" />

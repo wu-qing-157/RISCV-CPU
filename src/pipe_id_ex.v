@@ -35,7 +35,7 @@ module pipe_id_ex(
             write_o <= 0;
             regw_addr_o <= 0;
             mem_offset_o <= 0;
-        end else if (!stall[2]) begin
+        end else if (!stall[2] && !stall[3]) begin
             alusel_o <= alusel_i;
             aluop_o <= aluop_i;
             op1_o <= op1_i;

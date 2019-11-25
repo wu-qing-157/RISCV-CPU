@@ -20,7 +20,7 @@ module pipe_mem_wb(
             write_o <= 0;
             regw_addr_o <= 0;
             regw_data_o <= 0;
-        end else if (!stall[4]) begin
+        end else if (!stall[4] && !stall[5]) begin
             write_o <= write_i;
             regw_addr_o <= regw_addr_i;
             regw_data_o <= regw_data_i;

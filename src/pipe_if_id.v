@@ -17,7 +17,7 @@ module pipe_if_id(
         if (reset || (stall[1] && !stall[2])) begin
             pc_o <= 0;
             inst_o <= 0;
-        end else if (!stall[1]) begin
+        end else if (!stall[1] && !stall[2]) begin
             pc_o <= pc_i;
             inst_o <= inst_i;
         end
