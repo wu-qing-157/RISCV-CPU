@@ -7,7 +7,7 @@ module ctrl_stall(
     input wire stall_ex,
     input wire stall_mem,
 
-    output reg [5:0] stall
+    output reg [`StallBus] stall
 );
 
     always @(*) begin

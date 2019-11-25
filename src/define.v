@@ -118,4 +118,6 @@
 `define DataMemNum      131072
 `define DataMemNumLog2  17
 
+`define StallBus        5:0
+
 `endif // DEFINE_V

@@ -20,8 +20,8 @@ module stage_mem(
     output reg [2:0] ram_length,
     output reg ram_signed,
 
-    output wire ram_read,
-    output wire ram_write,
+    output reg ram_read,
+    output reg ram_write,
 
     input wire write_i,
     input wire [`RegAddrBus] regw_addr_i,
@@ -32,40 +32,45 @@ module stage_mem(
     output reg [`RegBus] regw_data_o
 );
 
+    initial begin
+        ram_read = 0;
+        ram_write = 0;
+    end
+
     always @(*) begin
         ram_read = 0;
-        mem_write = 0;
+        ram_write = 0;
         if (reset) begin
-            stall_mem <= 0;
-            write_o <= 0;
-            regw_addr_o <= 0;
-            regw_data_o <= 0;
+            stall_mem = 0;
+            write_o = 0;
+            regw_addr_o = 0;
+            regw_data_o = 0;
         end else if (load) begin
             if (ram_ready) begin
-                regw_data_o <= ram_data_i;
+                regw_data_o = ram_data_i;
             end else begin
-                stall_mem <= 1;
+                stall_mem = 1;
                 if (!ram_busy) begin
-                    ram_read <= 1;
-                    ram_addr_o <= addr;
-                    ram_length <= length;
-                    ram_signed <= signed_;
+                    ram_read = 1;
+                    ram_addr = addr;
+                    ram_length = length;
+                    ram_signed = signed_;
                 end
             end
         end else if (store) begin
             if (ram_busy) begin
-                stall_mem <= 1;
+                stall_mem = 1;
             end else begin
-                ram_write <= 1;
-                ram_addr_o <= addr;
-                ram_data_o <= data;
-                ram_length <= length;
+                ram_write = 1;
+                ram_addr = addr;
+                ram_data_o = data;
+                ram_length = length;
             end
         end else begin
-            write_o <= write_i;
-            regw_addr_o <= regw_addr_i;
-            regw_data_o <= regw_data_i;
+            write_o = write_i;
+            regw_addr_o = regw_addr_i;
+            regw_data_o = regw_data_i;
         end
     end
 
-endmodule: stage_mem
+endmodule

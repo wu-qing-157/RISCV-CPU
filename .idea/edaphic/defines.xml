@@ -1105,6 +1105,17 @@
                   </list>
                 </value>
               </entry>
+              <entry key="StallBus">
+                <value>
+                  <list>
+                    <Body>
+                      <option name="offset" value="2881" />
+                      <option name="replacementList" value="5:0" />
+                      <option name="source" value="$PROJECT_DIR$/src/define.v" />
+                    </Body>
+                  </list>
+                </value>
+              </entry>
             </map>
           </value>
         </entry>
@@ -1830,6 +1841,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
@@ -1845,6 +1857,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
@@ -1852,6 +1865,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
@@ -1904,6 +1918,21 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/stage_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MAB">
+          <value>
+            <set>
+              <option value="/stage_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MABIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
@@ -2093,8 +2122,8 @@
         <entry key="MemAdIntellijIdeaRulezzz">
           <value>
             <set>
-              <option value="/ctrl_mem.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -2230,8 +2259,8 @@
         <entry key="MemDar">
           <value>
             <set>
-              <option value="/ctrl_mem.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -2317,7 +2346,9 @@
               <option value="/fake_mem_if.v" />
               <option value="/pipe_ex_mem.v" />
               <option value="/stage_mem.v" />
+              <option value="$PROJECT_DIR$/src/cpu.v" />
               <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
+              <option value="$PROJECT_DIR$/src/pipe_ex_mem.v" />
               <option value="$PROJECT_DIR$/src/stage_mem.v" />
             </set>
           </value>
@@ -2325,8 +2356,8 @@
         <entry key="MemDataIntellijIdeaRulezzz">
           <value>
             <set>
-              <option value="/ctrl_mem.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -2843,6 +2874,19 @@
           <value>
             <set>
               <option value="/cpu.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="StallBus">
+          <value>
+            <set>
+              <option value="/ctrl_stall.v" />
+              <option value="/reg_pc.v" />
+              <option value="$PROJECT_DIR$/src/ctrl_stall.v" />
+              <option value="$PROJECT_DIR$/src/pipe_ex_mem.v" />
+              <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
+              <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
+              <option value="$PROJECT_DIR$/src/reg_pc.v" />
             </set>
           </value>
         </entry>

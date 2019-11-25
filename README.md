@@ -76,4 +76,4 @@
 + 2019.11.23 OP_OP and OP_IMM (pass test)
 + 2019.11.23 Add JUMP and BRANCH (not pass compilation)
 + 2019.11.23 Add ctrl_stall (not pass compilation)
-
++ 2019.11.25 Add MEM (not pass compilation)

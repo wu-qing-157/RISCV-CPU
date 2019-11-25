@@ -1,5 +1,6 @@
 `include "define.v"
 `include "ctrl_stall.v"
+`include "ctrl_mem.v"
 `include "stage_if.v"
 `include "stage_id.v"
 `include "stage_ex.v"
@@ -10,7 +11,6 @@
 `include "pipe_id_ex.v"
 `include "pipe_ex_mem.v"
 `include "pipe_mem_wb.v"
-`include "fake_mem_if.v"
 
 // RISCV32I CPU top module
 // port modification allowed for debugging purposes
@@ -61,6 +61,7 @@ module cpu(
     wire [`MemDataBus] ram_mem_data_o;
 
     ctrl_mem ctrl_mem_(
+        .clock(clk_in), .reset(rst_in),
         .ram_rw(mem_wr), .ram_addr(mem_a), .ram_w_data(mem_dout), .ram_r_data(mem_din),
         .busy(ram_busy),
         .if_read(ram_if_read), .if_addr_i(ram_if_addr_i),
@@ -86,6 +87,7 @@ module cpu(
     stage_if stage_if_(
         .reset(rst_in), .stall_if(stall_if),
         .pc_i(reg_if_pc), .pc_o(if_pc_o), .inst_o(if_inst_o),
+        .br(br), .br_addr(br_addr),
         .ram_busy(ram_busy), .ram_ready(ram_if_ready),
         .ram_addr_i(ram_if_addr_o), .ram_data_i(ram_if_data_o),
         .ram_read(ram_if_read), .ram_addr_o(ram_if_addr_i)
@@ -160,14 +162,6 @@ module cpu(
     wire mem_write_o;
     wire [`RegAddrBus] mem_regw_addr_o;
     wire [`RegBus] mem_regw_data_o;
-    wire mem_ram_busy;
-    wire mem_ram_ready;
-    wire [`MemDataBus] mem_ram_data_i;
-    wire mem_ram_read, mem_ram_write;
-    wire [`MemAddrBus] mem_ram_addr;
-    wire [`MemDataBus] mem_ram_data_o;
-    wire [2:0] mem_ram_length;
-    wire mem_ram_signed;
 
     pipe_ex_mem pipe_ex_mem_(
         .clock(clk_in), .reset(rst_in), .stall(stall),
@@ -186,9 +180,9 @@ module cpu(
         .addr(mem_regw_data_i), .load(mem_load), .store(mem_store), .data(mem_data),
         .length(mem_length), .signed_(mem_signed),
         .write_o(mem_write_o), .regw_addr_o(mem_regw_addr_o), .regw_data_o(mem_regw_data_o),
-        .ram_busy(mem_ram_busy), .ram_ready(mem_ram_ready), .ram_data_i(mem_ram_data_i),
-        .ram_read(mem_ram_read), .ram_write(mem_ram_write), .ram_addr(mem_ram_addr),
-        .ram_data_o(mem_ram_data_o), .ram_length(mem_ram_length), .ram_signed(mem_ram_signed)
+        .ram_busy(ram_busy), .ram_ready(ram_mem_ready), .ram_data_i(ram_mem_data_o),
+        .ram_read(ram_mem_read), .ram_write(ram_mem_write), .ram_addr(ram_mem_addr),
+        .ram_data_o(ram_mem_data_i), .ram_length(ram_mem_length), .ram_signed(ram_mem_signed)
     );
 
     stage_id stage_id_(
@@ -222,4 +216,4 @@ module cpu(
         .read2(id_read2), .reg2_addr(id_reg2_addr), .reg2_data(id_reg2_data)
     );
 
-endmodule: cpu
+endmodule

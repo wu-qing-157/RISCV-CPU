@@ -4,7 +4,7 @@ module pipe_ex_mem(
     input wire clock,
     input wire reset,
 
-    input wire [5:0] stall,
+    input wire [`StallBus] stall,
 
     input wire write_i,
     input wire [`RegAddrBus] regw_addr_i,
