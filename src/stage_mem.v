@@ -38,8 +38,6 @@ module stage_mem(
     end
 
     always @(*) begin
-        ram_read = 0;
-        ram_write = 0;
         write_o = write_i;
         regw_addr_o = regw_addr_i;
         if (reset) begin
@@ -51,6 +49,7 @@ module stage_mem(
             if (ram_ready) begin
                 stall_mem = 0;
                 regw_data_o = ram_data_i;
+                ram_read = 0;
             end else begin
                 stall_mem = 1;
                 if (!ram_busy) begin
@@ -61,14 +60,17 @@ module stage_mem(
                 end
             end
         end else if (store) begin
-            if (ram_busy) begin
-                stall_mem = 1;
-            end else begin
+            if (ram_ready) begin
                 stall_mem = 0;
-                ram_write = 1;
-                ram_addr = addr;
-                ram_data_o = data;
-                ram_length = length;
+                ram_write = 0;
+            end else begin
+                stall_mem = 1;
+                if (!ram_busy) begin
+                    ram_write = 1;
+                    ram_addr = addr;
+                    ram_length = length;
+                    ram_data_o = data;
+                end
             end
         end else begin
             regw_data_o = regw_data_i;

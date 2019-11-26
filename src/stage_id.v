@@ -42,6 +42,9 @@ module stage_id(
     wire [2:0] funct3 = inst[14:12];
     wire [6:0] funct7 = inst[31:25];
     wire [31:0] I_imm = {{20{inst[31]}}, inst[31:20]};
+    // 1018: 00000000_00000000_10000000_01100111
+    // 4:    01111111_11010000_00000000_11101111
+    // 8:    00001111_11110000_00000101_00010011
     wire [31:0] S_imm = {{20{inst[31]}}, inst[31:25], inst[11:7]};
     wire [31:0] B_imm = {{20{inst[31]}}, inst[7], inst[30:25], inst[11:8], 1'b0};
     wire [31:0] U_imm = {inst[31:12], 12'b0};
@@ -84,6 +87,7 @@ module stage_id(
                 end // JAL
                 7'b1100111: begin
                     alusel = 3'b110;
+                    read1 = 1; reg1_addr = rs;
                     write = 1; regw_addr = rd;
                     br = 1; br_addr = reg1_data+I_imm; link_addr = pc+4;
                 end // JALR

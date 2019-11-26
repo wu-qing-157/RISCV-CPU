@@ -80,3 +80,5 @@
 + 2019.11.25 Single LOAD seems passed
 + 2019.11.26 Fix Data Forward with stall_mem
 + 2019.11.26 BRANCH with stall_id & stall_mem seems passed
++ 2019.11.26 Reconstruct ctrl_mem (untested)
++ 2019.11.26 Trivial Test pass

@@ -22,7 +22,7 @@ module reg_file(
 
     initial begin
         // TODO for difficulties when making test data
-        for (i = 0; i < 32; i = i + 1) regs[i] <= 0;
+        for (i = 0; i < 32; i = i+1) regs[i] <= 0;
     end
 
     always @(posedge clock) begin

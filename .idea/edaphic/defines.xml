@@ -1497,6 +1497,13 @@
             </set>
           </value>
         </entry>
+        <entry key="Bys">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="Byt">
           <value>
             <set>
@@ -1918,6 +1925,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/stage_if.v" />
             </set>
           </value>
@@ -1940,6 +1948,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -1961,6 +1970,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/pipe_ex_mem.v" />
             </set>
           </value>
@@ -1978,6 +1988,20 @@
             <set>
               <option value="/cpu.v" />
               <option value="/pipe_ex_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MDW">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MDWIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -2943,6 +2967,69 @@
           <value>
             <set>
               <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="V">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="VIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Vy">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="VyIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Vyt">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="VytIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Vyte">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="W">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="WIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/ctrl_mem.v" />
             </set>
           </value>
         </entry>
