@@ -90,13 +90,13 @@ module stage_ex(
                     load = 1; mem_length = 2; mem_signed = 0;
                 end // LHU
                 5: begin
-                    store = 1; mem_length = 1; mem_write_data = op1;
+                    store = 1; mem_length = 1; mem_write_data = op2;
                 end // SB
                 6: begin
-                    store = 1; mem_length = 2; mem_write_data = op1;
+                    store = 1; mem_length = 2; mem_write_data = op2;
                 end
                 7: begin
-                    store = 1; mem_length = 4; mem_write_data = op1;
+                    store = 1; mem_length = 4; mem_write_data = op2;
                 end
             endcase
             mem_ret = op1+mem_offset;

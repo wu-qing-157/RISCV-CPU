@@ -4,6 +4,7 @@ module stage_id(
     input wire reset,
 
     output reg stall_id,
+    input wire [`StallBus] stall,
 
     input wire [`MemAddrBus] pc,
     input wire [`InstBus] inst,
@@ -324,9 +325,17 @@ module stage_id(
         end else if (ex_load && ex_regw_addr == reg2_addr) begin
             stall_id = 1;
         end else if (ex_write && ex_regw_addr == reg2_addr) begin
-            op2 = ex_regw_data;
+            if (stall[3]) begin
+                stall_id = 1;
+            end else begin
+                op2 = ex_regw_data;
+            end
         end else if (mem_write && mem_regw_addr == reg2_addr) begin
-            op2 = mem_regw_data;
+            if (stall[4]) begin
+                stall_id = 1;
+            end else begin
+                op2 = mem_regw_data;
+            end
         end else begin
             op2 = reg2_data;
         end

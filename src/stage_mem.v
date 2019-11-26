@@ -40,6 +40,8 @@ module stage_mem(
     always @(*) begin
         ram_read = 0;
         ram_write = 0;
+        write_o = write_i;
+        regw_addr_o = regw_addr_i;
         if (reset) begin
             stall_mem = 0;
             write_o = 0;
@@ -69,8 +71,6 @@ module stage_mem(
                 ram_length = length;
             end
         end else begin
-            write_o = write_i;
-            regw_addr_o = regw_addr_i;
             regw_data_o = regw_data_i;
         end
     end

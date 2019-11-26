@@ -2880,6 +2880,48 @@
             </set>
           </value>
         </entry>
+        <entry key="S">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="St">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Sta">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Stal">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Stall">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+            </set>
+          </value>
+        </entry>
         <entry key="StallBus">
           <value>
             <set>
@@ -2888,11 +2930,19 @@
               <option value="/pipe_id_ex.v" />
               <option value="/pipe_if_id.v" />
               <option value="/reg_pc.v" />
+              <option value="/stage_id.v" />
               <option value="$PROJECT_DIR$/src/ctrl_stall.v" />
               <option value="$PROJECT_DIR$/src/pipe_ex_mem.v" />
               <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
               <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
               <option value="$PROJECT_DIR$/src/reg_pc.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="StallIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
             </set>
           </value>
         </entry>
