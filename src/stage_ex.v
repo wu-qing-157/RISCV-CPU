@@ -94,10 +94,10 @@ module stage_ex(
                 end // SB
                 6: begin
                     store = 1; mem_length = 2; mem_write_data = op2;
-                end
+                end // SH
                 7: begin
                     store = 1; mem_length = 4; mem_write_data = op2;
-                end
+                end // SW
             endcase
             mem_ret = op1+mem_offset;
         end

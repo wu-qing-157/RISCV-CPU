@@ -42,9 +42,6 @@ module stage_id(
     wire [2:0] funct3 = inst[14:12];
     wire [6:0] funct7 = inst[31:25];
     wire [31:0] I_imm = {{20{inst[31]}}, inst[31:20]};
-    // 1018: 00000000_00000000_10000000_01100111
-    // 4:    01111111_11010000_00000000_11101111
-    // 8:    00001111_11110000_00000101_00010011
     wire [31:0] S_imm = {{20{inst[31]}}, inst[31:25], inst[11:7]};
     wire [31:0] B_imm = {{20{inst[31]}}, inst[7], inst[30:25], inst[11:8], 1'b0};
     wire [31:0] U_imm = {inst[31:12], 12'b0};
@@ -61,6 +58,7 @@ module stage_id(
     end
 
     always @(*) begin
+        op1 = 0; op2 = 0;
         alusel = 3'b000; aluop = 0;
         read1 = 0; reg1_addr = 0; imm1 = 0;
         read2 = 0; reg2_addr = 0; imm2 = 0;
@@ -89,7 +87,7 @@ module stage_id(
                     alusel = 3'b110;
                     read1 = 1; reg1_addr = rs;
                     write = 1; regw_addr = rd;
-                    br = 1; br_addr = reg1_data+I_imm; link_addr = pc+4;
+                    br = 1; br_addr = (reg1_data+I_imm) & ~1; link_addr = pc+4;
                 end // JALR
                 7'b1100011: begin
                     case (funct3)
@@ -121,18 +119,18 @@ module stage_id(
                             alusel = 3'b110;
                             read1 = 1; reg1_addr = rs;
                             read2 = 1; reg2_addr = rt;
-                            if (reg1_data < reg2_data) begin
-                                br = 1; br_addr = pc+B_imm;
-                            end
-                        end // BLTU
-                        3'b110: begin
-                            alusel = 3'b110;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
                             if ($signed(reg1_data) >= $signed(reg2_data)) begin
                                 br = 1; br_addr = pc+B_imm;
                             end
                         end // BGE
+                        3'b110: begin
+                            alusel = 3'b110;
+                            read1 = 1; reg1_addr = rs;
+                            read2 = 1; reg2_addr = rt;
+                            if (reg1_data < reg2_data) begin
+                                br = 1; br_addr = pc+B_imm;
+                            end
+                        end // BLTU
                         3'b111: begin
                             alusel = 3'b110;
                             read1 = 1; reg1_addr = rs;
@@ -168,137 +166,48 @@ module stage_id(
                     endcase
                 end // STORE
                 7'b0010011: begin
+                    read1 = 1; reg1_addr = rs;
+                    imm2 = I_imm;
+                    write = 1; regw_addr = rd;
                     case (funct3)
-                        3'b000: begin
-                            alusel = 3'b100; aluop = 0;
-                            read1 = 1; reg1_addr = rs;
-                            imm2 = I_imm;
-                            write = 1; regw_addr = rd;
-                        end // ADDI
-                        3'b010: begin
-                            alusel = 3'b100; aluop = 2;
-                            read1 = 1; reg1_addr = rs;
-                            imm2 = I_imm;
-                            write = 1; regw_addr = rd;
-                        end // SLTI
-                        3'b011: begin
-                            alusel = 3'b100; aluop = 3;
-                            read1 = 1; reg1_addr = rs;
-                            imm2 = I_imm;
-                            write = 1; regw_addr = rd;
-                        end // SLTIU
-                        3'b100: begin
-                            alusel = 3'b001; aluop = 2;
-                            read1 = 1; reg1_addr = rs;
-                            imm2 = I_imm;
-                            write = 1; regw_addr = rd;
-                        end // XORI
-                        3'b110: begin
-                            alusel = 3'b001; aluop = 0;
-                            read1 = 1; reg1_addr = rs;
-                            imm2 = I_imm;
-                            write = 1; regw_addr = rd;
-                        end // ORI
-                        3'b111: begin
-                            alusel = 3'b001; aluop = 1;
-                            read1 = 1; reg1_addr = rs;
-                            imm2 = I_imm;
-                            write = 1; regw_addr = rd;
-                        end // ANDI
-                        3'b001: begin
-                            alusel = 3'b010; aluop = 0;
-                            read1 = 1; reg1_addr = rs;
-                            imm2 = {20'b0, rt};
-                            write = 1; regw_addr = rd;
-                        end // SLLI
+                        3'b000: begin alusel = 3'b100; aluop = 0; end // ADDI
+                        3'b010: begin alusel = 3'b100; aluop = 2; end // SLTI
+                        3'b011: begin alusel = 3'b100; aluop = 3; end // SLTIU
+                        3'b100: begin alusel = 3'b001; aluop = 2; end // XORI
+                        3'b110: begin alusel = 3'b001; aluop = 0; end // ORI
+                        3'b111: begin alusel = 3'b001; aluop = 1; end // ANDI
+                        3'b001: begin alusel = 3'b010; aluop = 0; end // SLLI
                         3'b101: begin
                             case (funct7)
-                                7'b0000000: begin
-                                    alusel = 3'b010; aluop = 1;
-                                    read1 = 1; reg1_addr = rs;
-                                    imm2 = {20'b0, rt};
-                                    write = 1; regw_addr = rd;
-                                end // SRLI
-                                7'b0100000: begin
-                                    alusel = 3'b010; aluop = 2;
-                                    read1 = 1; reg1_addr = rs;
-                                    imm2 = {20'b0, rt};
-                                    write = 1; regw_addr = rd;
-                                end // SRAI
+                                7'b0000000: begin alusel = 3'b010; aluop = 1; end // SRLI
+                                7'b0100000: begin alusel = 3'b010; aluop = 2; end // SRAI
                             endcase
                         end // SRLI & SRAI
                     endcase
                 end // OP_IMM
                 7'b0110011: begin
+                    read1 = 1; reg1_addr = rs;
+                    read2 = 1; reg2_addr = rt;
+                    write = 1; regw_addr = rd;
                     case (funct3)
                         3'b000: begin
                             case (funct7)
-                                7'b0000000: begin
-                                    alusel = 3'b100; aluop = 0;
-                                    read1 = 1; reg1_addr = rs;
-                                    read2 = 1; reg2_addr = rt;
-                                    write = 1; regw_addr = rd;
-                                end // ADD
-                                7'b0100000: begin
-                                    alusel = 3'b100; aluop = 1;
-                                    read1 = 1; reg1_addr = rs;
-                                    read2 = 1; reg2_addr = rt;
-                                    write = 1; regw_addr = rd;
-                                end // SUB
+                                7'b0000000: begin alusel = 3'b100; aluop = 0; end // ADD
+                                7'b0100000: begin alusel = 3'b100; aluop = 1; end // SUB
                             endcase
                         end // ADD & SUB
-                        3'b001: begin
-                            alusel = 3'b010; aluop = 0;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            write = 1; regw_addr = rd;
-                        end // SLL
-                        3'b010: begin
-                            alusel = 3'b100; aluop = 2;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            write = 1; regw_addr = rd;
-                        end // SLT
-                        3'b011: begin
-                            alusel = 3'b100; aluop = 3;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            write = 1; regw_addr = rd;
-                        end // SLTU
-                        3'b100: begin
-                            alusel = 3'b001; aluop = 2;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            write = 1; regw_addr = rd;
-                        end // XOR
+                        3'b001: begin alusel = 3'b010; aluop = 0; end // SLL
+                        3'b010: begin alusel = 3'b100; aluop = 2; end // SLT
+                        3'b011: begin alusel = 3'b100; aluop = 3; end // SLTU
+                        3'b100: begin alusel = 3'b001; aluop = 2; end // XOR
                         3'b101: begin
                             case (funct7)
-                                7'b0000000: begin
-                                    alusel = 3'b010; aluop = 1;
-                                    read1 = 1; reg1_addr = rs;
-                                    read2 = 1; reg2_addr = rt;
-                                    write = 1; regw_addr = rd;
-                                end // SRL
-                                7'b0100000: begin
-                                    alusel = 3'b010; aluop = 1;
-                                    read1 = 1; reg1_addr = rs;
-                                    read2 = 1; reg2_addr = rt;
-                                    write = 1; regw_addr = rd;
-                                end // SRA
+                                7'b0000000: begin alusel = 3'b010; aluop = 1; end // SRL
+                                7'b0100000: begin alusel = 3'b010; aluop = 2; end // SRA
                             endcase
                         end // SRL & SRA
-                        3'b110: begin
-                            alusel = 3'b001; aluop = 0;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            write = 1; regw_addr = rd;
-                        end // OR
-                        3'b111: begin
-                            alusel = 3'b001; aluop = 1;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            write = 1; regw_addr = rd;
-                        end // AND
+                        3'b110: begin alusel = 3'b001; aluop = 0; end // OR
+                        3'b111: begin alusel = 3'b001; aluop = 1; end // AND
                     endcase
                 end // OP_OP
             endcase
@@ -313,9 +222,17 @@ module stage_id(
         end else if (ex_load && ex_regw_addr == reg1_addr) begin
             stall_id = 1;
         end else if (ex_write && ex_regw_addr == reg1_addr) begin
-            op1 = ex_regw_data;
+            if (stall[3]) begin
+                stall_id = 1;
+            end else begin
+                op1 = ex_regw_data;
+            end
         end else if (mem_write && mem_regw_addr == reg1_addr) begin
-            op1 = mem_regw_data;
+            if (stall[4]) begin
+                stall_id = 1;
+            end else begin
+                op1 = mem_regw_data;
+            end
         end else begin
             op1 = reg1_data;
         end

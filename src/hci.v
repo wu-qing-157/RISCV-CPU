@@ -248,6 +248,8 @@ always @*
               d_wr_en = 1'b1;
             end
             $display("IO:Return");
+            $timeformat(-9, 1, "ns", 12);
+            $display("%t", $realtime);
             $finish;
           end
         endcase

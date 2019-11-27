@@ -59,4 +59,4 @@ module stage_if(
         end
     end
 
-endmodule : stage_if
+endmodule

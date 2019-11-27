@@ -9,57 +9,10 @@
 
 |Status|Function|
 |----|----|
-|2|Basic Flow|
-|2|Stall Control|
-|2|Memory Control|
-|3|Data Forward|
+|3|Correct Output|
+|0|5-Circle IF|
 |0|Cache|
-
-## Instruction Progress
-
-+ 0 - Nothing
-+ 1 - Finished
-+ 2 - Tested
-
-|Status|Instruction|
-|----|----|
-|2|LUI|
-|1|AUIPC|
-|1|JAL|
-|1|JALR|
-|1|BEQ|
-|1|BNE|
-|1|BLT|
-|1|BGE|
-|1|BLTU|
-|1|BGEU|
-|1|LB|
-|1|LH|
-|1|LW|
-|1|LBU|
-|1|LHU|
-|1|SB|
-|1|SH|
-|1|SW|
-|2|ADDI|
-|2|SLTI|
-|2|SLTIU|
-|2|XORI|
-|2|ORI|
-|2|ANDI|
-|2|SLLI|
-|2|SRLI|
-|2|SRAI|
-|2|ADD|
-|2|SUB|
-|2|SLL|
-|2|SLT|
-|2|SLTU|
-|2|XOR|
-|2|SRL|
-|2|SRA|
-|2|OR|
-|2|AND|
+|0|Branch Prediction|
 
 ## Timeline
 
@@ -82,3 +35,4 @@
 + 2019.11.26 BRANCH with stall_id & stall_mem seems passed
 + 2019.11.26 Reconstruct ctrl_mem (untested)
 + 2019.11.26 Trivial Test pass
++ 2019.11.27 Pass many tests

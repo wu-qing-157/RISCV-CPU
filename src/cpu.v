@@ -218,4 +218,4 @@ module cpu(
         .read2(id_read2), .reg2_addr(id_reg2_addr), .reg2_data(id_reg2_data)
     );
 
-endmodule : cpu
+endmodule
