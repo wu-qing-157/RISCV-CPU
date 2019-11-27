@@ -82,6 +82,8 @@ module ctrl_mem(
                     if_ready <= 1;
                     if_data <= {ram_r_data, ret[2], ret[1], ret[0]};
                 end
+                if_busy <= 0;
+                mem_busy <= 0;
             end
         end else if (tot && ram_rw) begin
             if (cur == 0) begin
@@ -93,6 +95,7 @@ module ctrl_mem(
             if (cur == tot-1) begin
                 mem_ready <= 1;
                 cur <= 0;
+                if_busy <= 0;
             end else begin
                 cur <= cur+1;
             end
