@@ -6,6 +6,7 @@
       <w>auipc</w>
       <w>bgeu</w>
       <w>bltu</w>
+      <w>fpga</w>
       <w>jalr</w>
       <w>riscv</w>
       <w>slli</w>

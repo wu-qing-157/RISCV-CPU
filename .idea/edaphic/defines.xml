@@ -2622,6 +2622,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/pipe_ex_mem.v" />
               <option value="/pipe_id_ex.v" />
               <option value="/stage_ex.v" />
@@ -2642,6 +2643,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/pipe_ex_mem.v" />
               <option value="/pipe_id_ex.v" />
               <option value="/stage_ex.v" />
@@ -2715,6 +2717,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/pipe_id_ex.v" />
               <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
@@ -2726,6 +2729,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/pipe_id_ex.v" />
               <option value="/stage_ex.v" />
               <option value="/stage_id.v" />
@@ -2751,6 +2755,7 @@
           <value>
             <set>
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
               <option value="/oldreg_file.v" />
               <option value="/pipe_ex_mem.v" />
               <option value="/pipe_id_ex.v" />

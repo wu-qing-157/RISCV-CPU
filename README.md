@@ -10,6 +10,7 @@
 |Status|Function|
 |----|----|
 |3|Correct Output|
+|0|FPGA Correct Output|
 |0|5-Circle IF|
 |0|Cache|
 |0|Branch Prediction|
@@ -36,3 +37,4 @@
 + 2019.11.26 Reconstruct ctrl_mem (untested)
 + 2019.11.26 Trivial Test pass
 + 2019.11.27 Pass many tests
++ 2019.11.28 Fix an issue in IF

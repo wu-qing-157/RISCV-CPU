@@ -22,6 +22,7 @@ module stage_if(
 );
 
     reg complete;
+    reg [`MemAddrBus] pc;
 
     initial begin
         ram_read = 0;
@@ -31,25 +32,22 @@ module stage_if(
         if (reset) begin
             complete = 0;
             pc_o = 0;
-        end else if (br) begin
-            complete = 0;
-            pc_o = br_addr;
-        end else begin
-            complete = 0;
-            pc_o = pc_i;
-        end
-    end
-
-    always @(*) begin
-        stall_if = 0;
-        if (reset || !receiving) begin
             inst_o = 0;
         end else begin
+            if (br) begin
+                pc_o = br_addr;
+                if (pc != pc_o) complete = 0;
+            end else if (receiving) begin
+                pc_o = pc_i;
+                if (pc != pc_o) complete = 0;
+            end
             if (ram_ready) begin
+                pc = pc_o;
                 complete = 1;
+                stall_if = 0;
                 inst_o = ram_data;
                 ram_read = 0;
-            end else if (!complete) begin
+            end else if (receiving && !complete) begin
                 stall_if = 1;
                 if (!ram_busy) begin
                     ram_read = 1;
