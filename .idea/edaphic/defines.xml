@@ -2960,6 +2960,7 @@
               <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
               <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
               <option value="$PROJECT_DIR$/src/reg_pc.v" />
+              <option value="$PROJECT_DIR$/src/stage_id.v" />
             </set>
           </value>
         </entry>

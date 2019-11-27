@@ -58,7 +58,6 @@ module stage_id(
     end
 
     always @(*) begin
-        op1 = 0; op2 = 0;
         alusel = 3'b000; aluop = 0;
         read1 = 0; reg1_addr = 0; imm1 = 0;
         read2 = 0; reg2_addr = 0; imm2 = 0;

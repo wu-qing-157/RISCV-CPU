@@ -28,7 +28,6 @@ module ctrl_mem(
     output reg [`MemDataBus] mem_data_o
 );
 
-    reg writing;
     reg [2:0] cur;
     reg [`ByteBus] ret [2:0];
 
