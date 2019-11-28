@@ -50,6 +50,7 @@ module cpu(
     wire ram_mem_busy;
     wire ram_if_read;
     wire ram_if_ready;
+    wire [2:0] ram_waiting_time;
     wire [`MemAddrBus] ram_if_addr;
     wire [`MemDataBus] ram_if_data;
     wire ram_mem_read, ram_mem_write;
@@ -63,6 +64,7 @@ module cpu(
     ctrl_mem ctrl_mem_(
         .clock(clk_in), .reset(rst_in),
         .ram_rw(mem_wr), .ram_addr(mem_a), .ram_w_data(mem_dout), .ram_r_data(mem_din),
+        .waiting_time(ram_waiting_time),
         .if_busy(ram_if_busy),
         .if_read(ram_if_read), .if_addr(ram_if_addr),
         .if_ready(ram_if_ready), .if_data(ram_if_data),
@@ -90,7 +92,7 @@ module cpu(
         .reset(rst_in), .stall_if(stall_if),
         .receiving(reg_if), .pc_i(reg_if_pc), .pc_o(if_pc_o), .inst_o(if_inst_o),
         .br(br), .br_addr(br_addr),
-        .ram_busy(ram_if_busy), .ram_ready(ram_if_ready),
+        .ram_busy(ram_if_busy), .ram_ready(ram_if_ready), .ram_waiting_time(ram_waiting_time),
         .ram_data(ram_if_data),
         .ram_read(ram_if_read), .ram_addr(ram_if_addr)
     );

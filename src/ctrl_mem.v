@@ -19,6 +19,8 @@ module ctrl_mem(
     output wire [`ByteBus] ram_w_data,
     input wire [`ByteBus] ram_r_data,
 
+    output wire[2:0] waiting_time,
+
     output reg if_busy,
     output reg if_ready,
     output reg [`MemDataBus] if_data,
@@ -44,6 +46,8 @@ module ctrl_mem(
     assign ram_addr = addr+cur;
     assign ram_w_data = write_data[cur];
 
+    assign waiting_time = tot-cur-ram_rw;
+
     initial begin
         cur <= 0;
         if_busy <= 0;
@@ -61,8 +65,8 @@ module ctrl_mem(
             mem_ready <= 0;
         end else if (tot && !ram_rw) begin
             if (cur == 0) begin
-                if_busy <= mem_read;
-                mem_busy <= !mem_read;
+                if_busy <= 1; // mem_read;
+                mem_busy <= 1; //!mem_read;
                 if_ready <= 0;
                 mem_ready <= 0;
                 cur <= cur+1;
