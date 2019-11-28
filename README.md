@@ -33,3 +33,4 @@
 + 2019.11.26 Trivial Test pass
 + 2019.11.27 Pass many tests
 + 2019.11.28 Fix an issue in IF
++ 2019.11.28 Fix an issue in ctrl_stall

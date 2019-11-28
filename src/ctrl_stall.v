@@ -12,17 +12,17 @@ module ctrl_stall(
 
     always @(*) begin
         if (reset)
-            stall <= 6'b000000;
+            stall = 6'b000000;
         else if (stall_mem)
-            stall <= 6'b011111;
+            stall = 6'b011111;
         else if (stall_ex)
-            stall <= 6'b001111;
+            stall = 6'b001111;
         else if (stall_id)
-            stall <= 6'b000111;
+            stall = 6'b000111;
         else if (stall_if)
-            stall <= 6'b000011;
+            stall = 6'b000011;
         else
-            stall <= 6'b000000;
+            stall = 6'b000000;
     end
 
 endmodule
