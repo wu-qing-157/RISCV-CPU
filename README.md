@@ -1,19 +1,14 @@
 # RISCV-CPU
 
-## Function Progress
+## Feature Progress
 
-+ 0 - Nothing
-+ 1 - Partly
-+ 2 - Finished
-+ 3 - Tested
-
-|Status|Function|
+|Feature|Status|
 |----|----|
-|3|Correct Output|
-|0|FPGA Correct Output|
-|0|5-Circle IF|
-|0|Cache|
-|0|Branch Prediction|
+|Correct Output|Test OK|
+|FPGA Correct Output|Not started|
+|4-Circle IF|No major progression|
+|Cache|Not started|
+|Branch Prediction|Not started|
 
 ## Timeline
 
