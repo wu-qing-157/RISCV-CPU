@@ -4,10 +4,11 @@
 
 |Feature|Status|
 |----|----|
-|Correct Output|Test OK|
+|Correct Output|Maybe Incorrect (Working with Cache)|
 |FPGA Correct Output|Not started|
-|4-Circle IF|No major progression|
-|Cache|Not started|
+|4-Circle IF|No major work|
+|ICache|Pass some tests, WA with "bulgarian", "magic", and maybe "pi"|
+|DCache|Not started|
 |Branch Prediction|Not started|
 
 ## Timeline
@@ -34,3 +35,5 @@
 + 2019.11.27 Pass many tests
 + 2019.11.28 Fix an issue in IF
 + 2019.11.28 Fix an issue in ctrl_stall
++ 2019.11.28 Add ICache (pass some tests, cannot pass some tests)
++ 2019.11.28 Fix several issues about data hazard

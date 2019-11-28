@@ -1,4 +1,5 @@
 `include "define.v"
+`include "cache_i.v"
 `include "ctrl_stall.v"
 `include "ctrl_mem.v"
 `include "stage_if.v"
@@ -60,6 +61,10 @@ module cpu(
     wire ram_mem_ready;
     wire [`MemDataBus] ram_mem_data_o;
 
+    wire i_cache_read, i_cache_ready;
+    wire [`MemAddrBus] i_cache_addr;
+    wire [`MemDataBus] i_cache_data;
+
     ctrl_mem ctrl_mem_(
         .clock(clk_in), .reset(rst_in),
         .ram_rw(mem_wr), .ram_addr(mem_a), .ram_w_data(mem_dout), .ram_r_data(mem_din),
@@ -70,6 +75,14 @@ module cpu(
         .mem_read(ram_mem_read), .mem_write(ram_mem_write), .mem_addr(ram_mem_addr),
         .mem_data_i(ram_mem_data_i), .mem_length(ram_mem_length), .mem_signed(ram_mem_signed),
         .mem_ready(ram_mem_ready), .mem_data_o(ram_mem_data_o)
+    );
+
+    cache_i cache_i(
+        .reset(rst_in),
+        .ram_busy(ram_if_busy), .ram_ready(ram_if_ready),
+        .ram_read(ram_if_read), .ram_data(ram_if_data), .ram_addr(ram_if_addr),
+        .read(i_cache_read), .addr(i_cache_addr),
+        .ready(i_cache_ready), .data(i_cache_data)
     );
 
     wire reg_if;
@@ -90,9 +103,8 @@ module cpu(
         .reset(rst_in), .stall_if(stall_if),
         .receiving(reg_if), .pc_i(reg_if_pc), .pc_o(if_pc_o), .inst_o(if_inst_o),
         .br(br), .br_addr(br_addr),
-        .ram_busy(ram_if_busy), .ram_ready(ram_if_ready),
-        .ram_data(ram_if_data),
-        .ram_read(ram_if_read), .ram_addr(ram_if_addr)
+        .ram_read(i_cache_read), .ram_addr(i_cache_addr),
+        .ram_ready(i_cache_ready), .ram_data(i_cache_data)
     );
 
     wire [`RegBus] id_pc;

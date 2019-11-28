@@ -23,8 +23,13 @@ module reg_pc(
             pc <= 0;
             sending <= 0;
         end else if (br) begin
-            pc <= br_addr+4;
-            pc_o <= br_addr;
+            if (!stall[0]) begin
+                pc <= br_addr+8;
+                pc_o <= br_addr+4;
+            end else begin
+                pc <= br_addr+4;
+                pc_o <= br_addr;
+            end
             sending <= 1;
         end else if (!stall[0]) begin
             pc <= pc+4;

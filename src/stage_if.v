@@ -11,7 +11,6 @@ module stage_if(
     input wire br,
     input wire [`MemAddrBus] br_addr,
 
-    input wire ram_busy,
     output reg ram_read,
     output reg [`MemAddrBus] ram_addr,
     input wire ram_ready,
@@ -36,22 +35,18 @@ module stage_if(
         end else begin
             if (br) begin
                 pc_o = br_addr;
-                if (pc != pc_o) complete = 0;
             end else if (receiving) begin
                 pc_o = pc_i;
-                if (pc != pc_o) complete = 0;
             end
-            if (ram_ready) begin
-                pc = pc_o;
-                complete = 1;
-                stall_if = 0;
-                inst_o = ram_data;
-                ram_read = 0;
-            end else if (receiving && !complete) begin
-                stall_if = 1;
-                if (!ram_busy) begin
-                    ram_read = 1;
-                    ram_addr = pc_o;
+            if (br || receiving) begin
+                ram_read = 1;
+                ram_addr = pc_o;
+                if (ram_ready) begin
+                    stall_if = 0;
+                    inst_o = ram_data;
+                    ram_read = 0;
+                end else begin
+                    stall_if = 1;
                 end
             end
         end

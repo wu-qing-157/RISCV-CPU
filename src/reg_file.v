@@ -26,8 +26,10 @@ module reg_file(
     end
 
     always @(posedge clock) begin
-        if (reset == 0 && write == 1 && regw_addr != 0)
+        if (reset == 0 && write == 1 && regw_addr != 0) begin
+            // $display("write %h %h", regw_addr, regw_data);
             regs[regw_addr] <= regw_data;
+        end
     end
 
     always @(*) begin
