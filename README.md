@@ -4,10 +4,10 @@
 
 |Feature|Status|
 |----|----|
-|Correct Output|Maybe Incorrect (Working with Cache)|
+|Correct Output|__Test OK__|
 |FPGA Correct Output|Not started|
 |4-Circle IF|No major work|
-|ICache|Pass some tests, WA with "queens"|
+|ICache|__Test OK__|
 |DCache|Not started|
 |Branch Prediction|Not started|
 
@@ -38,6 +38,7 @@
 + 2019.11.28 Add ICache (pass some tests, cannot pass some tests)
 + 2019.11.28 Fix several issues about data hazard
 + 2019.11.29 Fix an issue about data hazard (branch after load)
++ 2019.11.30 Fix an issue in stage_ex (store after load)
 
 ## Test Cases
 
@@ -48,9 +49,9 @@
 |expr|91087|25869|
 |gcd|13129|7123|
 |lvalue2|219|219|
-|magic|7091975|5634177|
+|magic|7091975|5631839|
 |manyarguments|353|353|
 |multiarray|81339|55637|
 |pi (1000)|10134767|3296955|
 |qsort (1000)|4787333|2041527|
-|queens|5773345|__WA__|
+|queens|5773345|3268907|

@@ -34,7 +34,7 @@ module stage_if(
             pc_o = 0;
             inst_o = 0;
         end else begin
-            if (br) begin
+            if (br && !stall[2]) begin
                 pc_o = br_addr;
             end else if (receiving) begin
                 pc_o = pc_i;
