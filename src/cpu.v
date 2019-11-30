@@ -100,7 +100,7 @@ module cpu(
     );
 
     stage_if stage_if_(
-        .reset(rst_in), .stall_if(stall_if),
+        .reset(rst_in), .stall_if(stall_if), .stall(stall),
         .receiving(reg_if), .pc_i(reg_if_pc), .pc_o(if_pc_o), .inst_o(if_inst_o),
         .br(br), .br_addr(br_addr),
         .ram_read(i_cache_read), .ram_addr(i_cache_addr),

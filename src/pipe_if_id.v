@@ -19,7 +19,7 @@ module pipe_if_id(
             inst_o <= 0;
         end else if (!stall[1] && !stall[2]) begin
             if (inst_i != 0) begin
-                //$display("id %h %h", pc_i, inst_i);
+                // $display("inst %h %h", pc_i, inst_i);
             end
             pc_o <= pc_i;
             inst_o <= inst_i;

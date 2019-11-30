@@ -1181,32 +1181,36 @@
         <entry key="AluOpBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/stage_id.v" />
-              <option value="$PROJECT_DIR$/src/cpu.v" />
-              <option value="/stage_id.v" />
-              <option value="/stage_ex.v" />
-              <option value="/pipe_id_ex.v" />
               <option value="/cpu.v" />
+              <option value="/pipe_id_ex.v" />
+              <option value="/stage_ex.v" />
+              <option value="/stage_id.v" />
+              <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
+              <option value="$PROJECT_DIR$/src/stage_ex.v" />
+              <option value="$PROJECT_DIR$/src/stage_id.v" />
             </set>
           </value>
         </entry>
         <entry key="AluSelBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/stage_id.v" />
-              <option value="$PROJECT_DIR$/src/cpu.v" />
-              <option value="/stage_id.v" />
-              <option value="/stage_ex.v" />
-              <option value="/pipe_id_ex.v" />
               <option value="/cpu.v" />
+              <option value="/pipe_id_ex.v" />
+              <option value="/stage_ex.v" />
+              <option value="/stage_id.v" />
+              <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
+              <option value="$PROJECT_DIR$/src/stage_ex.v" />
+              <option value="$PROJECT_DIR$/src/stage_id.v" />
             </set>
           </value>
         </entry>
         <entry key="ByteBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
               <option value="/ctrl_mem.v" />
+              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
             </set>
           </value>
         </entry>
@@ -1221,6 +1225,7 @@
           <value>
             <set>
               <option value="/cache_i.v" />
+              <option value="$PROJECT_DIR$/src/cache_i.v" />
             </set>
           </value>
         </entry>
@@ -1228,6 +1233,7 @@
           <value>
             <set>
               <option value="/cache_i.v" />
+              <option value="$PROJECT_DIR$/src/cache_i.v" />
             </set>
           </value>
         </entry>
@@ -1235,6 +1241,7 @@
           <value>
             <set>
               <option value="/cache_i.v" />
+              <option value="$PROJECT_DIR$/src/cache_i.v" />
             </set>
           </value>
         </entry>
@@ -1242,118 +1249,169 @@
           <value>
             <set>
               <option value="/cache_i.v" />
+              <option value="$PROJECT_DIR$/src/cache_i.v" />
             </set>
           </value>
         </entry>
         <entry key="InstBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/stage_id.v" />
-              <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
-              <option value="$PROJECT_DIR$/src/stage_if.v" />
-              <option value="$PROJECT_DIR$/src/cpu.v" />
-              <option value="/stage_id.v" />
-              <option value="/fake_mem_if.v" />
-              <option value="/stage_if.v" />
-              <option value="/pipe_if_id.v" />
               <option value="/cpu.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_if_id.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+              <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
+              <option value="$PROJECT_DIR$/src/stage_id.v" />
+              <option value="$PROJECT_DIR$/src/stage_if.v" />
             </set>
           </value>
         </entry>
         <entry key="MemAddrBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/stage_id.v" />
-              <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
-              <option value="$PROJECT_DIR$/src/stage_if.v" />
-              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
-              <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="/cache_i.v" />
+              <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/fake_mem_if.v" />
+              <option value="/pipe_if_id.v" />
               <option value="/reg_pc.v" />
               <option value="/stage_id.v" />
-              <option value="/stage_mem.v" />
-              <option value="/fake_mem_if.v" />
-              <option value="/ctrl_mem.v" />
-              <option value="/cache_i.v" />
               <option value="/stage_if.v" />
-              <option value="/pipe_if_id.v" />
-              <option value="/cpu.v" />
+              <option value="/stage_mem.v" />
+              <option value="$PROJECT_DIR$/src/cache_i.v" />
+              <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
+              <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
+              <option value="$PROJECT_DIR$/src/reg_pc.v" />
+              <option value="$PROJECT_DIR$/src/stage_id.v" />
+              <option value="$PROJECT_DIR$/src/stage_if.v" />
+              <option value="$PROJECT_DIR$/src/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="MemDataBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
-              <option value="$PROJECT_DIR$/src/cpu.v" />
-              <option value="/pipe_ex_mem.v" />
-              <option value="/stage_mem.v" />
-              <option value="/ctrl_mem.v" />
               <option value="/cache_i.v" />
               <option value="/cpu.v" />
+              <option value="/ctrl_mem.v" />
+              <option value="/pipe_ex_mem.v" />
+              <option value="/stage_mem.v" />
+              <option value="$PROJECT_DIR$/src/cache_i.v" />
+              <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="$PROJECT_DIR$/src/ctrl_mem.v" />
+              <option value="$PROJECT_DIR$/src/pipe_ex_mem.v" />
+              <option value="$PROJECT_DIR$/src/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="RegAddrBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/stage_id.v" />
-              <option value="$PROJECT_DIR$/src/reg_file.v" />
-              <option value="$PROJECT_DIR$/src/pipe_mem_wb.v" />
-              <option value="$PROJECT_DIR$/src/cpu.v" />
-              <option value="/stage_id.v" />
+              <option value="/cpu.v" />
               <option value="/pipe_ex_mem.v" />
-              <option value="/stage_mem.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/pipe_mem_wb.v" />
               <option value="/reg_file.v" />
               <option value="/stage_ex.v" />
-              <option value="/pipe_id_ex.v" />
-              <option value="/cpu.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
+              <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="$PROJECT_DIR$/src/pipe_ex_mem.v" />
+              <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
+              <option value="$PROJECT_DIR$/src/pipe_mem_wb.v" />
+              <option value="$PROJECT_DIR$/src/reg_file.v" />
+              <option value="$PROJECT_DIR$/src/stage_ex.v" />
+              <option value="$PROJECT_DIR$/src/stage_id.v" />
+              <option value="$PROJECT_DIR$/src/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="RegBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/stage_id.v" />
-              <option value="$PROJECT_DIR$/src/reg_file.v" />
-              <option value="$PROJECT_DIR$/src/pipe_mem_wb.v" />
-              <option value="$PROJECT_DIR$/src/cpu.v" />
-              <option value="/stage_id.v" />
+              <option value="/cpu.v" />
               <option value="/pipe_ex_mem.v" />
-              <option value="/stage_mem.v" />
+              <option value="/pipe_id_ex.v" />
               <option value="/pipe_mem_wb.v" />
               <option value="/reg_file.v" />
               <option value="/stage_ex.v" />
-              <option value="/pipe_id_ex.v" />
-              <option value="/cpu.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_mem.v" />
+              <option value="$PROJECT_DIR$/src/cpu.v" />
+              <option value="$PROJECT_DIR$/src/pipe_ex_mem.v" />
+              <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
+              <option value="$PROJECT_DIR$/src/pipe_mem_wb.v" />
+              <option value="$PROJECT_DIR$/src/reg_file.v" />
+              <option value="$PROJECT_DIR$/src/stage_ex.v" />
+              <option value="$PROJECT_DIR$/src/stage_id.v" />
+              <option value="$PROJECT_DIR$/src/stage_mem.v" />
             </set>
           </value>
         </entry>
         <entry key="RegNum">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/reg_file.v" />
               <option value="/reg_file.v" />
+              <option value="$PROJECT_DIR$/src/reg_file.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="S">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SB">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SBIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SIntellijIdeaRulezzz">
+          <value>
+            <set>
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
             </set>
           </value>
         </entry>
         <entry key="StallBus">
           <value>
             <set>
-              <option value="$PROJECT_DIR$/src/stage_id.v" />
-              <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
-              <option value="$PROJECT_DIR$/src/ctrl_stall.v" />
               <option value="/ctrl_stall.v" />
-              <option value="/reg_pc.v" />
-              <option value="/stage_id.v" />
               <option value="/pipe_ex_mem.v" />
               <option value="/pipe_id_ex.v" />
               <option value="/pipe_if_id.v" />
+              <option value="/reg_pc.v" />
+              <option value="/stage_id.v" />
+              <option value="/stage_if.v" />
+              <option value="$PROJECT_DIR$/src/ctrl_stall.v" />
+              <option value="$PROJECT_DIR$/src/pipe_ex_mem.v" />
+              <option value="$PROJECT_DIR$/src/pipe_id_ex.v" />
+              <option value="$PROJECT_DIR$/src/pipe_if_id.v" />
+              <option value="$PROJECT_DIR$/src/reg_pc.v" />
             </set>
           </value>
         </entry>
       </map>
     </option>
     <option name="status" value="NORMAL" />
+    <option name="version" value="547" />
   </component>
 </project>

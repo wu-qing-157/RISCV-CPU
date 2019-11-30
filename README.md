@@ -7,7 +7,7 @@
 |Correct Output|Maybe Incorrect (Working with Cache)|
 |FPGA Correct Output|Not started|
 |4-Circle IF|No major work|
-|ICache|Pass some tests, WA with "bulgarian", "magic", and maybe "pi"|
+|ICache|Pass some tests, WA with "queens"|
 |DCache|Not started|
 |Branch Prediction|Not started|
 
@@ -37,3 +37,20 @@
 + 2019.11.28 Fix an issue in ctrl_stall
 + 2019.11.28 Add ICache (pass some tests, cannot pass some tests)
 + 2019.11.28 Fix several issues about data hazard
++ 2019.11.29 Fix an issue about data hazard (branch after load)
+
+## Test Cases
+
+|Test Name|aedf0cf|Current|
+|----|----|----|
+|basicopt1|6432481|3921803|
+|bulgarian|9073277|5531041|
+|expr|91087|25869|
+|gcd|13129|7123|
+|lvalue2|219|219|
+|magic|7091975|5634177|
+|manyarguments|353|353|
+|multiarray|81339|55637|
+|pi (1000)|10134767|3296955|
+|qsort (1000)|4787333|2041527|
+|queens|5773345|__WA__|

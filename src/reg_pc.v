@@ -22,7 +22,7 @@ module reg_pc(
         if (reset) begin
             pc <= 0;
             sending <= 0;
-        end else if (br) begin
+        end else if (br && !stall[2]) begin
             if (!stall[0]) begin
                 pc <= br_addr+8;
                 pc_o <= br_addr+4;
