@@ -1,17 +1,4 @@
 `include "define.v"
-`include "cache_i.v"
-`include "ctrl_stall.v"
-`include "ctrl_mem.v"
-`include "stage_if.v"
-`include "stage_id.v"
-`include "stage_ex.v"
-`include "stage_mem.v"
-`include "reg_pc.v"
-`include "reg_file.v"
-`include "pipe_if_id.v"
-`include "pipe_id_ex.v"
-`include "pipe_ex_mem.v"
-`include "pipe_mem_wb.v"
 
 // RISCV32I CPU top module
 // port modification allowed for debugging purposes
