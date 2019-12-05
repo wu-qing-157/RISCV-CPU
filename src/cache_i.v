@@ -30,7 +30,7 @@ module cache_i(
     end
 
     always @(*) begin
-        if (reset) begin
+        if (reset || !read) begin
             ready = 0;
         end else begin
             if (cache_tag[addr[`ICacheBus]] == addr[`ICacheTagBytes]) begin
@@ -40,24 +40,21 @@ module cache_i(
             end else begin
                 //$display("%h cache miss! ram_ready %h read %h", addr, ram_ready, read);
                 //$display("bus %h tag %h stored_tag %h", addr[`ICacheBus], addr[`ICacheTagBytes], cache_tag[addr[`ICacheBus]]);
-                if (read) begin
-                    if (ram_ready) begin
-                        cache_data[addr[`ICacheBus]] = ram_data;
-                        //$display("store tag");
-                        cache_tag[addr[`ICacheBus]] = addr[`ICacheTagBytes];
-                        ram_read = 0;
-                        ready = 1;
-                        data = ram_data;
-                    end else begin
-                        if (!ram_busy) begin
-                            ram_read = 1;
-                            ram_addr = addr;
-                        end else begin
-                            ram_read = 0;
-                        end
-                    end
+                if (ram_ready) begin
+                    cache_data[addr[`ICacheBus]] = ram_data;
+                    //$display("store tag");
+                    cache_tag[addr[`ICacheBus]] = addr[`ICacheTagBytes];
+                    ram_read = 0;
+                    ready = 1;
+                    data = ram_data;
                 end else begin
                     ready = 0;
+                    if (!ram_busy) begin
+                        ram_read = 1;
+                        ram_addr = addr;
+                    end else begin
+                        ram_read = 0;
+                    end
                 end
             end
         end

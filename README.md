@@ -4,8 +4,8 @@
 
 |Feature|Status|
 |----|----|
-|Correct Output|__Test OK__|
-|FPGA Correct Output|Not started|
+|Simulation Correct Output|__Test OK__|
+|FPGA Correct Output|Fixing improper code|
 |4-Circle IF|No major work|
 |ICache|__Test OK__|
 |DCache|Not started|
