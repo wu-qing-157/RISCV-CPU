@@ -4,7 +4,7 @@ module pipe_if_id(
     input wire clock,
     input wire reset,
 
-    input wire [`StallBus] stall,
+    input wire [2:1] stall,
 
     input wire [`MemAddrBus] pc_i,
     input wire [`InstBus] inst_i,

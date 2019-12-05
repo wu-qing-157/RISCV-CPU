@@ -4,7 +4,7 @@ module pipe_id_ex(
     input wire clock,
     input wire reset,
 
-    input wire [`StallBus] stall,
+    input wire [3:2] stall,
 
     input wire [`AluSelBus] alusel_i,
     input wire [`AluOpBus] aluop_i,

@@ -30,7 +30,7 @@ module cpu(
     wire stall_if, stall_id, stall_ex, stall_mem;
 
     ctrl_stall ctrl_stall_(
-        .stall(stall),
+        .reset(rst_in), .stall(stall),
         .stall_if(stall_if), .stall_id(stage_id), .stall_ex(stall_ex), .stall_mem(stall_mem)
     );
 
@@ -81,13 +81,13 @@ module cpu(
     wire [`MemAddrBus] br_addr;
 
     reg_pc reg_pc_(
-        .clock(clk_in), .reset(rst_in), .stall(stall),
+        .clock(clk_in), .reset(rst_in), .stall0(stall[0]), .stall2(stall[2]),
         .br(br), .br_addr(br_addr),
         .sending(reg_if), .pc_o(reg_if_pc)
     );
 
     stage_if stage_if_(
-        .reset(rst_in), .stall_if(stall_if), .stall(stall),
+        .reset(rst_in), .stall_if(stall_if), .stall2(stall[2]),
         .receiving(reg_if), .pc_i(reg_if_pc), .pc_o(if_pc_o), .inst_o(if_inst_o),
         .br(br), .br_addr(br_addr),
         .ram_read(i_cache_read), .ram_addr(i_cache_addr),
@@ -112,7 +112,7 @@ module cpu(
     wire [`RegBus] id_mem_offset;
 
     pipe_if_id pipe_if_id_(
-        .clock(clk_in), .reset(rst_in), .stall(stall),
+        .clock(clk_in), .reset(rst_in), .stall(stall[2:1]),
         .pc_i(if_pc_o), .inst_i(if_inst_o),
         .pc_o(id_pc), .inst_o(id_inst)
     );
@@ -134,7 +134,7 @@ module cpu(
     wire ex_mem_signed;
 
     pipe_id_ex pipe_id_ex_(
-        .clock(clk_in), .reset(rst_in), .stall(stall),
+        .clock(clk_in), .reset(rst_in), .stall(stall[3:2]),
         .alusel_i(id_alusel), .aluop_i(id_aluop),
         .op1_i(id_op1), .op2_i(id_op2), .link_addr_i(id_link_addr),
         .write_i(id_write), .regw_addr_i(id_regw_addr), .mem_offset_i(id_mem_offset),
@@ -165,7 +165,7 @@ module cpu(
     wire [`RegBus] mem_regw_data_o;
 
     pipe_ex_mem pipe_ex_mem_(
-        .clock(clk_in), .reset(rst_in), .stall(stall),
+        .clock(clk_in), .reset(rst_in), .stall(stall[4:3]),
         .write_i(ex_write_o), .regw_addr_i(ex_regw_addr_o), .regw_data_i(ex_regw_data),
         .load_i(ex_load), .store_i(ex_store),
         .mem_write_data_i(ex_mem_write_data), .mem_length_i(ex_mem_length),
@@ -205,7 +205,7 @@ module cpu(
     wire [`RegBus] wb_regw_data;
 
     pipe_mem_wb pipe_mem_wb_(
-        .clock(clk_in), .reset(rst_in), .stall(stall),
+        .clock(clk_in), .reset(rst_in), .stall(stall[5:4]),
         .write_i(mem_write_o), .regw_addr_i(mem_regw_addr_o), .regw_data_i(mem_regw_data_o),
         .write_o(wb_write), .regw_addr_o(wb_regw_addr), .regw_data_o(wb_regw_data)
     );

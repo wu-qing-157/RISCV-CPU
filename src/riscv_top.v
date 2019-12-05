@@ -3,7 +3,7 @@
 
 module riscv_top
 #(
-	parameter SIM = 1						// whether in simulation
+	parameter SIM = 0						// whether in simulation
 )
 (
 	input wire 			EXCLK,
