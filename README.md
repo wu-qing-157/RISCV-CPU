@@ -5,7 +5,7 @@
 |Feature|Status|
 |----|----|
 |Simulation Correct Output|__Test OK__|
-|FPGA Correct Output|Fixing improper code|
+|FPGA Correct Output|Pending branch reconstruction|
 |4-Circle IF|No major work|
 |ICache|__Test OK__|
 |DCache|Not started|
@@ -39,6 +39,7 @@
 + 2019.11.28 Fix several issues about data hazard
 + 2019.11.29 Fix an issue about data hazard (branch after load)
 + 2019.11.30 Fix an issue in stage_ex (store after load)
++ 2019.12.09 Fix some (maybe meaningless) bugs
 
 ## Test Cases
 

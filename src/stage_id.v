@@ -61,7 +61,7 @@ module stage_id(
         read1 = 0; reg1_addr = 0; imm1 = 0;
         read2 = 0; reg2_addr = 0; imm2 = 0;
         write = 0; regw_addr = 0;
-        br = 0; br_addr = 0; link_addr = 0;
+        br = 0; br_addr = 0; link_addr = 0; mem_offset = 0;
         if (!reset) begin
             case (opcode)
                 7'b0110111: begin
@@ -221,7 +221,7 @@ module stage_id(
         end else if (reg1_addr == 0) begin
             op1 = 0;
         end else if (ex_load && ex_regw_addr == reg1_addr) begin
-            stall_id = 1;
+            op1 = 0; stall_id = 1;
         end else if (ex_write && ex_regw_addr == reg1_addr) begin
             op1 = ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg1_addr) begin
@@ -236,7 +236,7 @@ module stage_id(
         end else if (reg2_addr == 0) begin
             op2 = 0;
         end else if (ex_load && ex_regw_addr == reg2_addr) begin
-            stall_id = 1;
+            op2 = 0; stall_id = 1;
         end else if (ex_write && ex_regw_addr == reg2_addr) begin
             op2 = ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg2_addr) begin

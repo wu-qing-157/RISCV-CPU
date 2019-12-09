@@ -22,41 +22,34 @@ module cache_i(
 
     initial begin
         ram_read = 0;
-        for (i = 0; i < `ICacheNum; i = i+1) begin
+        for (i = 0; i < `ICacheNum; i = i+1)
             cache_tag[i] = -1;
-            //$display("%h %h", i, cache_tag[i]);
-        end
-        //$display("%h", cache_tag[7'h3c]);
     end
 
     always @(*) begin
         if (reset || !read) begin
-            ready = 0;
+            ready = 0; data = 0;
+            ram_read = 0; ram_addr = 0;
         end else begin
             if (cache_tag[addr[`ICacheBus]] == addr[`ICacheTagBytes]) begin
-                //$display("%h cache hit!", addr);
                 ready = 1; data = cache_data[addr[`ICacheBus]];
-                ram_read = 0;
+                ram_read = 0; ram_addr = 0;
             end else begin
-                //$display("%h cache miss! ram_ready %h read %h", addr, ram_ready, read);
-                //$display("bus %h tag %h stored_tag %h", addr[`ICacheBus], addr[`ICacheTagBytes], cache_tag[addr[`ICacheBus]]);
-                if (ram_ready) begin
-                    cache_data[addr[`ICacheBus]] = ram_data;
-                    //$display("store tag");
-                    cache_tag[addr[`ICacheBus]] = addr[`ICacheTagBytes];
-                    ram_read = 0;
-                    ready = 1;
-                    data = ram_data;
+                ready = 0; data = 0;
+                if (!ram_busy) begin
+                    ram_read = 1;
+                    ram_addr = addr;
                 end else begin
-                    ready = 0;
-                    if (!ram_busy) begin
-                        ram_read = 1;
-                        ram_addr = addr;
-                    end else begin
-                        ram_read = 0;
-                    end
+                    ram_read = 0; ram_addr = 0;
                 end
             end
+        end
+    end
+
+    always @(*) begin
+        if (ram_ready) begin
+            cache_tag[addr[`ICacheBus]] = addr[`ICacheTagBytes];
+            cache_data[addr[`ICacheBus]] = ram_data;
         end
     end
 

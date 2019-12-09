@@ -26,6 +26,8 @@ module cpu(
 // - 0x30004 read: read clocks passed since cpu starts (in dword, 4 bytes)
 // - 0x30004 write: indicates program stop (will output '\0' through uart tx)
 
+    assign dbgreg_dout = rdy_in;
+
     wire [5:0] stall;
     wire stall_if, stall_id, stall_ex, stall_mem;
 

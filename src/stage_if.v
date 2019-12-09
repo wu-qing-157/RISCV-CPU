@@ -21,7 +21,6 @@ module stage_if(
     output reg [`InstBus] inst_o
 );
 
-    reg complete;
     reg [`MemAddrBus] pc;
 
     assign stall_if = (br || receiving) && !ram_ready;
@@ -32,17 +31,20 @@ module stage_if(
 
     always @(*) begin
         if (reset) begin
-            complete = 0;
             pc_o = 0;
+            ram_read = 0; ram_addr = 0;
         end else begin
             if (br && !stall2) begin
                 pc_o = br_addr;
             end else if (receiving) begin
                 pc_o = pc_i;
+            end else begin
+                pc_o = 0;
             end
             if (br || receiving) begin
-                ram_read = 1;
-                ram_addr = pc_o;
+                ram_read = 1; ram_addr = pc_o;
+            end else begin
+                ram_read = 0; ram_addr = 0;
             end
         end
     end
