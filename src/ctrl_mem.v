@@ -53,6 +53,10 @@ module ctrl_mem(
     end
 
     always @(posedge clock) begin
+        if (mem_read || mem_write) begin
+            // $timeformat(-9, 1, "ns", 12);
+            // $display("%t mem %h %h %h", $realtime, ram_rw, ram_addr, ram_r_data, ram_w_data);
+        end
         if (reset) begin
             cur <= 0;
             if_busy <= 0;

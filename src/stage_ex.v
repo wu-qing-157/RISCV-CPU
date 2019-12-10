@@ -68,9 +68,9 @@ module stage_ex(
     end
 
     always @(*) begin
+        load = 0;
+        store = 0;
         if (reset || alusel != 3'b111) begin
-            load = 0;
-            store = 0;
             mem_ret = 0;
         end else begin
             case (aluop)

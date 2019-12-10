@@ -117,6 +117,11 @@
 `define ByteBus         7:0
 `define DataMemNum      131072
 `define DataMemNumLog2  17
+`define ICacheBus       6:0
+`define ICacheNum       128
+`define ICacheNumLog2   7
+`define ICacheTagBytes  16:7
+`define ICacheTagBus    10:0
 
 `define StallBus        5:0
 

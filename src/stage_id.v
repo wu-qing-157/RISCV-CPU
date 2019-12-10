@@ -4,7 +4,6 @@ module stage_id(
     input wire reset,
 
     output reg stall_id,
-    input wire [`StallBus] stall,
 
     input wire [`MemAddrBus] pc,
     input wire [`InstBus] inst,
@@ -86,7 +85,7 @@ module stage_id(
                     alusel = 3'b110;
                     read1 = 1; reg1_addr = rs;
                     write = 1; regw_addr = rd;
-                    br = 1; br_addr = (reg1_data+I_imm) & ~1; link_addr = pc+4;
+                    br = 1; br_addr = (op1+I_imm) & ~1; link_addr = pc+4;
                 end // JALR
                 7'b1100011: begin
                     case (funct3)
@@ -94,7 +93,7 @@ module stage_id(
                             alusel = 3'b110;
                             read1 = 1; reg1_addr = rs;
                             read2 = 1; reg2_addr = rt;
-                            if (reg1_data == reg2_data) begin
+                            if (op1 == op2) begin
                                 br = 1; br_addr = pc+B_imm;
                             end
                         end // BEQ
@@ -102,7 +101,7 @@ module stage_id(
                             alusel = 3'b110;
                             read1 = 1; reg1_addr = rs;
                             read2 = 1; reg2_addr = rt;
-                            if (reg1_data != reg2_data) begin
+                            if (op1 != op2) begin
                                 br = 1; br_addr = pc+B_imm;
                             end
                         end // BNE
@@ -110,7 +109,7 @@ module stage_id(
                             alusel = 3'b110;
                             read1 = 1; reg1_addr = rs;
                             read2 = 1; reg2_addr = rt;
-                            if ($signed(reg1_data) < $signed(reg2_data)) begin
+                            if ($signed(op1) < $signed(op2)) begin
                                 br = 1; br_addr = pc+B_imm;
                             end
                         end // BLT
@@ -118,7 +117,7 @@ module stage_id(
                             alusel = 3'b110;
                             read1 = 1; reg1_addr = rs;
                             read2 = 1; reg2_addr = rt;
-                            if ($signed(reg1_data) >= $signed(reg2_data)) begin
+                            if ($signed(op1) >= $signed(op2)) begin
                                 br = 1; br_addr = pc+B_imm;
                             end
                         end // BGE
@@ -126,7 +125,7 @@ module stage_id(
                             alusel = 3'b110;
                             read1 = 1; reg1_addr = rs;
                             read2 = 1; reg2_addr = rt;
-                            if (reg1_data < reg2_data) begin
+                            if (op1 < op2) begin
                                 br = 1; br_addr = pc+B_imm;
                             end
                         end // BLTU
@@ -134,7 +133,7 @@ module stage_id(
                             alusel = 3'b110;
                             read1 = 1; reg1_addr = rs;
                             read2 = 1; reg2_addr = rt;
-                            if (reg1_data >= reg2_data) begin
+                            if (op1 >= op2) begin
                                 br = 1; br_addr = pc+B_imm;
                             end
                         end // BGEU
@@ -214,48 +213,34 @@ module stage_id(
     end
 
     always @(*) begin
+        stall_id = 0;
         if (reset) begin
             op1 = 0;
         end else if (read1 == 0) begin
             op1 = imm1;
+        end else if (reg1_addr == 0) begin
+            op1 = 0;
         end else if (ex_load && ex_regw_addr == reg1_addr) begin
             stall_id = 1;
         end else if (ex_write && ex_regw_addr == reg1_addr) begin
-            if (stall[3]) begin
-                stall_id = 1;
-            end else begin
-                op1 = ex_regw_data;
-            end
+            op1 = ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg1_addr) begin
-            if (stall[4]) begin
-                stall_id = 1;
-            end else begin
-                op1 = mem_regw_data;
-            end
+            op1 = mem_regw_data;
         end else begin
             op1 = reg1_data;
         end
-    end
-
-    always @(*) begin
         if (reset) begin
             op2 = 0;
         end else if (read2 == 0) begin
             op2 = imm2;
+        end else if (reg2_addr == 0) begin
+            op2 = 0;
         end else if (ex_load && ex_regw_addr == reg2_addr) begin
             stall_id = 1;
         end else if (ex_write && ex_regw_addr == reg2_addr) begin
-            if (stall[3]) begin
-                stall_id = 1;
-            end else begin
-                op2 = ex_regw_data;
-            end
+            op2 = ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg2_addr) begin
-            if (stall[4]) begin
-                stall_id = 1;
-            end else begin
-                op2 = mem_regw_data;
-            end
+            op2 = mem_regw_data;
         end else begin
             op2 = reg2_data;
         end

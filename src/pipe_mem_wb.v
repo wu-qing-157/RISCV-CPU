@@ -16,7 +16,7 @@ module pipe_mem_wb(
 );
 
     always @(posedge clock) begin
-        if (reset && (stall[4] && !stall[5])) begin
+        if (reset || (stall[4] && !stall[5])) begin
             write_o <= 0;
             regw_addr_o <= 0;
             regw_data_o <= 0;
