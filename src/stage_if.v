@@ -9,7 +9,8 @@ module stage_if(
     input wire receiving,
     input wire [`MemAddrBus] pc_i,
 
-    input wire br,
+    input wire id_br,
+    input wire ex_br,
     input wire [`MemAddrBus] br_addr,
 
     output reg ram_read,
@@ -23,25 +24,25 @@ module stage_if(
 
     reg [`MemAddrBus] pc;
 
-    assign stall_if = (br || receiving) && !ram_ready;
+    assign stall_if = id_br || ((ex_br || receiving) && !ram_ready);
 
     initial begin
         ram_read = 0;
     end
 
     always @(*) begin
-        if (reset) begin
+        if (reset || id_br) begin
             pc_o = 0;
             ram_read = 0; ram_addr = 0;
         end else begin
-            if (br && !stall2) begin
+            if (ex_br && !stall2) begin
                 pc_o = br_addr;
             end else if (receiving) begin
                 pc_o = pc_i;
             end else begin
                 pc_o = 0;
             end
-            if (br || receiving) begin
+            if (ex_br || receiving) begin
                 ram_read = 1; ram_addr = pc_o;
             end else begin
                 ram_read = 0; ram_addr = 0;

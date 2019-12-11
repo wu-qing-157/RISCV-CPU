@@ -26,6 +26,7 @@ module stage_id(
 
     output reg br,
     output reg [`MemAddrBus] br_addr,
+    output reg [`MemAddrBus] br_offset,
 
     input wire ex_load,
     input wire ex_write,
@@ -61,7 +62,8 @@ module stage_id(
         read1 = 0; reg1_addr = 0; imm1 = 0;
         read2 = 0; reg2_addr = 0; imm2 = 0;
         write = 0; regw_addr = 0;
-        br = 0; br_addr = 0; link_addr = 0; mem_offset = 0;
+        br = 0; br_addr = 0; br_offset = 0; link_addr = 0;
+        mem_offset = 0;
         if (!reset) begin
             case (opcode)
                 7'b0110111: begin
@@ -79,64 +81,26 @@ module stage_id(
                 7'b1101111: begin
                     alusel = 3'b110;
                     write = 1; regw_addr = rd;
-                    br = 1; br_addr = pc+J_imm; link_addr = pc+4;
+                    br = 1; br_addr = pc; br_offset = J_imm; link_addr = pc;
                 end // JAL
                 7'b1100111: begin
                     alusel = 3'b110;
                     read1 = 1; reg1_addr = rs;
                     write = 1; regw_addr = rd;
-                    br = 1; br_addr = (op1+I_imm) & ~1; link_addr = pc+4;
+                    br = 1; br_addr = op1; br_offset = I_imm; link_addr = pc;
                 end // JALR
                 7'b1100011: begin
+                    alusel = 3'b101;
+                    read1 = 1; reg1_addr = rs;
+                    read2 = 1; reg2_addr = rt;
+                    br = 1; br_addr = pc; br_offset = B_imm;
                     case (funct3)
-                        3'b000: begin
-                            alusel = 3'b110;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            if (op1 == op2) begin
-                                br = 1; br_addr = pc+B_imm;
-                            end
-                        end // BEQ
-                        3'b001: begin
-                            alusel = 3'b110;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            if (op1 != op2) begin
-                                br = 1; br_addr = pc+B_imm;
-                            end
-                        end // BNE
-                        3'b100: begin
-                            alusel = 3'b110;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            if ($signed(op1) < $signed(op2)) begin
-                                br = 1; br_addr = pc+B_imm;
-                            end
-                        end // BLT
-                        3'b101: begin
-                            alusel = 3'b110;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            if ($signed(op1) >= $signed(op2)) begin
-                                br = 1; br_addr = pc+B_imm;
-                            end
-                        end // BGE
-                        3'b110: begin
-                            alusel = 3'b110;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            if (op1 < op2) begin
-                                br = 1; br_addr = pc+B_imm;
-                            end
-                        end // BLTU
-                        3'b111: begin
-                            alusel = 3'b110;
-                            read1 = 1; reg1_addr = rs;
-                            read2 = 1; reg2_addr = rt;
-                            if (op1 >= op2) begin
-                                br = 1; br_addr = pc+B_imm;
-                            end
-                        end // BGEU
+                        3'b000: aluop = 0; // BEQ
+                        3'b001: aluop = 1; // BNE
+                        3'b100: aluop = 2; // BLT
+                        3'b101: aluop = 3; // BGE
+                        3'b110: aluop = 4; // BLTU
+                        3'b111: aluop = 5; // BGEU
                     endcase
                 end // BRANCH
                 7'b0000011: begin

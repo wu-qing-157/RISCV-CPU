@@ -41,7 +41,7 @@ module ctrl_mem(
     assign write_data[3] = mem_data_i[31:24];
 
     assign ram_rw = mem_write;
-    assign ram_addr = addr+cur;
+    assign ram_addr = addr | cur;
     assign ram_w_data = write_data[cur];
 
     initial begin
