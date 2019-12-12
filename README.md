@@ -41,6 +41,7 @@
 + 2019.11.30 Fix an issue in stage_ex (store after load)
 + 2019.12.09 Fix some (maybe meaningless) bugs
 + 2019.12.11 Decrease time slack to 4.865ns (reconstruct branch)
++ 2019.12.12 Reconstruct mem_ctrl (become slower)
 
 ## Test Cases
 

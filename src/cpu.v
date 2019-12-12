@@ -36,8 +36,6 @@ module cpu(
         .stall_if(stall_if), .stall_id(stage_id), .stall_ex(stall_ex), .stall_mem(stall_mem)
     );
 
-    wire ram_if_busy;
-    wire ram_mem_busy;
     wire ram_if_read;
     wire ram_if_ready;
     wire [`MemAddrBus] ram_if_addr;
@@ -57,10 +55,8 @@ module cpu(
     ctrl_mem ctrl_mem_(
         .clock(clk_in), .reset(rst_in),
         .ram_rw(mem_wr), .ram_addr(mem_a), .ram_w_data(mem_dout), .ram_r_data(mem_din),
-        .if_busy(ram_if_busy),
         .if_read(ram_if_read), .if_addr(ram_if_addr),
         .if_ready(ram_if_ready), .if_data(ram_if_data),
-        .mem_busy(ram_mem_busy),
         .mem_read(ram_mem_read), .mem_write(ram_mem_write), .mem_addr(ram_mem_addr),
         .mem_data_i(ram_mem_data_i), .mem_length(ram_mem_length), .mem_signed(ram_mem_signed),
         .mem_ready(ram_mem_ready), .mem_data_o(ram_mem_data_o)
@@ -68,7 +64,7 @@ module cpu(
 
     cache_i cache_i(
         .reset(rst_in),
-        .ram_busy(ram_if_busy), .ram_ready(ram_if_ready),
+        .ram_ready(ram_if_ready),
         .ram_read(ram_if_read), .ram_data(ram_if_data), .ram_addr(ram_if_addr),
         .read(i_cache_read), .addr(i_cache_addr),
         .ready(i_cache_ready), .data(i_cache_data)
@@ -190,7 +186,7 @@ module cpu(
         .addr(mem_regw_data_i), .load(mem_load), .store(mem_store), .data(mem_data),
         .length(mem_length), .signed_(mem_signed),
         .write_o(mem_write_o), .regw_addr_o(mem_regw_addr_o), .regw_data_o(mem_regw_data_o),
-        .ram_busy(ram_mem_busy), .ram_ready(ram_mem_ready), .ram_data_i(ram_mem_data_o),
+        .ram_ready(ram_mem_ready), .ram_data_i(ram_mem_data_o),
         .ram_read(ram_mem_read), .ram_write(ram_mem_write), .ram_addr(ram_mem_addr),
         .ram_data_o(ram_mem_data_i), .ram_length(ram_mem_length), .ram_signed(ram_mem_signed)
     );

@@ -12,7 +12,6 @@ module stage_mem(
     input wire [2:0] length,
     input wire signed_,
 
-    input wire ram_busy,
     input wire ram_ready,
     output reg [`MemAddrBus] ram_addr,
     input wire [`MemDataBus] ram_data_i,
@@ -52,12 +51,10 @@ module stage_mem(
                 ram_read = 0;
             end else begin
                 stall_mem = 1;
-                if (!ram_busy) begin
-                    ram_read = 1;
-                    ram_addr = addr;
-                    ram_length = length;
-                    ram_signed = signed_;
-                end
+                ram_read = 1;
+                ram_addr = addr;
+                ram_length = length;
+                ram_signed = signed_;
             end
         end else if (store) begin
             if (ram_ready) begin
@@ -65,12 +62,10 @@ module stage_mem(
                 ram_write = 0;
             end else begin
                 stall_mem = 1;
-                if (!ram_busy) begin
-                    ram_write = 1;
-                    ram_addr = addr;
-                    ram_length = length;
-                    ram_data_o = data;
-                end
+                ram_write = 1;
+                ram_addr = addr;
+                ram_length = length;
+                ram_data_o = data;
             end
         end else begin
             regw_data_o = regw_data_i;

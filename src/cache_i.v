@@ -3,7 +3,6 @@
 module cache_i(
     input wire reset,
 
-    input wire ram_busy,
     input wire ram_ready,
     input wire [`MemDataBus] ram_data,
     output reg ram_read,
@@ -38,7 +37,7 @@ module cache_i(
             if (cache_tag[addr_index] == addr_tag) begin
                 ready = 1; data = cache_data[addr_index]; ram_read = 0;
             end else begin
-                ready = 0; data = 0; ram_read = !ram_busy;
+                ready = 0; data = 0; ram_read = 1;
             end
         end
     end
