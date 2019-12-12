@@ -24,7 +24,7 @@ module stage_id(
     output reg [`RegAddrBus] regw_addr,
     output reg [`RegBus] mem_offset,
 
-    output reg br,
+    output reg br_wait,
     output reg [`MemAddrBus] br_addr,
     output reg [`MemAddrBus] br_offset,
 
@@ -62,7 +62,7 @@ module stage_id(
         read1 = 0; reg1_addr = 0; imm1 = 0;
         read2 = 0; reg2_addr = 0; imm2 = 0;
         write = 0; regw_addr = 0;
-        br = 0; br_addr = 0; br_offset = 0; link_addr = 0;
+        br_wait = 0; br_addr = 0; br_offset = 0; link_addr = 0;
         mem_offset = 0;
         if (!reset) begin
             case (opcode)
@@ -81,19 +81,19 @@ module stage_id(
                 7'b1101111: begin
                     alusel = 3'b110;
                     write = 1; regw_addr = rd;
-                    br = 1; br_addr = pc; br_offset = J_imm; link_addr = pc;
+                    br_wait = 1; br_addr = pc; br_offset = J_imm; link_addr = pc;
                 end // JAL
                 7'b1100111: begin
                     alusel = 3'b110;
                     read1 = 1; reg1_addr = rs;
                     write = 1; regw_addr = rd;
-                    br = 1; br_addr = op1; br_offset = I_imm; link_addr = pc;
+                    br_wait = 1; br_addr = op1; br_offset = I_imm; link_addr = pc;
                 end // JALR
                 7'b1100011: begin
                     alusel = 3'b101;
                     read1 = 1; reg1_addr = rs;
                     read2 = 1; reg2_addr = rt;
-                    br = 1; br_addr = pc; br_offset = B_imm;
+                    br_wait = 1; br_addr = pc; br_offset = B_imm;
                     case (funct3)
                         3'b000: aluop = 0; // BEQ
                         3'b001: aluop = 1; // BNE
