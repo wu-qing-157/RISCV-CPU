@@ -4,7 +4,7 @@ module pipe_ex_mem(
     input wire clock,
     input wire reset,
 
-    input wire [`StallBus] stall,
+    input wire [4:3] stall,
 
     input wire write_i,
     input wire [`RegAddrBus] regw_addr_i,
@@ -43,7 +43,7 @@ module pipe_ex_mem(
             store_o <= store_i;
             mem_write_data_o <= mem_write_data_i;
             mem_length_o <= mem_length_i;
-            mem_signed_o <= mem_signed_o;
+            mem_signed_o <= mem_signed_i;
         end
     end
 

@@ -4,7 +4,7 @@ module reg_pc(
     input wire clock,
     input wire reset,
 
-    input wire [`StallBus] stall,
+    input wire stall0,
 
     input wire br,
     input wire [`MemAddrBus] br_addr,
@@ -22,19 +22,15 @@ module reg_pc(
         if (reset) begin
             pc <= 0;
             sending <= 0;
-        end else if (br && !stall[2]) begin
-            if (!stall[0]) begin
-                pc <= br_addr+8;
-                pc_o <= br_addr+4;
-            end else begin
+        end else begin
+            sending <= 1;
+            if (br) begin
                 pc <= br_addr+4;
                 pc_o <= br_addr;
+            end else if (!stall0) begin
+                pc <= pc+4;
+                pc_o <= pc;
             end
-            sending <= 1;
-        end else if (!stall[0]) begin
-            pc <= pc+4;
-            pc_o <= pc;
-            sending <= 1;
         end
     end
 
