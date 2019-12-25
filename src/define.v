@@ -121,7 +121,7 @@
 `define ICacheNum       128
 `define ICacheNumLog2   7
 `define ICacheTagBytes  16:7
-`define ICacheTagBus    10:0
+`define ICacheTagBus    9:0
 
 `define StallBus        5:0
 

@@ -67,7 +67,7 @@ module cpu(
     );
 
     cache_i cache_i(
-        .reset(rst_in),
+        .clock(clk_in), .reset(rst_in),
         .ram_busy(ram_if_busy), .ram_ready(ram_if_ready),
         .ram_read(ram_if_read), .ram_data(ram_if_data), .ram_addr(ram_if_addr),
         .read(i_cache_read), .addr(i_cache_addr),

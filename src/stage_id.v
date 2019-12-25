@@ -53,10 +53,6 @@ module stage_id(
 
     reg [`RegBus] imm1, imm2;
 
-    initial begin
-        stall_id <= 0;
-    end
-
     always @(*) begin
         alusel = 3'b000; aluop = 0;
         read1 = 0; reg1_addr = 0; imm1 = 0;
