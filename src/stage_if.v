@@ -4,7 +4,6 @@ module stage_if(
     input wire reset,
 
     output wire stall_if,
-    input wire stall2,
 
     input wire receiving,
     input wire [`MemAddrBus] pc_i,
@@ -23,10 +22,6 @@ module stage_if(
     reg [`MemAddrBus] pc;
 
     assign stall_if = br_wait || (receiving && !ram_ready);
-
-    initial begin
-        ram_read = 0;
-    end
 
     always @(*) begin
         if (reset || br_wait || !receiving) begin

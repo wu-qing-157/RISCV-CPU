@@ -39,9 +39,8 @@ module stage_ex(
     wire [`RegBus] jump_ret;
 
     always @(*) begin
-        if (reset || alusel != 3'b001) begin
-            logic_ret = 0;
-        end else begin
+        logic_ret = 0;
+        if (!reset && alusel == 3'b001) begin
             case (aluop)
                 0: logic_ret = op1 | op2;
                 1: logic_ret = op1 & op2;
@@ -51,9 +50,8 @@ module stage_ex(
     end
 
     always @(*) begin
-        if (reset || alusel != 3'b010) begin
-            shift_ret = 0;
-        end else begin
+        shift_ret = 0;
+        if (!reset && alusel == 3'b010) begin
             case (aluop)
                 0: shift_ret = op1 << op2[4:0];
                 1: shift_ret = op1 >> op2[4:0];
@@ -63,9 +61,8 @@ module stage_ex(
     end
 
     always @(*) begin
-        if (reset || alusel != 3'b100) begin
-            arith_ret = 0;
-        end else begin
+        arith_ret = 0;
+        if (!reset && alusel == 3'b100) begin
             case (aluop)
                 0: arith_ret = op1+op2;
                 1: arith_ret = op1-op2;
@@ -99,9 +96,11 @@ module stage_ex(
     always @(*) begin
         load = 0;
         store = 0;
-        if (reset || alusel != 3'b111) begin
-            mem_ret = 0;
-        end else begin
+        mem_ret = 0;
+        mem_signed = 0;
+        mem_length = 0;
+        mem_write_data = 0;
+        if (!reset && alusel == 3'b111) begin
             case (aluop)
                 0: begin load = 1; mem_length = 1; mem_signed = 1; end // LB
                 1: begin load = 1; mem_length = 2; mem_signed = 1; end // LH
@@ -123,7 +122,7 @@ module stage_ex(
             regw_addr_o = 0;
         end else begin
             write_o = write_i;
-            regw_addr_o <= regw_addr_i;
+            regw_addr_o = regw_addr_i;
             case (alusel)
                 3'b001: regw_data = logic_ret; // LOGIC
                 3'b010: regw_data = shift_ret; // SHIFT
