@@ -44,14 +44,6 @@ module ctrl_mem(
     assign ram_addr = addr | cur;
     assign ram_w_data = write_data[cur];
 
-    initial begin
-        cur <= 0;
-        if_busy <= 0;
-        mem_busy <= 0;
-        if_ready <= 0;
-        mem_ready <= 0;
-    end
-
     always @(posedge clock) begin
         if (reset) begin
             cur <= 0;

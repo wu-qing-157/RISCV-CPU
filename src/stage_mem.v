@@ -32,24 +32,23 @@ module stage_mem(
     output reg [`RegBus] regw_data_o
 );
 
-    initial begin
-        ram_read = 0;
-        ram_write = 0;
-    end
-
     always @(*) begin
+        stall_mem = 0;
         write_o = write_i;
         regw_addr_o = regw_addr_i;
+        regw_data_o = 0;
+        ram_read = 0;
+        ram_write = 0;
+        ram_addr = 0;
+        ram_length = 0;
+        ram_signed = 0;
+        ram_data_o = 0;
         if (reset) begin
-            stall_mem = 0;
             write_o = 0;
             regw_addr_o = 0;
-            regw_data_o = 0;
         end else if (load) begin
             if (ram_ready) begin
-                stall_mem = 0;
                 regw_data_o = ram_data_i;
-                ram_read = 0;
             end else begin
                 stall_mem = 1;
                 if (!ram_busy) begin
@@ -60,10 +59,7 @@ module stage_mem(
                 end
             end
         end else if (store) begin
-            if (ram_ready) begin
-                stall_mem = 0;
-                ram_write = 0;
-            end else begin
+            if (!ram_ready) begin
                 stall_mem = 1;
                 if (!ram_busy) begin
                     ram_write = 1;

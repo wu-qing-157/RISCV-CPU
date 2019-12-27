@@ -5,7 +5,7 @@
 |Feature|Status|
 |----|----|
 |Simulation Correct Output|__Test OK__|
-|FPGA Correct Output|Pending mem_ctrl reconstruct|
+|FPGA Correct Output|Seems OK, pending further br_wait optimization|
 |4-Circle IF|No major work|
 |ICache|__Test OK__|
 |DCache|Not started|
@@ -42,10 +42,13 @@
 + 2019.12.09 Fix some (maybe meaningless) bugs
 + 2019.12.11 Decrease time slack to 4.865ns (reconstruct branch)
 + 2019.12.12 Delay br one more cycle (not very useful)
++ 2019.12.25 Reconstruct cache and fix all inferring latch
++ 2019.12.26 Pass several tests on FPGA
++ 2019.12.27 Invalidate cache_i when resetting
 
 ## Test Cases
 
-Test Name|aedf0cf|1f7a93d|Current
+Test Name|aedf0cf|1f7a93d|e9bd94e3
 ----|----|----|---
 basicopt1|6432481|3921803|4303755
 bulgarian|9073277|5531041|6041243
