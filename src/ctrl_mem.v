@@ -3,6 +3,7 @@
 module ctrl_mem(
     input wire clock,
     input wire reset,
+    input wire if_discard,
 
     input wire if_read,
     input wire [`MemAddrBus] if_addr,
@@ -31,8 +32,10 @@ module ctrl_mem(
     reg [2:0] cur;
     reg [`ByteBus] ret [2:0];
 
-    wire [2:0] tot = (mem_read || mem_write) ? mem_length:if_read ? 4:0;
-    wire [`MemAddrBus] addr = (mem_read || mem_write) ? mem_addr:if_read ? if_addr:0;
+    wire mem_working = mem_read || mem_write;
+
+    wire [2:0] tot = mem_working ? mem_length:if_read ? 4:0;
+    wire [`MemAddrBus] addr = mem_working ? mem_addr:if_read ? if_addr:0;
 
     wire [`ByteBus] write_data[3:0];
     assign write_data[0] = mem_data_i[7:0];
@@ -45,7 +48,7 @@ module ctrl_mem(
     assign ram_w_data = write_data[cur];
 
     always @(posedge clock) begin
-        if (reset) begin
+        if (reset || (if_discard && !mem_working)) begin
             cur <= 0;
             if_busy <= 0;
             if_ready <= 0;
