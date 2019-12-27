@@ -26,11 +26,19 @@ module cpu(
 // - 0x30004 read: read clocks passed since cpu starts (in dword, 4 bytes)
 // - 0x30004 write: indicates program stop (will output '\0' through uart tx)
 
+    wire reset = rst_in || !rdy_in;
+    assign dbgreg_dout = reset;
+
+    wire ex_br;
+    wire [`MemAddrBus] br_addr;
+
     wire [5:0] stall;
     wire stall_if, stall_id, stall_ex, stall_mem;
 
+    wire br = ex_br && !stall[3];
+
     ctrl_stall ctrl_stall_(
-        .reset(rst_in), .stall(stall),
+        .reset(reset), .stall(stall),
         .stall_if(stall_if), .stall_id(stage_id), .stall_ex(stall_ex), .stall_mem(stall_mem)
     );
 
@@ -53,7 +61,7 @@ module cpu(
     wire [`MemDataBus] i_cache_data;
 
     ctrl_mem ctrl_mem_(
-        .clock(clk_in), .reset(rst_in),
+        .clock(clk_in), .reset(reset), .if_discard(br),
         .ram_rw(mem_wr), .ram_addr(mem_a), .ram_w_data(mem_dout), .ram_r_data(mem_din),
         .if_busy(ram_if_busy),
         .if_read(ram_if_read), .if_addr(ram_if_addr),
@@ -65,7 +73,7 @@ module cpu(
     );
 
     cache_i cache_i(
-        .reset(rst_in),
+        .clock(clk_in), .reset(reset),
         .ram_busy(ram_if_busy), .ram_ready(ram_if_ready),
         .ram_read(ram_if_read), .ram_data(ram_if_data), .ram_addr(ram_if_addr),
         .read(i_cache_read), .addr(i_cache_addr),
@@ -77,19 +85,16 @@ module cpu(
     wire [`MemAddrBus] if_pc_o;
     wire [`InstBus] if_inst_o;
 
-    wire br;
-    wire [`MemAddrBus] br_addr;
 
     reg_pc reg_pc_(
-        .clock(clk_in), .reset(rst_in), .stall0(stall[0]), .stall2(stall[2]),
+        .clock(clk_in), .reset(reset), .stall0(stall[0]),
         .br(br), .br_addr(br_addr),
         .sending(reg_if), .pc_o(reg_if_pc)
     );
 
     stage_if stage_if_(
-        .reset(rst_in), .stall_if(stall_if), .stall2(stall[2]),
+        .reset(reset), .stall_if(stall_if),
         .receiving(reg_if), .pc_i(reg_if_pc), .pc_o(if_pc_o), .inst_o(if_inst_o),
-        .br(br), .br_addr(br_addr),
         .ram_read(i_cache_read), .ram_addr(i_cache_addr),
         .ram_ready(i_cache_ready), .ram_data(i_cache_data)
     );
@@ -110,9 +115,12 @@ module cpu(
     wire id_write;
     wire [`RegAddrBus] id_regw_addr;
     wire [`RegBus] id_mem_offset;
+    wire [`MemAddrBus] id_br_addr;
+    wire [`MemAddrBus] id_br_offset;
 
     pipe_if_id pipe_if_id_(
-        .clock(clk_in), .reset(rst_in), .stall(stall[2:1]),
+        .clock(clk_in), .reset(reset), .discard(br),
+        .stall(stall[2:1]),
         .pc_i(if_pc_o), .inst_i(if_inst_o),
         .pc_o(id_pc), .inst_o(id_inst)
     );
@@ -132,25 +140,31 @@ module cpu(
     wire [`MemDataBus] ex_mem_write_data;
     wire [2:0] ex_mem_length;
     wire ex_mem_signed;
+    wire [`MemAddrBus] ex_br_addr_i;
+    wire [`MemAddrBus] ex_br_offset;
 
     pipe_id_ex pipe_id_ex_(
-        .clock(clk_in), .reset(rst_in), .stall(stall[3:2]),
+        .clock(clk_in), .reset(reset), .discard(br),
+        .stall(stall[3:2]),
         .alusel_i(id_alusel), .aluop_i(id_aluop),
         .op1_i(id_op1), .op2_i(id_op2), .link_addr_i(id_link_addr),
         .write_i(id_write), .regw_addr_i(id_regw_addr), .mem_offset_i(id_mem_offset),
+        .br_addr_i(id_br_addr), .br_offset_i(id_br_offset),
         .alusel_o(ex_alusel), .aluop_o(ex_aluop),
         .op1_o(ex_op1), .op2_o(ex_op2), .link_addr_o(ex_link_addr),
-        .write_o(ex_write_i), .regw_addr_o(ex_regw_addr_i), .mem_offset_o(ex_mem_offset)
+        .write_o(ex_write_i), .regw_addr_o(ex_regw_addr_i), .mem_offset_o(ex_mem_offset),
+        .br_addr_o(ex_br_addr_i), .br_offset_o(ex_br_offset)
     );
 
     stage_ex stage_ex_(
-        .reset(rst_in), .stall_ex(stall_ex),
+        .reset(reset), .stall_ex(stall_ex),
         .alusel(ex_alusel), .aluop(ex_aluop),
         .op1(ex_op1), .op2(ex_op2), .link_addr(ex_link_addr),
         .write_i(ex_write_i), .regw_addr_i(ex_regw_addr_i), .mem_offset(ex_mem_offset),
         .load(ex_load), .store(ex_store),
         .write_o(ex_write_o), .regw_addr_o(ex_regw_addr_o), .regw_data(ex_regw_data),
-        .mem_write_data(ex_mem_write_data), .mem_length(ex_mem_length), .mem_signed(ex_mem_signed)
+        .mem_write_data(ex_mem_write_data), .mem_length(ex_mem_length), .mem_signed(ex_mem_signed),
+        .br(ex_br), .br_addr_i(ex_br_addr_i), .br_offset(ex_br_offset), .br_addr_o(br_addr)
     );
 
     wire mem_write_i;
@@ -165,7 +179,7 @@ module cpu(
     wire [`RegBus] mem_regw_data_o;
 
     pipe_ex_mem pipe_ex_mem_(
-        .clock(clk_in), .reset(rst_in), .stall(stall[4:3]),
+        .clock(clk_in), .reset(reset), .stall(stall[4:3]),
         .write_i(ex_write_o), .regw_addr_i(ex_regw_addr_o), .regw_data_i(ex_regw_data),
         .load_i(ex_load), .store_i(ex_store),
         .mem_write_data_i(ex_mem_write_data), .mem_length_i(ex_mem_length),
@@ -176,7 +190,7 @@ module cpu(
     );
 
     stage_mem stage_mem_(
-        .reset(rst_in), .stall_mem(stall_mem),
+        .reset(reset), .stall_mem(stall_mem),
         .write_i(mem_write_i), .regw_addr_i(mem_regw_addr_i), .regw_data_i(mem_regw_data_i),
         .addr(mem_regw_data_i), .load(mem_load), .store(mem_store), .data(mem_data),
         .length(mem_length), .signed_(mem_signed),
@@ -187,11 +201,11 @@ module cpu(
     );
 
     stage_id stage_id_(
-        .reset(rst_in), .stall_id(stage_id),
+        .reset(reset), .stall_id(stage_id),
         .pc(id_pc), .inst(id_inst),
         .read1(id_read1), .reg1_addr(id_reg1_addr), .reg1_data(id_reg1_data),
         .read2(id_read2), .reg2_addr(id_reg2_addr), .reg2_data(id_reg2_data),
-        .br(br), .br_addr(br_addr),
+        .br_addr(id_br_addr), .br_offset(id_br_offset),
         .alusel(id_alusel), .aluop(id_aluop),
         .op1(id_op1), .op2(id_op2), .link_addr(id_link_addr),
         .write(id_write), .regw_addr(id_regw_addr), .mem_offset(id_mem_offset),
@@ -205,13 +219,13 @@ module cpu(
     wire [`RegBus] wb_regw_data;
 
     pipe_mem_wb pipe_mem_wb_(
-        .clock(clk_in), .reset(rst_in), .stall(stall[5:4]),
+        .clock(clk_in), .reset(reset), .stall(stall[5:4]),
         .write_i(mem_write_o), .regw_addr_i(mem_regw_addr_o), .regw_data_i(mem_regw_data_o),
         .write_o(wb_write), .regw_addr_o(wb_regw_addr), .regw_data_o(wb_regw_data)
     );
 
     reg_file reg_file_(
-        .clock(clk_in), .reset(rst_in),
+        .clock(clk_in), .reset(reset),
         .write(wb_write), .regw_addr(wb_regw_addr), .regw_data(wb_regw_data),
         .read1(id_read1), .reg1_addr(id_reg1_addr), .reg1_data(id_reg1_data),
         .read2(id_read2), .reg2_addr(id_reg2_addr), .reg2_data(id_reg2_data)

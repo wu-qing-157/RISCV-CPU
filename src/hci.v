@@ -248,8 +248,10 @@ always @*
               d_wr_en = 1'b1;
             end
             $display("IO:Return");
+`ifdef iverilog
             $timeformat(-9, 1, "ns", 12);
             $display("%t", $realtime);
+`endif
             $finish;
           end
         endcase
@@ -563,7 +565,7 @@ always @*
 
     endcase
     end
-    
+
   end
 
 assign active      = (q_state != S_DISABLED);
