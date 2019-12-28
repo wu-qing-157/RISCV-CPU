@@ -47,7 +47,7 @@
 + 2019.12.27 Invalidate cache_i when resetting
 + 2019.12.27 Pass all tests on FPGA
 + 2019.12.27 Optimize some codes
-+ 2019.12.28 Add an extra cycle to mem_ctrl
++ 2019.12.28 Add an extra cycle to cache miss to reduce cycle time
 
 ## Simulation Test Cases
 
