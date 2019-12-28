@@ -16,6 +16,7 @@ module cache_i(
     output reg [`MemDataBus] data
 );
 
+    reg miss;
     assign ram_addr = addr;
 
     reg [`ICacheNum-1:0] cache_valid;
@@ -33,18 +34,22 @@ module cache_i(
 
     always @(*) begin
         if (reset || !read) begin
-            ready = 0; data = 0; ram_read = 0;
+            ready = 0; data = 0; miss = 0;
         end else begin
             if (cache_valid[addr_index] && cache_tag[addr_index] == addr_tag) begin
-                ready = 1; data = cache_data[addr_index]; ram_read = 0;
+                ready = 1; data = cache_data[addr_index]; miss = 0;
             end else if (ram_ready) begin
-                ready = 1; data = ram_data; ram_read = 0;
+                ready = 1; data = ram_data; miss = 0;
             end else if (!ram_busy) begin
-                ready = 0; data = 0; ram_read = 1;
+                ready = 0; data = 0; miss = 1;
             end else begin
-                ready = 0; data = 0; ram_read = 0;
+                ready = 0; data = 0; miss = 0;
             end
         end
+    end
+
+    always @(posedge clock) begin
+        ram_read <= !reset && miss;
     end
 
     always @(posedge clock) begin
