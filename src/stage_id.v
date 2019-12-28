@@ -3,7 +3,7 @@
 module stage_id(
     input wire reset,
 
-    output reg stall_id,
+    output wire stall_id,
 
     input wire [`MemAddrBus] pc,
     input wire [`InstBus] inst,
@@ -24,7 +24,6 @@ module stage_id(
     output reg [`RegAddrBus] regw_addr,
     output reg [`RegBus] mem_offset,
 
-    output reg br,
     output reg [`MemAddrBus] br_addr,
     output reg [`MemAddrBus] br_offset,
 
@@ -53,16 +52,12 @@ module stage_id(
 
     reg [`RegBus] imm1, imm2;
 
-    initial begin
-        stall_id <= 0;
-    end
-
     always @(*) begin
         alusel = 3'b000; aluop = 0;
         read1 = 0; reg1_addr = 0; imm1 = 0;
         read2 = 0; reg2_addr = 0; imm2 = 0;
         write = 0; regw_addr = 0;
-        br = 0; br_addr = 0; br_offset = 0; link_addr = 0;
+        br_addr = 0; br_offset = 0; link_addr = 0;
         mem_offset = 0;
         if (!reset) begin
             case (opcode)
@@ -81,19 +76,19 @@ module stage_id(
                 7'b1101111: begin
                     alusel = 3'b110;
                     write = 1; regw_addr = rd;
-                    br = 1; br_addr = pc; br_offset = J_imm; link_addr = pc;
+                    br_addr = pc; br_offset = J_imm; link_addr = pc;
                 end // JAL
                 7'b1100111: begin
                     alusel = 3'b110;
                     read1 = 1; reg1_addr = rs;
                     write = 1; regw_addr = rd;
-                    br = 1; br_addr = op1; br_offset = I_imm; link_addr = pc;
+                    br_addr = op1; br_offset = I_imm; link_addr = pc;
                 end // JALR
                 7'b1100011: begin
                     alusel = 3'b101;
                     read1 = 1; reg1_addr = rs;
                     read2 = 1; reg2_addr = rt;
-                    br = 1; br_addr = pc; br_offset = B_imm;
+                    br_addr = pc; br_offset = B_imm;
                     case (funct3)
                         3'b000: aluop = 0; // BEQ
                         3'b001: aluop = 1; // BNE
@@ -176,8 +171,11 @@ module stage_id(
         end
     end
 
+    reg stall_id1, stall_id2;
+    assign stall_id = stall_id1 || stall_id2;
+
     always @(*) begin
-        stall_id = 0;
+        stall_id1 = 0;
         if (reset) begin
             op1 = 0;
         end else if (read1 == 0) begin
@@ -185,7 +183,7 @@ module stage_id(
         end else if (reg1_addr == 0) begin
             op1 = 0;
         end else if (ex_load && ex_regw_addr == reg1_addr) begin
-            op1 = 0; stall_id = 1;
+            op1 = 0; stall_id1 = 1;
         end else if (ex_write && ex_regw_addr == reg1_addr) begin
             op1 = ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg1_addr) begin
@@ -193,6 +191,10 @@ module stage_id(
         end else begin
             op1 = reg1_data;
         end
+    end
+
+    always @(*) begin
+        stall_id2 = 0;
         if (reset) begin
             op2 = 0;
         end else if (read2 == 0) begin
@@ -200,7 +202,7 @@ module stage_id(
         end else if (reg2_addr == 0) begin
             op2 = 0;
         end else if (ex_load && ex_regw_addr == reg2_addr) begin
-            op2 = 0; stall_id = 1;
+            op2 = 0; stall_id2 = 1;
         end else if (ex_write && ex_regw_addr == reg2_addr) begin
             op2 = ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg2_addr) begin

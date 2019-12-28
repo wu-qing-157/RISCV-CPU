@@ -3,6 +3,7 @@
 module pipe_id_ex(
     input wire clock,
     input wire reset,
+    input wire discard,
 
     input wire [3:2] stall,
 
@@ -30,7 +31,7 @@ module pipe_id_ex(
 );
 
     always @(posedge clock) begin
-        if (reset || (stall[2] && !stall[3])) begin
+        if (reset || discard || (stall[2] && !stall[3])) begin
             alusel_o <= 0;
             aluop_o <= 0;
             op1_o <= 0;
