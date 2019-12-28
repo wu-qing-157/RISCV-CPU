@@ -46,10 +46,11 @@
 + 2019.12.26 Pass several tests on FPGA
 + 2019.12.27 Invalidate cache_i when resetting
 + 2019.12.27 Pass all tests on FPGA
++ 2019.12.27 Optimize some codes
 
 ## Simulation Test Cases
 
-Test Name|aedf0cf|1f7a93d|e9bd94e3|Current
+Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef
 ----|----|----|----|----
 basicopt1|6432481|3921803|4303755|4319783
 bulgarian|9073277|5531041|6041243|6129043
@@ -65,7 +66,7 @@ queens|5773345|3268907|3408607|3459811
 
 ## FPGA Test Cases
 
-Test Name|Current
+Test Name|8a0e2ef
 ----|----
 array_test1|__Pass__
 array_test2|__Pass__

@@ -73,9 +73,11 @@ module ctrl_mem(
                         2: mem_data_o <= {{16{mem_signed && ram_r_data[7]}}, ram_r_data, ret[0]};
                         4: mem_data_o <= {ram_r_data, ret[2], ret[1], ret[0]};
                     endcase
+                    if_busy <= 0;
                 end else begin
                     if_ready <= 1;
                     if_data <= {ram_r_data, ret[2], ret[1], ret[0]};
+                    mem_busy <= 0;
                 end
             end
         end else if (tot && ram_rw) begin
@@ -88,6 +90,7 @@ module ctrl_mem(
             if (cur == tot-1) begin
                 mem_ready <= 1;
                 cur <= 0;
+                if_busy <= 0;
             end else begin
                 cur <= cur+1;
             end

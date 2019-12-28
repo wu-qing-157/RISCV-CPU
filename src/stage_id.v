@@ -3,7 +3,7 @@
 module stage_id(
     input wire reset,
 
-    output reg stall_id,
+    output wire stall_id,
 
     input wire [`MemAddrBus] pc,
     input wire [`InstBus] inst,
@@ -171,8 +171,11 @@ module stage_id(
         end
     end
 
+    reg stall_id1, stall_id2;
+    assign stall_id = stall_id1 || stall_id2;
+
     always @(*) begin
-        stall_id = 0;
+        stall_id1 = 0;
         if (reset) begin
             op1 = 0;
         end else if (read1 == 0) begin
@@ -180,7 +183,7 @@ module stage_id(
         end else if (reg1_addr == 0) begin
             op1 = 0;
         end else if (ex_load && ex_regw_addr == reg1_addr) begin
-            op1 = 0; stall_id = 1;
+            op1 = 0; stall_id1 = 1;
         end else if (ex_write && ex_regw_addr == reg1_addr) begin
             op1 = ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg1_addr) begin
@@ -188,6 +191,10 @@ module stage_id(
         end else begin
             op1 = reg1_data;
         end
+    end
+
+    always @(*) begin
+        stall_id2 = 0;
         if (reset) begin
             op2 = 0;
         end else if (read2 == 0) begin
@@ -195,7 +202,7 @@ module stage_id(
         end else if (reg2_addr == 0) begin
             op2 = 0;
         end else if (ex_load && ex_regw_addr == reg2_addr) begin
-            op2 = 0; stall_id = 1;
+            op2 = 0; stall_id2 = 1;
         end else if (ex_write && ex_regw_addr == reg2_addr) begin
             op2 = ex_regw_data;
         end else if (mem_write && mem_regw_addr == reg2_addr) begin
