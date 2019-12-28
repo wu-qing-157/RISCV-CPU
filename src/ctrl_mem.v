@@ -48,7 +48,7 @@ module ctrl_mem(
     assign ram_w_data = write_data[cur];
 
     always @(posedge clock) begin
-        if (reset || (if_discard && !mem_working)) begin
+        if (reset || ((!if_read || if_discard) && !mem_read && !mem_write)) begin
             cur <= 0;
             if_busy <= 0;
             if_ready <= 0;
