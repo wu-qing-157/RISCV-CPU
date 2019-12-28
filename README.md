@@ -1,15 +1,28 @@
 # RISCV-CPU
 
+## Cycle Details
+
+Description|Cycles
+----|----
+IF (Cache Miss)|7
+IF (Contiguous Cache Miss without Branch)|4
+IF (Cache Hit)|1
+ID|1
+EX|1
+MEM (Write)|length + 2
+MEM (Read)|length + 3
+WB|1
+
 ## Feature Progress
 
-|Feature|Status|
-|----|----|
-|Simulation Correct Output|__Test OK__|
-|FPGA Correct Output|__Test OK__|
-|5-Cycle Cache-Miss IF|No major work|
-|1-Cycle Cache-Hit IF|__Test OK__|
-|DCache|Not started|
-|Branch Prediction|Not started|
+Feature|Status
+----|----
+Simulation Correct Output|__Test OK__
+FPGA Correct Output|__Test OK__
+Optimize IF Cycles|No major work
+1-Cycle Cache-Hit IF|__Test OK__
+DCache|Not started
+Branch Prediction|Not started
 
 ## Timeline
 
@@ -48,22 +61,23 @@
 + 2019.12.27 Pass all tests on FPGA
 + 2019.12.27 Optimize some codes
 + 2019.12.28 Add an extra cycle to cache miss to reduce cycle time
++ 2019.12.28 Add IF-read ahead to mem_ctrl
 
 ## Simulation Test Cases
 
-Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef
-----|----|----|----|----
-basicopt1|6432481|3921803|4303755|4319783
-bulgarian|9073277|5531041|6041243|6129043
-expr|91087|25869|32151|33241
-gcd|13129|7123|7941|8003
-lvalue2|219|219|223|227
-magic|7091975|5631839|5796301|5826219
-manyarguments|353|353|357|361
-multiarray|81339|55637|60289|60573
-pi (1000)|10134767|3296955|3995597|4117307
-qsort (1000)|4787333|2041527|2327071|2363023
-queens|5773345|3268907|3408607|3459811
+Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef|Current
+----|----|----|----|----|----
+basicopt1|6432481|3921803|4303755|4319783|3586405
+bulgarian|9073277|5531041|6041243|6129043|5436831
+expr|91087|25869|32151|33241|30895
+gcd|13129|7123|7941|8003|7171
+lvalue2|219|219|223|227|199
+magic|7091975|5631839|5796301|5826219|5400941
+manyarguments|353|353|357|361|327
+multiarray|81339|55637|60289|60573|51309
+pi (1000)|10134767|3296955|3995597|4117307|3775945
+qsort (1000)|4787333|2041527|2327071|2363023|2165759
+queens|5773345|3268907|3408607|3459811|3298751
 
 ## FPGA Test Cases
 
