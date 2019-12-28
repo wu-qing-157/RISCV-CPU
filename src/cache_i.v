@@ -18,7 +18,7 @@ module cache_i(
 
     assign ram_addr = addr;
 
-    reg cache_valid [`ICacheNum-1:0];
+    reg [`ICacheNum-1:0] cache_valid;
     reg [`ICacheTagBus] cache_tag [`ICacheNum-1:0];
     reg [`MemDataBus] cache_data [`ICacheNum-1:0];
 
@@ -48,7 +48,9 @@ module cache_i(
     end
 
     always @(posedge clock) begin
-        if (ram_ready) begin
+        if (reset) begin
+            cache_valid <= 0;
+        end else if (ram_ready) begin
             cache_valid[addr_index] <= 1;
             cache_tag[addr_index] <= addr_tag;
             cache_data[addr_index] <= ram_data;

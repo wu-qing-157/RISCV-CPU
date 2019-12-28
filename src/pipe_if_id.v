@@ -3,6 +3,7 @@
 module pipe_if_id(
     input wire clock,
     input wire reset,
+    input wire discard,
 
     input wire [2:1] stall,
 
@@ -13,19 +14,11 @@ module pipe_if_id(
     output reg [`InstBus] inst_o
 );
 
-    reg [31:0] cur;
-
-    initial cur = 0;
-
     always @(posedge clock) begin
-        if (reset || (stall[1] && !stall[2])) begin
+        if (reset || discard || (stall[1] && !stall[2])) begin
             pc_o <= 0;
             inst_o <= 0;
         end else if (!stall[1] && !stall[2]) begin
-            if (inst_i != 0) begin
-                cur = cur+1;
-                // $display("%h inst %h %h", cur, pc_i, inst_i);
-            end
             pc_o <= pc_i;
             inst_o <= inst_i;
         end
