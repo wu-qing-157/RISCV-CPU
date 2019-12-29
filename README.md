@@ -64,6 +64,7 @@ Branch Prediction|Not started
 + 2019.12.28 Add IF-read ahead to mem_ctrl
 + 2019.12.28 Fix cache offset
 + 2019.12.29 Add DCache (pass some tests)
++ 2019.12.29 Reduce Time Slack & Pass tests on FPGA without input
 
 ## Simulation Test Cases
 
@@ -83,22 +84,22 @@ queens|5773345|3268907|3408607|3459811|3298751|2106301
 
 ## FPGA Test Cases
 
-Test Name|8a0e2ef
-----|----
-array_test1|__Pass__
-array_test2|__Pass__
-basicopt1|__Pass__
-bulgarian|__Pass__
-expr|__Pass__
-gcd|__Pass__
-hanoi|__Pass__
-lvalue2|__Pass__
-magic|__Pass__
-manyarguments|__Pass__
-multiarray|__Pass__
-pi|__Pass__
-qsort|__Pass__
-queens|__Pass__
-statement_test|__Pass__
-superloop|__Pass__
-tak|__Pass__
+Test Name|8a0e2ef|Current
+----|----|----
+array_test1|__Pass__|Fail
+array_test2|__Pass__|Fail
+basicopt1|__Pass__|__Pass__
+bulgarian|__Pass__|__Pass__
+expr|__Pass__|__Pass__
+gcd|__Pass__|__Pass__
+hanoi|__Pass__|Fail
+lvalue2|__Pass__|__Pass__
+magic|__Pass__|__Pass__
+manyarguments|__Pass__|__Pass__
+multiarray|__Pass__|__Pass__
+pi|__Pass__|__Pass__
+qsort|__Pass__|__Pass__
+queens|__Pass__|__Pass__
+statement_test|__Pass__|Fail
+superloop|__Pass__|__Pass__
+tak|__Pass__|Fail

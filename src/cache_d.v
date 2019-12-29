@@ -8,11 +8,11 @@ module cache_d(
     input wire ram_ready,
     output reg ram_read,
     output reg ram_write,
-    output wire [2:0] ram_length,
-    output wire ram_signed,
-    output wire [`MemAddrBus] ram_addr,
+    output reg [2:0] ram_length,
+    output reg ram_signed,
+    output reg [`MemAddrBus] ram_addr,
     input wire [`MemDataBus] ram_data_i,
-    output wire [`MemDataBus] ram_data_o,
+    output reg [`MemDataBus] ram_data_o,
 
     input wire read,
     input wire write,
@@ -89,17 +89,21 @@ module cache_d(
         end
     end
 
-    assign ram_addr = todo == 3 ? {cache_tag[addr_index], addr_index, 2'b0}:addr;
-    assign ram_length = todo == 3 ? 4:length;
-    assign ram_signed = signed_;
-    assign ram_data_o = todo == 3 ? cache_data_w:data_i;
+    wire [`MemAddrBus] delay_addr = todo == 3 ? {cache_tag[addr_index], addr_index, 2'b0}:addr;
+    wire [2:0] delay_length = todo == 3 ? 4:length;
+    wire delay_signed = signed_;
+    wire [`MemDataBus] delay_data_o = todo == 3 ? cache_data_w:data_i;
     reg delay_read, delay_write;
-    reg [2:0] delay_length;
+    reg [2:0] history_length;
 
     always @(posedge clock) begin
         delay_read <= todo == 1;
         delay_write <= todo[1];
-        delay_length <= ram_length;
+        history_length <= ram_length;
+        ram_length <= delay_length;
+        ram_addr <= delay_addr;
+        ram_signed <= delay_signed;
+        ram_data_o <= delay_data_o;
     end
 
     always @(*) begin
@@ -151,14 +155,14 @@ module cache_d(
                 cache_tag[addr_index] <= addr_tag;
                 cache_data[addr_index] <= data_i;
             end
-        end else if (delay_read && ram_ready && delay_length == 4) begin
+        end else if (delay_read && ram_ready && history_length == 4) begin
             //$display("update new read");
             cache_valid[addr_index] <= 1;
             cache_dirty[addr_index] <= 0;
             cache_tag[addr_index] <= addr_tag;
             cache_data[addr_index] <= ram_data_i;
         end else if (delay_write && ram_ready) begin
-            if (delay_length == 4) begin
+            if (history_length == 4) begin
                 //$display("update flush");
                 cache_dirty[addr_index] <= 0;
             end else begin
