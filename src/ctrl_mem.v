@@ -32,7 +32,10 @@ module ctrl_mem(
     reg [2:0] cur;
     reg [`ByteBus] ret [2:0];
 
-    wire mem_working = (mem_read || mem_write) && !mem_ready;
+    wire mem_read_working = mem_read && !mem_ready;
+    wire if_working = !mem_read_working && if_read && !if_ready;
+    wire mem_write_working = !if_working && mem_write && !mem_ready;
+    wire mem_working = mem_read_working || mem_write_working;
 
     reg [2:0] tot;
     reg [`MemAddrBus] addr;
@@ -43,7 +46,7 @@ module ctrl_mem(
     assign write_data[2] = mem_data_i[23:16];
     assign write_data[3] = mem_data_i[31:24];
 
-    assign ram_rw = mem_write && !mem_ready;
+    assign ram_rw = mem_write_working;
     assign ram_w_data = write_data[cur];
 
     reg ahead, ahead_continue;
@@ -65,7 +68,7 @@ module ctrl_mem(
     end
 
     always @(*) begin
-        if (mem_read || mem_write) begin
+        if (mem_working) begin
             ram_addr = addr+cur;
             ahead_cur = 0;
         end else if (ahead) begin
@@ -100,8 +103,8 @@ module ctrl_mem(
             mem_ready <= 0;
         end else if (tot != 0 && !ram_rw) begin
             if (cur == 0) begin
-                if_busy <= mem_read;
-                mem_busy <= !mem_read;
+                if_busy <= mem_read_working;
+                mem_busy <= if_working;
                 if_ready <= 0;
                 mem_ready <= 0;
                 ahead <= 0;
@@ -115,7 +118,14 @@ module ctrl_mem(
                 cur <= cur+1;
             end else begin
                 cur <= 0;
-                if (mem_read) begin
+                if (if_working) begin
+                    if_ready <= 1;
+                    if_data <= {ram_r_data, ret[2], ret[1], ret[0]};
+                    mem_busy <= 0;
+                    ahead <= 1;
+                    ahead_continue <= 1;
+                    ahead_addr <= addr+4;
+                end else begin
                     mem_ready <= 1;
                     case (tot)
                         1: mem_data_o <= {{24{mem_signed && ram_r_data[7]}}, ram_r_data};
@@ -123,13 +133,6 @@ module ctrl_mem(
                         4: mem_data_o <= {ram_r_data, ret[2], ret[1], ret[0]};
                     endcase
                     if_busy <= 0;
-                end else begin
-                    if_ready <= 1;
-                    if_data <= {ram_r_data, ret[2], ret[1], ret[0]};
-                    mem_busy <= 0;
-                    ahead <= 1;
-                    ahead_continue <= 1;
-                    ahead_addr <= addr+4;
                 end
             end
         end else if (tot != 0 && ram_rw) begin
