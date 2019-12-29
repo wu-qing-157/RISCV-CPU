@@ -60,7 +60,7 @@ module cache_d(
                     4: data_o = cache_data_w;
                 endcase
             end else begin
-                if (!addr[17] && cache_dirty[addr_index] && !ram_ready) begin
+                if (!addr[17] && length == 4 && cache_dirty[addr_index] && !ram_ready) begin
                     todo = 3;
                 end else if (ram_read && ram_ready) begin
                     ready = 1; data_o = ram_data_i;
@@ -127,25 +127,11 @@ module cache_d(
         end
     end
 
-    reg [`MemAddrBus] last;
-
     always @(posedge clock) begin
-        /*if ((read || write) && last != addr) begin
-            last <= addr;
-            $display("%t %b %h(%b) %h valid %b dirty %b tag %b hit %b dirty %b ready %b exec %b",
-                $realtime, write, addr, addr, length,
-                cache_valid[addr_index], cache_dirty[addr_index], cache_tag[addr_index],
-                !addr[17] && cache_valid[addr_index] && cache_tag[addr_index] == addr_tag,
-                !addr[17] && cache_dirty[addr_index] && !ram_ready,
-                ram_read && ram_ready,
-                !ram_busy);
-        end*/
         if (reset) begin
             cache_valid <= 0;
             cache_dirty <= 0;
-            last <= 0;
         end else if (cache_write) begin
-            //$display("update local write");
             if (length != 4) begin
                 cache_dirty[addr_index] <= 1;
                 cache_data[addr_index] <= cache_write_data;
@@ -156,19 +142,12 @@ module cache_d(
                 cache_data[addr_index] <= data_i;
             end
         end else if (delay_read && ram_ready && history_length == 4) begin
-            //$display("update new read");
             cache_valid[addr_index] <= 1;
             cache_dirty[addr_index] <= 0;
             cache_tag[addr_index] <= addr_tag;
             cache_data[addr_index] <= ram_data_i;
         end else if (delay_write && ram_ready) begin
-            if (history_length == 4) begin
-                //$display("update flush");
-                cache_dirty[addr_index] <= 0;
-            end else begin
-                //cache_valid[addr_index] <= 0;
-                //cache_dirty[addr_index] <= 0;
-            end
+            if (history_length == 4) cache_dirty[addr_index] <= 0;
         end
     end
 

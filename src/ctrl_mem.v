@@ -98,7 +98,7 @@ module ctrl_mem(
             if_ready <= 0;
             mem_busy <= 0;
             mem_ready <= 0;
-        end else if (!if_ready && tot != 0 && !ram_rw) begin
+        end else if (tot != 0 && !ram_rw) begin
             if (cur == 0) begin
                 if_busy <= mem_read;
                 mem_busy <= !mem_read;
@@ -132,7 +132,7 @@ module ctrl_mem(
                     ahead_addr <= addr+4;
                 end
             end
-        end else if (!if_ready && tot != 0 && ram_rw) begin
+        end else if (tot != 0 && ram_rw) begin
             if (cur == 0) begin
                 if_busy <= 1;
                 mem_busy <= 0;

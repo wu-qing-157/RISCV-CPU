@@ -65,41 +65,42 @@ Branch Prediction|Not started
 + 2019.12.28 Fix cache offset
 + 2019.12.29 Add DCache (pass some tests)
 + 2019.12.29 Reduce Time Slack & Pass tests on FPGA without input
++ 2019.12.29 DCache pass all tests on FPGA
 
 ## Simulation Test Cases
 
-Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef|358a5cf|b833ffa
-----|----|----|----|----|----|----
-basicopt1|6432481|3921803|4303755|4319783|3586405|2124699
-bulgarian|9073277|5531041|6041243|6129043|5436831|3195399
-expr|91087|25869|32151|33241|30895|24479
-gcd|13129|7123|7941|8003|7171|4667
-lvalue2|219|219|223|227|199|199
-magic|7091975|5631839|5796301|5826219|5400941|3123099
-manyarguments|353|353|357|361|327|327
-multiarray|81339|55637|60289|60573|51309|37267
-pi (1000)|10134767|3296955|3995597|4117307|3775945|2565651
+Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef|358a5cf|b833ffa|Current
+----|----|----|----|----|----|----|----
+basicopt1|6432481|3921803|4303755|4319783|3586405|2124699|2390183
+bulgarian|9073277|5531041|6041243|6129043|5436831|3195399|2839913
+expr|91087|25869|32151|33241|30895|24479|24593
+gcd|13129|7123|7941|8003|7171|4667|4675
+lvalue2|219|219|223|227|199|199|243
+magic|7091975|5631839|5796301|5826219|5400941|3123099|2454099
+manyarguments|353|353|357|361|327|327|385
+multiarray|81339|55637|60289|60573|51309|37267|43753
+pi (1000)|10134767|3296955|3995597|4117307|3775945|2565651|2581617
 qsort (1000)|4787333|2041527|2327071|2363023|2165759|1271419
-queens|5773345|3268907|3408607|3459811|3298751|2106301
+queens|5773345|3268907|3408607|3459811|3298751|2106301|1735495
 
 ## FPGA Test Cases
 
-Test Name|8a0e2ef|Current
-----|----|----
-array_test1|__Pass__|Fail
-array_test2|__Pass__|Fail
-basicopt1|__Pass__|__Pass__
-bulgarian|__Pass__|__Pass__
-expr|__Pass__|__Pass__
-gcd|__Pass__|__Pass__
-hanoi|__Pass__|Fail
-lvalue2|__Pass__|__Pass__
-magic|__Pass__|__Pass__
-manyarguments|__Pass__|__Pass__
-multiarray|__Pass__|__Pass__
-pi|__Pass__|__Pass__
-qsort|__Pass__|__Pass__
-queens|__Pass__|__Pass__
-statement_test|__Pass__|Fail
-superloop|__Pass__|__Pass__
-tak|__Pass__|Fail
+Test Name|Current
+----|----
+array_test1|__Pass__
+array_test2|__Pass__
+basicopt1|__Pass__
+bulgarian|__Pass__
+expr|__Pass__
+gcd|__Pass__
+hanoi|__Pass__
+lvalue2|__Pass__
+magic|__Pass__
+manyarguments|__Pass__
+multiarray|__Pass__
+pi|__Pass__
+qsort|__Pass__
+queens|__Pass__
+statement_test|__Pass__
+superloop|__Pass__
+tak|__Pass__
