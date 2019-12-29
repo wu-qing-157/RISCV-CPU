@@ -60,6 +60,11 @@ module cpu(
     wire [`MemAddrBus] i_cache_addr;
     wire [`MemDataBus] i_cache_data;
 
+    wire d_cache_read, d_cache_write, d_cache_signed, d_cache_ready;
+    wire [2:0] d_cache_length;
+    wire [`MemAddrBus] d_cache_addr;
+    wire [`MemDataBus] d_cache_data_i, d_cache_data_o;
+
     ctrl_mem ctrl_mem_(
         .clock(clk_in), .reset(reset), .if_discard(br),
         .ram_rw(mem_wr), .ram_addr(mem_a), .ram_w_data(mem_dout), .ram_r_data(mem_din),
@@ -72,12 +77,24 @@ module cpu(
         .mem_ready(ram_mem_ready), .mem_data_o(ram_mem_data_o)
     );
 
-    cache_i cache_i(
+    cache_i cache_i_(
         .clock(clk_in), .reset(reset),
         .ram_busy(ram_if_busy), .ram_ready(ram_if_ready),
         .ram_read(ram_if_read), .ram_data(ram_if_data), .ram_addr(ram_if_addr),
         .read(i_cache_read), .addr(i_cache_addr),
         .ready(i_cache_ready), .data(i_cache_data)
+    );
+
+    cache_d cache_d_(
+        .clock(clk_in), .reset(reset),
+        .ram_busy(ram_mem_busy), .ram_ready(ram_mem_ready),
+        .ram_read(ram_mem_read), .ram_write(ram_mem_write), .ram_length(ram_mem_length),
+        .ram_signed(ram_mem_signed),
+        .ram_addr(ram_mem_addr), .ram_data_i(ram_mem_data_o), .ram_data_o(ram_mem_data_i),
+        .read(d_cache_read), .write(d_cache_write), .length(d_cache_length),
+        .signed_(d_cache_signed),
+        .addr(d_cache_addr), .data_i(d_cache_data_i), .data_o(d_cache_data_o),
+        .ready(d_cache_ready)
     );
 
     wire reg_if;
@@ -195,9 +212,9 @@ module cpu(
         .addr(mem_regw_data_i), .load(mem_load), .store(mem_store), .data(mem_data),
         .length(mem_length), .signed_(mem_signed),
         .write_o(mem_write_o), .regw_addr_o(mem_regw_addr_o), .regw_data_o(mem_regw_data_o),
-        .ram_busy(ram_mem_busy), .ram_ready(ram_mem_ready), .ram_data_i(ram_mem_data_o),
-        .ram_read(ram_mem_read), .ram_write(ram_mem_write), .ram_addr(ram_mem_addr),
-        .ram_data_o(ram_mem_data_i), .ram_length(ram_mem_length), .ram_signed(ram_mem_signed)
+        .ram_ready(d_cache_ready), .ram_data_i(d_cache_data_o),
+        .ram_read(d_cache_read), .ram_write(d_cache_write), .ram_addr(d_cache_addr),
+        .ram_data_o(d_cache_data_i), .ram_length(d_cache_length), .ram_signed(d_cache_signed)
     );
 
     stage_id stage_id_(

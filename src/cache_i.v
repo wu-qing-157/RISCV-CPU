@@ -40,16 +40,20 @@ module cache_i(
                 ready = 1; data = cache_data[addr_index]; miss = 0;
             end else if (ram_ready) begin
                 ready = 1; data = ram_data; miss = 0;
-            end else if (!ram_busy) begin
-                ready = 0; data = 0; miss = 1;
             end else begin
-                ready = 0; data = 0; miss = 0;
+                ready = 0; data = 0; miss = 1;
             end
         end
     end
 
+    reg delay_read;
+
     always @(posedge clock) begin
-        ram_read <= !reset && miss;
+        delay_read <= !reset && miss;
+    end
+
+    always @(*) begin
+        ram_read = delay_read && !ram_busy;
     end
 
     always @(posedge clock) begin

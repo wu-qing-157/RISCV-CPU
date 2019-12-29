@@ -3,7 +3,7 @@
 module stage_mem(
     input wire reset,
 
-    output reg stall_mem,
+    output wire stall_mem,
 
     input wire load,
     input wire store,
@@ -12,7 +12,6 @@ module stage_mem(
     input wire [2:0] length,
     input wire signed_,
 
-    input wire ram_busy,
     input wire ram_ready,
     output reg [`MemAddrBus] ram_addr,
     input wire [`MemDataBus] ram_data_i,
@@ -32,11 +31,11 @@ module stage_mem(
     output reg [`RegBus] regw_data_o
 );
 
+    assign stall_mem = (load || store) && !ram_ready;
+
     always @(*) begin
-        stall_mem = 0;
         write_o = write_i;
         regw_addr_o = regw_addr_i;
-        regw_data_o = 0;
         ram_read = 0;
         ram_write = 0;
         ram_addr = 0;
@@ -47,29 +46,25 @@ module stage_mem(
             write_o = 0;
             regw_addr_o = 0;
         end else if (load) begin
-            if (ram_ready) begin
-                regw_data_o = ram_data_i;
-            end else begin
-                stall_mem = 1;
-                if (!ram_busy) begin
-                    ram_read = 1;
-                    ram_addr = addr;
-                    ram_length = length;
-                    ram_signed = signed_;
-                end
-            end
+            ram_read = 1;
+            ram_addr = addr;
+            ram_length = length;
+            ram_signed = signed_;
         end else if (store) begin
-            if (!ram_ready) begin
-                stall_mem = 1;
-                if (!ram_busy) begin
-                    ram_write = 1;
-                    ram_addr = addr;
-                    ram_length = length;
-                    ram_data_o = data;
-                end
-            end
-        end else begin
+            ram_write = 1;
+            ram_addr = addr;
+            ram_length = length;
+            ram_data_o = data;
+        end
+    end
+
+    always @(*) begin
+        if (reset) begin
+            regw_data_o = 0;
+        end else if (!load) begin
             regw_data_o = regw_data_i;
+        end else begin
+            regw_data_o = ram_data_i;
         end
     end
 

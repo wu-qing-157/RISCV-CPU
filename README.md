@@ -63,10 +63,11 @@ Branch Prediction|Not started
 + 2019.12.28 Add an extra cycle to cache miss to reduce cycle time
 + 2019.12.28 Add IF-read ahead to mem_ctrl
 + 2019.12.28 Fix cache offset
++ 2019.12.29 Add DCache (pass some tests)
 
 ## Simulation Test Cases
 
-Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef|358a5cf|Current
+Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef|358a5cf|b833ffa
 ----|----|----|----|----|----|----
 basicopt1|6432481|3921803|4303755|4319783|3586405|2124699
 bulgarian|9073277|5531041|6041243|6129043|5436831|3195399
