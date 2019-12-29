@@ -32,7 +32,7 @@ module ctrl_mem(
     reg [2:0] cur;
     reg [`ByteBus] ret [2:0];
 
-    wire mem_working = mem_read || mem_write;
+    wire mem_working = (mem_read || mem_write) && !mem_ready;
 
     reg [2:0] tot;
     reg [`MemAddrBus] addr;
@@ -43,7 +43,7 @@ module ctrl_mem(
     assign write_data[2] = mem_data_i[23:16];
     assign write_data[3] = mem_data_i[31:24];
 
-    assign ram_rw = mem_write;
+    assign ram_rw = mem_write && !mem_ready;
     assign ram_w_data = write_data[cur];
 
     reg ahead, ahead_continue;
@@ -52,7 +52,7 @@ module ctrl_mem(
     reg [`ByteBus] ahead_ret [2:0];
 
     always @(*) begin
-        if (mem_read || mem_write) begin
+        if (mem_working) begin
             addr = mem_addr;
             tot = mem_length;
         end else if (if_read) begin
@@ -90,7 +90,7 @@ module ctrl_mem(
 
     always @(posedge clock) begin
         if (ahead) ret[ahead_cur] <= ram_r_data;
-        if (reset || ((!if_read || if_discard) && !mem_read && !mem_write)) begin
+        if (reset || ((!if_read || if_discard) && !mem_working)) begin
             cur <= 0;
             if (ahead_continue) ahead_continue <= 0;
             else ahead <= 0;
@@ -98,7 +98,7 @@ module ctrl_mem(
             if_ready <= 0;
             mem_busy <= 0;
             mem_ready <= 0;
-        end else if (!if_ready && tot != 0 && !ram_rw) begin
+        end else if (tot != 0 && !ram_rw) begin
             if (cur == 0) begin
                 if_busy <= mem_read;
                 mem_busy <= !mem_read;
@@ -132,7 +132,7 @@ module ctrl_mem(
                     ahead_addr <= addr+4;
                 end
             end
-        end else if (!if_ready && tot != 0 && ram_rw) begin
+        end else if (tot != 0 && ram_rw) begin
             if (cur == 0) begin
                 if_busy <= 1;
                 mem_busy <= 0;

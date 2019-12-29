@@ -122,6 +122,11 @@
 `define ICacheNumLog2   7
 `define ICacheTagBytes  16:9
 `define ICacheTagBus    7:0
+`define DCacheBus       8:2
+`define DCacheNum       128
+`define DCacheNumLog2   7
+`define DCacheTagBytes  16:9
+`define DCacheTagBus    7:0
 
 `define StallBus        5:0
 
