@@ -7,19 +7,23 @@ module cache_d(
     input wire ram_busy,
     input wire ram_ready,
     output reg ram_read,
-    output reg ram_write,
     output reg [2:0] ram_length,
     output reg ram_signed,
     output reg [`MemAddrBus] ram_addr,
-    input wire [`MemDataBus] ram_data_i,
-    output reg [`MemDataBus] ram_data_o,
+    input wire [`MemDataBus] ram_data,
+
+    input wire buffer_busy,
+    output reg buffer_write,
+    output reg [2:0] buffer_length,
+    output reg [`MemAddrBus] buffer_addr,
+    output reg [`MemDataBus] buffer_data,
 
     input wire read,
     input wire write,
+    output reg ready,
     input wire [2:0] length,
     input wire signed_,
     input wire [`MemAddrBus] addr,
-    output reg ready,
     input wire [`MemDataBus] data_i,
     output reg [`MemDataBus] data_o
 );
@@ -42,14 +46,16 @@ module cache_d(
     wire [15:0] cache_data_h = cache_data_h_[addr[1]];
     wire [`MemDataBus] cache_data_w = cache_data[addr_index];
 
-    reg [1:0] todo;
+    wire [`MemAddrBus] flush_addr = {cache_tag[addr_index], addr_index, 2'b0};
+    wire [`MemDataBus] flush_data = cache_data[addr_index];
+
+    reg to_read, to_write, to_flush;
     reg cache_write;
 
     always @(*) begin
-        ready = 0;
-        data_o = 0;
+        ready = 0; data_o = 0;
         cache_write = 0;
-        todo = 0;
+        to_read = 0; to_write = 0; to_flush = 0;
         if (reset) begin
         end else if (read) begin
             if (!addr[17] && cache_valid[addr_index] && cache_tag[addr_index] == addr_tag) begin
@@ -59,56 +65,69 @@ module cache_d(
                     2: data_o = {{16{cache_data_h[15] && signed_}}, cache_data_h};
                     4: data_o = cache_data_w;
                 endcase
-            end else begin
-                if (!addr[17] && length == 4 && cache_dirty[addr_index] && !ram_ready) begin
-                    todo = 3;
-                end else if (ram_read && ram_ready) begin
-                    ready = 1; data_o = ram_data_i;
+            end else if (length != 4) begin
+                if (ram_ready) begin
+                    ready = 1; data_o = ram_data;
                 end else begin
-                    todo = 1;
+                    to_read = 1;
+                end
+            end else begin
+                if (ram_ready) begin
+                    ready = 1; data_o = ram_data;
+                end else if (!cache_dirty[addr_index]) begin
+                    to_read = 1;
+                end else if (!buffer_busy) begin
+                    to_read = 1; to_flush = cache_valid[addr_index];
+                end else if (buffer_addr == flush_addr && buffer_data == flush_data) begin
+                    to_read = 1;
                 end
             end
         end else if (write) begin
-            if (length != 4) begin
-                if (!addr[17] && cache_valid[addr_index] && cache_tag[addr_index] == addr_tag) begin
-                    ready = 1; cache_write = 1;
-                end else if (ram_ready) begin
-                    ready = 1;
-                end else begin
-                    todo = 2;
+            if (!addr[17] && cache_valid[addr_index] && cache_tag[addr_index] == addr_tag) begin
+                ready = 1; cache_write = 1;
+            end else if (length != 4) begin
+                if (!buffer_busy) begin
+                    ready = 1; to_write = 1;
                 end
             end else begin
-                if (cache_dirty[addr_index] && cache_tag[addr_index] != addr_tag && !ram_ready) begin
-                    todo = 3;
-                end else begin
+                if (!cache_dirty[addr_index]) begin
                     ready = 1; cache_write = 1;
+                end else if (!buffer_busy) begin
+                    ready = 1; to_flush = cache_valid[addr_index]; cache_write = 1;
                 end
             end
-        end else begin
-            ready = 0; data_o = 0;
         end
     end
 
-    wire [`MemAddrBus] delay_addr = todo == 3 ? {cache_tag[addr_index], addr_index, 2'b0}:addr;
-    wire [2:0] delay_length = todo == 3 ? 4:length;
-    wire delay_signed = signed_;
-    wire [`MemDataBus] delay_data_o = todo == 3 ? cache_data_w:data_i;
-    reg delay_read, delay_write;
+    reg delay_read;
     reg [2:0] history_length;
 
     always @(posedge clock) begin
-        delay_read <= todo == 1;
-        delay_write <= todo[1];
+        delay_read <= to_read;
         history_length <= ram_length;
-        ram_length <= delay_length;
-        ram_addr <= delay_addr;
-        ram_signed <= delay_signed;
-        ram_data_o <= delay_data_o;
+        ram_length <= length;
+        ram_addr <= addr;
+        ram_signed <= signed_;
     end
 
     always @(*) begin
         ram_read = delay_read && !ram_busy;
-        ram_write = delay_write && !ram_busy;
+    end
+
+    always @(posedge clock) begin
+        if (reset) begin
+            buffer_write <= 0;
+            buffer_length <= 0;
+            buffer_addr <= 0;
+            buffer_data <= 0;
+        end else if (to_write || to_flush) begin
+            buffer_write <= 1;
+            buffer_length <= to_write ? length:to_flush ? 4:0;
+            buffer_addr <= to_write ? addr:flush_addr;
+            buffer_data <= to_write ? data_i:flush_data;
+        end else begin
+            buffer_write <= 0;
+        end
     end
 
     reg [`MemDataBus] cache_write_data;
@@ -145,9 +164,7 @@ module cache_d(
             cache_valid[addr_index] <= 1;
             cache_dirty[addr_index] <= 0;
             cache_tag[addr_index] <= addr_tag;
-            cache_data[addr_index] <= ram_data_i;
-        end else if (delay_write && ram_ready) begin
-            if (history_length == 4) cache_dirty[addr_index] <= 0;
+            cache_data[addr_index] <= ram_data;
         end
     end
 

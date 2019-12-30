@@ -4,6 +4,8 @@ module cache_i(
     input wire clock,
     input wire reset,
 
+    input wire discard,
+
     input wire ram_busy,
     input wire ram_ready,
     input wire [`MemDataBus] ram_data,
@@ -49,7 +51,7 @@ module cache_i(
     reg delay_read;
 
     always @(posedge clock) begin
-        delay_read <= !reset && miss;
+        delay_read <= !reset && miss && !discard;
     end
 
     always @(*) begin

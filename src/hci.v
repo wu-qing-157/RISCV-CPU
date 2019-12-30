@@ -249,7 +249,6 @@ always @*
             end
             $display("IO:Return");
 `ifdef iverilog
-            $timeformat(-9, 1, "ns", 12);
             $display("%t", $realtime);
 `endif
             $finish;
