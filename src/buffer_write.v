@@ -1,6 +1,6 @@
 `include "define.v"
 
-module buffer(
+module buffer_write(
     input wire clock,
     input wire reset,
 

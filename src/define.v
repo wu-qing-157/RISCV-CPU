@@ -117,16 +117,17 @@
 `define ByteBus         7:0
 `define DataMemNum      131072
 `define DataMemNumLog2  17
-`define ICacheBus       8:2
-`define ICacheNum       128
-`define ICacheNumLog2   7
-`define ICacheTagBytes  16:9
-`define ICacheTagBus    7:0
+`define ICacheBus       9:2
+`define ICacheNum       256
+`define ICacheNumLog2   8
+`define ICacheTagBytes  16:10
+`define ICacheTagBus    6:0
 `define DCacheBus       8:2
 `define DCacheNum       128
 `define DCacheNumLog2   7
 `define DCacheTagBytes  16:9
 `define DCacheTagBus    7:0
+`define DCacheAllBytes  31:2
 
 `define StallBus        5:0
 

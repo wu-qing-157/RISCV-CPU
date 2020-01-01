@@ -32,137 +32,117 @@ module ctrl_mem(
 );
 
     reg [2:0] cur;
-    reg [`ByteBus] ret [2:0];
+    reg [`ByteBus] if_ret [3:0], mem_ret [2:0];
+
+    reg ahead, ahead_ready;
+    reg [2:0] ahead_cur;
+    reg [`MemAddrBus] ahead_addr;
+    wire delay_ahead_addr = if_addr+4;
 
     wire mem_read_working = mem_read && !mem_r_ready;
-    wire if_working = !mem_read_working && if_read && !if_ready;
-    wire mem_write_working = !mem_read_working && !if_read && mem_write;
-    wire mem_working = mem_read_working || mem_write_working;
-    assign mem_w_success = mem_write_working;
+    wire if_working = if_read && !if_ready;
+    wire ahead_working = ahead && !ahead_ready;
+    wire mem_write_working = mem_write;
+    assign mem_w_success = !mem_read_working && !if_working && !ahead_working && mem_write_working;
 
-    reg [2:0] tot;
-    reg [`MemAddrBus] addr;
-
-    assign ram_rw = mem_write_working;
+    assign ram_rw = mem_w_success;
     assign ram_w_data = mem_w_data;
-
-    reg ahead;
-    reg [1:0] ahead_cur;
-    reg [`MemAddrBus] ahead_addr;
-    reg [`ByteBus] ahead_ret [2:0];
 
     always @(*) begin
         if (mem_read_working) begin
-            addr = mem_r_addr;
-            tot = mem_r_length;
+            ram_addr = cur[2] ? ahead_addr+ahead_cur:mem_r_addr+cur;
         end else if (if_working) begin
-            addr = if_addr;
-            tot = 4;
+            ram_addr = ahead && ahead_addr == if_addr ? ahead_addr+ahead_cur:if_addr+cur;
+        end else if (ahead_working) begin
+            ram_addr = ahead_addr+ahead_cur;
         end else if (mem_write_working) begin
-            addr = mem_w_addr;
-            tot = 1;
-        end else begin
-            addr = ahead_addr;
-            tot = 0;
-        end
-    end
-
-    always @(*) begin
-        if (mem_working || (if_working && !(ahead && ahead_addr == if_addr))) begin
-            ram_addr = addr+cur;
-            ahead_cur = 0;
-        end else if (ahead) begin
-            if (if_ready) begin
-                ahead_cur = 0;
-                ram_addr = ahead_addr+1;
-            end else if (!if_read) begin
-                ahead_cur = 1;
-                ram_addr = ahead_addr+2;
-            end else begin
-                ahead_cur = 2;
-                ram_addr = ahead_addr+3;
-            end
+            ram_addr = mem_w_addr;
         end else begin
             ram_addr = 0;
-            ahead_cur = 0;
         end
     end
 
     always @(posedge clock) begin
-        if (ahead) ret[ahead_cur] <= ram_r_data;
-        if (if_discard || mem_working) ahead <= 0;
         if (reset) begin
-            cur <= 0;
-            if_ready <= 0;
-            mem_r_ready <= 0;
-            if_busy <= 0;
-            mem_r_busy <= 0;
-            mem_w_busy <= 0;
+            if_ready <= 0; mem_r_ready <= 0;
+            if_busy <= 0; mem_r_busy <= 0; mem_w_busy <= 0;
+            ahead <= 0; cur <= 0; ahead_cur <= 0;
         end else if (mem_read_working) begin
             if (cur == 0) begin
-                if_ready <= 0;
-                mem_r_ready <= 0;
-                if_busy <= 1;
-                mem_r_busy <= 0;
-                mem_w_busy <= 1;
-                ahead <= 0;
+                if_ready <= 0; mem_r_ready <= 0;
+                if_busy <= 1; mem_r_busy <= 0; mem_w_busy <= 1;
                 cur <= 1;
-            end else if (cur < tot) begin
-                ret[cur-1] <= ram_r_data;
+                if (ahead && !ahead_ready) begin
+                    if_ret[ahead_cur-1] <= ram_r_data;
+                end
+            end else if (cur < mem_r_length) begin
+                mem_ret[cur-1] <= ram_r_data;
                 cur <= cur+1;
             end else begin
-                cur <= 0;
                 mem_r_ready <= 1;
-                case (tot)
+                if_busy <= 0; mem_w_busy <= 0;
+                cur <= 0;
+                case (mem_r_length)
                     1: mem_r_data <= {{24{mem_r_signed && ram_r_data[7]}}, ram_r_data};
-                    2: mem_r_data <= {{16{mem_r_signed && ram_r_data[7]}}, ram_r_data, ret[0]};
-                    4: mem_r_data <= {ram_r_data, ret[2], ret[1], ret[0]};
+                    2: mem_r_data <= {{16{mem_r_signed && ram_r_data[7]}}, ram_r_data, mem_ret[0]};
+                    4: mem_r_data <= {ram_r_data, mem_ret[2], mem_ret[1], mem_ret[0]};
                 endcase
-                if_busy <= 0;
-                mem_w_busy <= 0;
+                if (ahead && !ahead_ready) begin
+                    if (ahead_cur[2]) ahead_ready <= 1;
+                    else ahead_cur <= ahead_cur+1;
+                end
             end
         end else if (if_working) begin
             if (if_discard) begin
-                cur <= 0;
-                if_ready <= 0;
-                mem_r_ready <= 0;
-                if_busy <= 0;
-                mem_r_busy <= 0;
-                mem_w_busy <= 0;
+                if_ready <= 0; mem_r_ready <= 0;
+                if_busy <= 0; mem_r_busy <= 0; mem_w_busy <= 0;
+                ahead <= 0; cur <= 0;
             end else if (cur == 0) begin
-                if_ready <= 0;
-                mem_r_ready <= 0;
-                if_busy <= 0;
-                mem_r_busy <= 1;
-                mem_w_busy <= 1;
-                ahead <= 0;
-                if (ahead && ahead_addr == if_addr) begin
-                    cur <= 4;
-                end else begin
+                if (!ahead || ahead_addr != if_addr) begin
+                    if_ready <= 0; mem_r_ready <= 0;
+                    if_busy <= 0; mem_r_busy <= 1; mem_w_busy <= 1;
                     cur <= 1;
+                end else if (ahead_ready) begin
+                    if_ready <= 1; mem_r_ready <= 0;
+                    if_busy <= 0; mem_r_busy <= 0; mem_w_busy <= 0;
+                    cur <= 0;
+                    if_data <= {if_ret[3], if_ret[2], if_ret[1], if_ret[0]};
+                    ahead_addr <= delay_ahead_addr; ahead_cur <= 1; ahead_ready <= 0;
+                end else if (ahead_cur[2]) begin
+                    if_ready <= 1; mem_r_ready <= 0;
+                    if_busy <= 0; mem_r_busy <= 0; mem_w_busy <= 0;
+                    cur <= 0;
+                    if_data <= {ram_r_data, if_ret[2], if_ret[1], if_ret[0]};
+                    ahead_addr <= delay_ahead_addr; ahead_cur <= 1; ahead_ready <= 0;
+                end else begin
+                    if_ready <= 0; mem_r_ready <= 0;
+                    if_busy <= 0; mem_r_busy <= 1; mem_w_busy <= 1;
+                    if_ret[ahead_cur-1] <= ram_r_data;
+                    cur <= ahead_cur+1;
+                    ahead <= 0;
                 end
-            end else if (cur < tot) begin
-                ret[cur-1] <= ram_r_data;
+            end else if (!cur[2]) begin
+                if_ret[cur-1] <= ram_r_data;
                 cur <= cur+1;
             end else begin
-                cur <= 0;
                 if_ready <= 1;
-                if_data <= {ram_r_data, ret[2], ret[1], ret[0]};
-                ahead <= 1;
-                ahead_addr <= addr+4;
-                mem_r_busy <= 0;
-                mem_w_busy <= 0;
+                mem_r_busy <= 0; mem_w_busy <= 0;
+                cur <= 0;
+                if_data <= {ram_r_data, if_ret[2], if_ret[1], if_ret[0]};
+                ahead <= 1; ahead_addr <= delay_ahead_addr; ahead_cur <= 1; ahead_ready <= 0;
             end
-        end else if (mem_write_working) begin
-            if_ready <= 0;
-            mem_r_ready <= 0;
-            if_busy <= 0;
-            mem_r_busy <= 0;
-            mem_w_busy <= 0;
-            ahead <= 0;
+        end else if (ahead_working) begin
+            if (if_discard) begin
+                if_ready <= 0; mem_r_ready <= 0;
+                ahead <= 0; cur <= 0; ahead_cur <= 0;
+            end else begin
+                if_ready <= 0; mem_r_ready <= 0;
+                if_ret[ahead_cur-1] <= ram_r_data;
+                if (ahead_cur[2]) ahead_ready <= 1;
+                else ahead_cur <= ahead_cur+1;
+            end
         end else begin
-            if_ready <= 0;
-            mem_r_ready <= 0;
+            if_ready <= 0; mem_r_ready <= 0;
         end
     end
 

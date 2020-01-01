@@ -197,7 +197,7 @@ module cpu(
     wire buffer_ram_busy, buffer_ram_write, buffer_ram_success;
     wire [`MemAddrBus] buffer_ram_addr;
     wire [`ByteBus] buffer_ram_data;
-    buffer buffer_(
+    buffer_write buffer_(
         .clock(clk_in), .reset(reset),
         .write(cache_d_buffer_write), .busy(cache_d_buffer_busy),
         .length(cache_d_buffer_length), .addr(cache_d_buffer_addr), .data(cache_d_buffer_data),

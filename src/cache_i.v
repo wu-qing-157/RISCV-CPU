@@ -10,7 +10,7 @@ module cache_i(
     input wire ram_ready,
     input wire [`MemDataBus] ram_data,
     output reg ram_read,
-    output wire [`MemAddrBus] ram_addr,
+    output reg [`MemAddrBus] ram_addr,
 
     input wire read,
     input wire [`MemAddrBus] addr,
@@ -19,7 +19,6 @@ module cache_i(
 );
 
     reg miss;
-    assign ram_addr = addr;
 
     reg [`ICacheNum-1:0] cache_valid;
     reg [`ICacheTagBus] cache_tag [`ICacheNum-1:0];
@@ -52,6 +51,7 @@ module cache_i(
 
     always @(posedge clock) begin
         delay_read <= !reset && miss && !discard;
+        ram_addr <= addr;
     end
 
     always @(*) begin

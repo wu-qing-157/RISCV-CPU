@@ -72,10 +72,11 @@ Branch Prediction|__Test OK__, Current: Always Predict no Branch
 + 2019.12.29 DCache pass all tests on FPGA
 + 2019.12.29 Change mem_ctrl priority
 + 2019.12.30 Add Write Buffer (pass all tests on FPGA)
++ 2020.01.01 IF Read Ahead Interruptable
 
 ## Simulation Test Cases
 
-Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef|358a5cf|b833ffa|c947f75|5e1048a
+Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef|358a5cf|b833ffa|5e1048a|2fbd2e2
 ----|----|----|----|----|----|----|----|----
 basicopt1|6432481|3921803|4303755|4319783|3586405|2124699|2390181|2111249
 bulgarian|9073277|5531041|6041243|6129043|5436831|3195399|2762323|2482579
