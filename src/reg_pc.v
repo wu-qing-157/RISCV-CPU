@@ -9,7 +9,6 @@ module reg_pc(
     input wire [`MemAddrBus] pc_i,
     input wire br,
     input wire [`MemAddrBus] br_addr,
-    output reg sending,
     output reg [`MemAddrBus] pc_o
 );
 

@@ -72,9 +72,8 @@ module ctrl_mem(
                 if_ready <= 0; mem_r_ready <= 0;
                 if_busy <= 1; mem_r_busy <= 0; mem_w_busy <= 1;
                 cur <= 1;
-                if (ahead && !ahead_ready) begin
-                    if_ret[ahead_cur-1] <= ram_r_data;
-                end
+                if (mem_r_addr[17]) ahead <= 0;
+                else if (!ahead_ready) if_ret[ahead_cur-1] <= ram_r_data;
             end else if (cur < mem_r_length) begin
                 mem_ret[cur-1] <= ram_r_data;
                 cur <= cur+1;

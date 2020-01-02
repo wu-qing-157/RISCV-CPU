@@ -46,12 +46,10 @@ module cpu(
     wire br_error = ex_br_error;
 
     wire [`MemAddrBus] reg_pc_pc_i;
-    wire reg_pc_sending;
     wire [`MemAddrBus] reg_pc_pc_o;
     reg_pc reg_pc_(
         .clock(clk_in), .reset(reset), .stall0(ctrl_stall_stall[0]),
-        .br(br_error), .br_addr(ex_br_actual_addr), .pc_i(reg_pc_pc_i),
-        .sending(reg_pc_sending), .pc_o(reg_pc_pc_o)
+        .br(br_error), .br_addr(ex_br_actual_addr), .pc_i(reg_pc_pc_i), .pc_o(reg_pc_pc_o)
     );
 
     wire [`MemAddrBus] pipe_if_id_pc_i, pipe_if_id_pc_o;
@@ -139,8 +137,7 @@ module cpu(
     wire [`InstBus] stage_if_ram_data;
     stage_if stage_if_(
         .reset(reset), .stall_if(ctrl_stall_stall_if),
-        .receiving(reg_pc_sending), .pc_i(reg_pc_pc_o),
-        .pc_o(pipe_if_id_pc_i), .inst_o(pipe_if_id_inst_i),
+        .pc_i(reg_pc_pc_o), .pc_o(pipe_if_id_pc_i), .inst_o(pipe_if_id_inst_i),
         .ram_read(stage_if_ram_read), .ram_ready(stage_if_ram_ready),
         .ram_addr(stage_if_ram_addr), .ram_data(stage_if_ram_data)
     );

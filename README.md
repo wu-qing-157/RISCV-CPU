@@ -10,12 +10,17 @@ IF (Cache Hit)|1
 IF (Branch Prediction Error Penalty)|+= 2
 ID|1
 EX|1
-MEM (Read Cache Miss)|length + 3
-MEM (Read Cache Hit)|1
-MEM (Write)|1
+MEM (Load, Cache Miss)|length + 3
+MEM (Load, Cache Hit)|1
+MEM (Store)|1
 WB|1
 
-Note: MEM (Read Cache Miss) & MEM (Write) may wait write buffer to finish current work if flush needed.
+Note: IF Read Ahead may take advantage of the inessential 3 cycles of MEM (Load, Cache Miss), thus taking less cycles.
+
+Note: For branches predicted taken but actually not taken, IF (With Read Ahead) will still take 4 cycles,
+not influenced by the +2-cycle penalty.
+
+Note: MEM (Load, Cache Miss) & MEM (Store) may wait write buffer to finish current work if flush needed.
 
 ## Feature Progress
 
@@ -24,9 +29,9 @@ Feature|Status
 Simulation Correct Output|__Test OK__
 FPGA Correct Output|__Test OK__
 Data Forwarding|__Test OK__
-Optimize IF Cycles|__Test OK__
-1-Cycle Cache-Hit IF|__Test OK__
-DCache|__Test OK__
+IF Read Ahead|__Test OK__
+ICache (1-Cycle Hit)|__Test OK__
+DCache (Write Back) (1-Cycle Hit)|__Test OK__
 Write Buffer|__Test OK__
 2-bit BTB|Pending Full Test
 
@@ -76,6 +81,7 @@ Write Buffer|__Test OK__
 + 2019.12.30 Add Write Buffer (pass all tests on FPGA)
 + 2020.01.01 IF Read Ahead Interruptable
 + 2020.01.02 Add BTB (pass some test)
++ 2020.01.02 Interrupt IF-read head when IO (cannot pass print_hello, gcd and hanoi)
 
 ## Simulation Test Cases
 

@@ -5,7 +5,6 @@ module stage_if(
 
     output wire stall_if,
 
-    input wire receiving,
     input wire [`MemAddrBus] pc_i,
 
     output reg ram_read,
