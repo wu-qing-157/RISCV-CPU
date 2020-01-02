@@ -4,17 +4,18 @@
 
 Description|Cycles
 ----|----
-IF (Cache Miss)|7
-IF (Contiguous Cache Miss without Branch)|4
+IF|7
+IF (With Read Ahead)|4
 IF (Cache Hit)|1
-IF (Branch Prediction Error with Cache Miss)|9
-IF (Branch Prediction Error with Cache Hit)|3
+IF (Branch Prediction Error Penalty)|+= 2
 ID|1
 EX|1
-MEM (Read Cache Miss)|length + 3 + Additional if Write Buffer Busy
+MEM (Read Cache Miss)|length + 3
 MEM (Read Cache Hit)|1
-MEM (Write)|1 + Additional if Flush Needed and Write Buffer Busy
+MEM (Write)|1
 WB|1
+
+Note: MEM (Read Cache Miss) & MEM (Write) may wait write buffer to finish current work if flush needed.
 
 ## Feature Progress
 
@@ -22,11 +23,12 @@ Feature|Status
 ----|----
 Simulation Correct Output|__Test OK__
 FPGA Correct Output|__Test OK__
-Optimize IF Cycles|__Test OK__, Pending Interruptable by MEM
+Data Forwarding|__Test OK__
+Optimize IF Cycles|__Test OK__
 1-Cycle Cache-Hit IF|__Test OK__
 DCache|__Test OK__
-Write Buffer|__Test OK__, Pending Reduce Priority
-Branch Prediction|__Test OK__, Current: Always Predict no Branch
+Write Buffer|__Test OK__
+2-bit BTB|Pending Full Test
 
 ## Timeline
 
@@ -73,6 +75,7 @@ Branch Prediction|__Test OK__, Current: Always Predict no Branch
 + 2019.12.29 Change mem_ctrl priority
 + 2019.12.30 Add Write Buffer (pass all tests on FPGA)
 + 2020.01.01 IF Read Ahead Interruptable
++ 2020.01.02 Add BTB (pass some test)
 
 ## Simulation Test Cases
 
@@ -92,7 +95,7 @@ queens|5773345|3268907|3408607|3459811|3298751|2106301|1384893|1243179
 
 ## FPGA Test Cases
 
-Test Name|Current
+Test Name|2fbd2e2
 ----|----
 array_test1|__Pass__
 array_test2|__Pass__

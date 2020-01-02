@@ -17,6 +17,9 @@ module pipe_id_ex(
     input wire [`RegBus] mem_offset_i,
     input wire [`MemAddrBus] br_addr_i,
     input wire [`MemAddrBus] br_offset_i,
+    input wire prediction_i,
+    input wire [`MemAddrBus] pc_i,
+    input wire no_prediction_i,
 
     output reg [`AluSelBus] alusel_o,
     output reg [`AluOpBus] aluop_o,
@@ -27,7 +30,10 @@ module pipe_id_ex(
     output reg [`RegAddrBus] regw_addr_o,
     output reg [`RegBus] mem_offset_o,
     output reg [`MemAddrBus] br_addr_o,
-    output reg [`MemAddrBus] br_offset_o
+    output reg [`MemAddrBus] br_offset_o,
+    output reg prediction_o,
+    output reg [`MemAddrBus] pc_o,
+    output reg no_prediction_o
 );
 
     always @(posedge clock) begin
@@ -42,6 +48,9 @@ module pipe_id_ex(
             mem_offset_o <= 0;
             br_addr_o <= 0;
             br_offset_o <= 0;
+            prediction_o <= 0;
+            pc_o <= 0;
+            no_prediction_o <= 0;
         end else if (!stall[2] && !stall[3]) begin
             alusel_o <= alusel_i;
             aluop_o <= aluop_i;
@@ -53,6 +62,9 @@ module pipe_id_ex(
             mem_offset_o <= mem_offset_i;
             br_addr_o <= br_addr_i;
             br_offset_o <= br_offset_i;
+            prediction_o <= prediction_i;
+            pc_o <= pc_i;
+            no_prediction_o <= no_prediction_i;
         end
     end
 

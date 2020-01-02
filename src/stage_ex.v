@@ -26,9 +26,18 @@ module stage_ex(
     output reg [2:0] mem_length,
     output reg mem_signed,
 
+    input wire no_prediction,
+    input wire prediction,
+    input wire [`MemAddrBus] pc,
+    output reg br_inst,
+    output wire [`MemAddrBus] br_addr_o,
     output reg br,
-    output wire [`MemAddrBus] br_addr_o
+    output wire br_error,
+    output wire [`MemAddrBus] br_actual_addr
 );
+
+    assign br_error = (br_inst && br != prediction) || (no_prediction && br);
+    assign br_actual_addr = br ? br_addr_o:pc+4;
 
     assign stall_ex = 0;
 
@@ -76,7 +85,7 @@ module stage_ex(
     assign jump_ret = link_addr+4;
 
     always @(*) begin
-        br = 0;
+        br = 0; br_inst = 0;
         if (!reset) begin
             if (alusel == 3'b101) begin
                 case (aluop)
@@ -87,8 +96,9 @@ module stage_ex(
                     4: br = op1 < op2;
                     5: br = op1 >= op2;
                 endcase
+                br_inst = 1;
             end else if (alusel == 3'b110) begin
-                br = 1;
+                br = 1; br_inst = !no_prediction;
             end
         end
     end

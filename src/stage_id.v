@@ -5,7 +5,7 @@ module stage_id(
 
     output wire stall_id,
 
-    input wire [`MemAddrBus] pc,
+    input wire [`MemAddrBus] pc_i,
     input wire [`InstBus] inst,
 
     output reg read1,
@@ -34,8 +34,16 @@ module stage_id(
 
     input wire mem_write,
     input wire [`RegAddrBus] mem_regw_addr,
-    input wire [`RegBus] mem_regw_data
+    input wire [`RegBus] mem_regw_data,
+
+    input wire prediction_i,
+    output wire prediction_o,
+    output wire [`MemAddrBus] pc_o,
+    output reg no_prediction
 );
+
+    assign prediction_o = prediction_i;
+    assign pc_o = pc_i;
 
     wire [6:0] opcode = inst[6:0];
     wire [2:0] funct3 = inst[14:12];
@@ -58,7 +66,7 @@ module stage_id(
         read2 = 0; reg2_addr = 0; imm2 = 0;
         write = 0; regw_addr = 0;
         br_addr = 0; br_offset = 0; link_addr = 0;
-        mem_offset = 0;
+        mem_offset = 0; no_prediction = 0;
         if (!reset) begin
             case (opcode)
                 7'b0110111: begin
@@ -70,25 +78,25 @@ module stage_id(
                 7'b0010111: begin
                     alusel = 3'b100; aluop = 0;
                     imm1 = U_imm;
-                    imm2 = pc;
+                    imm2 = pc_i;
                     write = 1; regw_addr = rd;
                 end // AUIPC
                 7'b1101111: begin
                     alusel = 3'b110;
                     write = 1; regw_addr = rd;
-                    br_addr = pc; br_offset = J_imm; link_addr = pc;
+                    br_addr = pc_i; br_offset = J_imm; link_addr = pc_i;
                 end // JAL
                 7'b1100111: begin
                     alusel = 3'b110;
                     read1 = 1; reg1_addr = rs;
                     write = 1; regw_addr = rd;
-                    br_addr = op1; br_offset = I_imm; link_addr = pc;
+                    br_addr = op1; br_offset = I_imm; link_addr = pc_i; no_prediction = 1;
                 end // JALR
                 7'b1100011: begin
                     alusel = 3'b101;
                     read1 = 1; reg1_addr = rs;
                     read2 = 1; reg2_addr = rt;
-                    br_addr = pc; br_offset = B_imm;
+                    br_addr = pc_i; br_offset = B_imm;
                     case (funct3)
                         3'b000: aluop = 0; // BEQ
                         3'b001: aluop = 1; // BNE

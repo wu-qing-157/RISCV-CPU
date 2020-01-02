@@ -37,7 +37,7 @@ module ctrl_mem(
     reg ahead, ahead_ready;
     reg [2:0] ahead_cur;
     reg [`MemAddrBus] ahead_addr;
-    wire delay_ahead_addr = if_addr+4;
+    wire [`MemAddrBus] delay_ahead_addr = if_addr+4;
 
     wire mem_read_working = mem_read && !mem_r_ready;
     wire if_working = if_read && !if_ready;

@@ -128,6 +128,11 @@
 `define DCacheTagBytes  16:9
 `define DCacheTagBus    7:0
 `define DCacheAllBytes  31:2
+`define BTBBus          6:2
+`define BTBNum          32
+`define BTBNumLog2      5
+`define BTBTagBytes     16:7
+`define BTBTagBus       9:0
 
 `define StallBus        5:0
 
