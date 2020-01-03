@@ -133,6 +133,7 @@
 `define BTBNumLog2      5
 `define BTBTagBytes     16:7
 `define BTBTagBus       9:0
+`define BTBAllBytes     16:2
 
 `define StallBus        5:0
 

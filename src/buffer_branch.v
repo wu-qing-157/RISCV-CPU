@@ -10,7 +10,7 @@ module buffer_branch(
 
     input wire update,
     input wire committed,
-    input wire [`MemAddrBus] current,
+    input wire [`BTBAllBytes] current,
     input wire [`MemAddrBus] target
 );
 

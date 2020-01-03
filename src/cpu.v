@@ -129,7 +129,8 @@ module cpu(
     buffer_branch buffer_branch_(
         .clock(clk_in), .reset(reset),
         .pc_i(pipe_if_id_pc_i), .pc_o(reg_pc_pc_i), .prediction(pipe_if_id_prediction_i),
-        .update(ex_br_inst), .committed(ex_br), .current(pipe_id_ex_pc_o), .target(ex_br_addr)
+        .update(ex_br_inst), .committed(ex_br),
+        .current(pipe_id_ex_pc_o[`BTBAllBytes]), .target(ex_br_addr)
     );
 
     wire stage_if_ram_read, stage_if_ram_ready;

@@ -83,6 +83,7 @@ Write Buffer|__Test OK__
 + 2020.01.02 Add BTB (pass some test)
 + 2020.01.02 Interrupt IF-read head when IO (cannot pass print_hello, gcd and hanoi)
 + 2020.01.03 Pass All Tests
++ 2020.01.03 Remove unused code
 
 ## Simulation Test Cases
 
