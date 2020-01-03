@@ -33,7 +33,7 @@ IF Read Ahead|__Test OK__
 ICache (1-Cycle Hit)|__Test OK__
 DCache (Write Back) (1-Cycle Hit)|__Test OK__
 Write Buffer|__Test OK__
-2-bit BTB|Pending Full Test
+2-bit BTB|__Test OK__
 
 ## Timeline
 
@@ -82,6 +82,7 @@ Write Buffer|__Test OK__
 + 2020.01.01 IF Read Ahead Interruptable
 + 2020.01.02 Add BTB (pass some test)
 + 2020.01.02 Interrupt IF-read head when IO (cannot pass print_hello, gcd and hanoi)
++ 2020.01.03 Pass All Tests
 
 ## Simulation Test Cases
 

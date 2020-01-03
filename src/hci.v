@@ -29,7 +29,7 @@
 
 module hci
 #(
-  parameter SYS_CLK_FREQ = 50000000,
+  parameter SYS_CLK_FREQ = 230000000,
   parameter RAM_ADDR_WIDTH = 17,
   parameter BAUD_RATE = 115200
 )

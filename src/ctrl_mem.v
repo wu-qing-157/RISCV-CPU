@@ -50,7 +50,7 @@ module ctrl_mem(
 
     always @(*) begin
         if (mem_read_working) begin
-            ram_addr = cur[2] ? ahead_addr+ahead_cur:mem_r_addr+cur;
+            ram_addr = (ahead && mem_r_length == cur) ? ahead_addr+ahead_cur:mem_r_addr+cur;
         end else if (if_working) begin
             ram_addr = ahead && ahead_addr == if_addr ? ahead_addr+ahead_cur:if_addr+cur;
         end else if (ahead_working) begin
