@@ -1,3 +1,9 @@
 out
 data
-.idea/edaphic/defines.xml
+/.idea/edaphic/defines.xml
+*.aux
+*.log
+*.out
+*.swp
+/test_tool/ctrl/ctrl
+/test_tool/test/

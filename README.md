@@ -1,35 +1,21 @@
 # RISCV-CPU
 
-## Cycle Details
+A RISC-V CPU with standard 5-stage pipeline, implemented in Verilog HDL
 
-Description|Cycles
-----|----
-IF|7
-IF (With Read Ahead)|4
-IF (Cache Hit)|1
-IF (Branch Prediction Error Penalty)|+= 2
-ID|1
-EX|1
-MEM (Load, Cache Miss)|length + 3
-MEM (Load, Cache Hit)|1
-MEM (Store)|1
-WB|1
+## Feature, Performance
 
-Note: IF Read Ahead may take advantage of the inessential 3 cycles of MEM (Load, Cache Miss), thus taking less cycles.
-
-Note: For branches predicted taken but actually not taken, IF (With Read Ahead) will still take 4 cycles,
-not influenced by the +2-cycle penalty.
-
-Note: MEM (Load, Cache Miss) & MEM (Store) may wait write buffer to finish current work if flush needed.
+Please refer to the project report.
 
 ## Feature Progress
+
+For feature details, please refer to project report.
 
 Feature|Status
 ----|----
 Simulation Correct Output|__Test OK__
 FPGA Correct Output|__Test OK__
 Data Forwarding|__Test OK__
-IF Read Ahead|__Test OK__
+IF Prefetch|__Test OK__
 ICache (1-Cycle Hit)|__Test OK__
 DCache (Write Back) (1-Cycle Hit)|__Test OK__
 Write Buffer|__Test OK__
@@ -84,41 +70,27 @@ Write Buffer|__Test OK__
 + 2020.01.02 Interrupt IF-read head when IO (cannot pass print_hello, gcd and hanoi)
 + 2020.01.03 Pass All Tests
 + 2020.01.03 Remove unused code
++ 2020.01.03 Add project report
 
-## Simulation Test Cases
+## Test on FPGA
 
-Test Name|aedf0cf|1f7a93d|e9bd94e|8a0e2ef|358a5cf|b833ffa|5e1048a|2fbd2e2
-----|----|----|----|----|----|----|----|----
-basicopt1|6432481|3921803|4303755|4319783|3586405|2124699|2390181|2111249
-bulgarian|9073277|5531041|6041243|6129043|5436831|3195399|2762323|2482579
-expr|91087|25869|32151|33241|30895|24479|24535|23677
-gcd|13129|7123|7941|8003|7171|4667|4675|4087
-lvalue2|219|219|223|227|199|199|243|197
-magic|7091975|5631839|5796301|5826219|5400941|3123099|2376481|1939991
-manyarguments|353|353|357|361|327|327|385|313
-multiarray|81339|55637|60289|60573|51309|37267|42659|33575
-pi (1000)|10134767|3296955|3995597|4117307|3775945|2565651|2554391|2530517
-qsort (1000)|4787333|2041527|2327071|2363023|2165759|1271419|1212889|1157307
-queens|5773345|3268907|3408607|3459811|3298751|2106301|1384893|1243179
-
-## FPGA Test Cases
-
-Test Name|2fbd2e2
+Test Name|Current
 ----|----
-array_test1|__Pass__
-array_test2|__Pass__
-basicopt1|__Pass__
-bulgarian|__Pass__
-expr|__Pass__
-gcd|__Pass__
-hanoi|__Pass__
-lvalue2|__Pass__
-magic|__Pass__
-manyarguments|__Pass__
-multiarray|__Pass__
-pi|__Pass__
-qsort|__Pass__
-queens|__Pass__
-statement_test|__Pass__
-superloop|__Pass__
-tak|__Pass__
+array_test1|0.000
+array_test2|0.016
+basicopt1|0.016
+bulgarian|1.313 (extra sleep)
+expr|0.031
+gcd|0.016
+hanoi|0.766
+lvalue2|0.016
+magic|0.031
+manyarguments|0.000
+multiarray|0.031
+pi|0.469
+qsort|3.500 (extra sleep)
+queens|0.563
+statement_test|0.016
+superloop|0.016
+tak|0.016
+love|138.3
